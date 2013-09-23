@@ -13,10 +13,10 @@ import finansyx.Exceptions.*;
 public class Modelo {
 
     //Variables que forman parte de la ecuación
-    Double A, a, b, c, n;
+    Double A=0.0 ,  a= 0.0, b= 0.0, c= 0.0, n=0.0;
     
     //Variables que ayudan a la toma de decisión
-    Double Sxy, r, r2;
+    Double Sxy=0.0, r=0.0, r2=0.0;
     
     //Sumatorias
     Double sumX, sumY, sumXY, sumX2, sumY2;
