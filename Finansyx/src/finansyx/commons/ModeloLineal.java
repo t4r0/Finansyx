@@ -4,7 +4,6 @@
  */
 package finansyx.commons;
 
-import finansyx.Exceptions.DiferentSizeException;
 import java.util.ArrayList;
 
 /**
@@ -17,27 +16,40 @@ public class ModeloLineal extends Modelo{
         super ();
     }
     
-    
-    @Override
-    public void Sumatorias(ArrayList<Integer> y, ArrayList<Double> x)
-            throws DiferentSizeException
+    public ModeloLineal(ArrayList<Integer> y, ArrayList<Double> x)
     {
-        Double varX = 0.0;
-        try
-        {    
-            super.Sumatorias(y, x);
-            for(Integer i : y)
-            {
-                varX = x.get(i);
-                sumX += varX;
-                sumY += i;
-                sumXY += varX * i;
-            }
-        }
-        catch (DiferentSizeException e)
-        {
-            throw e;
-        }
+        super(y, x);
     }
     
+    @Override
+    public Double Calcular(Integer x)
+    {
+        return a*x + b;
+    }
+    
+    @Override
+    public void Sumatorias(ArrayList<Integer> y, ArrayList<Double> x)           
+    {
+        Double varX = 0.0;
+        super.Sumatorias(y, x);
+        for(Integer i : y)
+        {
+            varX = x.get(i);
+            sumX += varX;
+            sumY += i;
+            sumXY += varX * i;
+            sumX2 += Math.pow(varX, 2);
+            sumY2 += Math.pow(i, 2);
+        }
+        n = y.size();
+    }
+    
+    @Override
+    public void CalcularVariables()
+    {
+        a = ((n*sumXY) - (sumX*sumY)) 
+                / ((n*sumX2) - Math.pow(sumX, 2));
+        
+        b = (sumY / n) - a*(sumX/n);
+    }
 }
