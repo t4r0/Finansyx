@@ -27,9 +27,12 @@ public class Finansyx {
         ModeloPolinomial modP = new ModeloPolinomial(keys, values);
         ModeloExponencial modE = new ModeloExponencial(keys, values);
         ModeloLogaritmico modL = new ModeloLogaritmico(keys, values);
+        ModeloPotencial modPo = new ModeloPotencial(keys, values);
+                
         System.out.println(modl.toString());
         System.out.println(modP.toString());
         System.out.println(modE.toString());
         System.out.println(modL.toString());
+        System.out.println(modPo.toString());
     }
 }
