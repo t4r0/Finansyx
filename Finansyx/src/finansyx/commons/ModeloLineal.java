@@ -16,9 +16,9 @@ public class ModeloLineal extends Modelo{
         super ();
     }
     
-    public ModeloLineal(ArrayList<Integer> y, ArrayList<Double> x)
+    public ModeloLineal(ArrayList<Integer> x, ArrayList<Double> y)
     {
-        super(y, x);
+        super(x, y);
     }
     
     @Override
@@ -28,18 +28,20 @@ public class ModeloLineal extends Modelo{
     }
     
     @Override
-    public void Sumatorias(ArrayList<Integer> y, ArrayList<Double> x)           
+    public void Sumatorias(ArrayList<Integer> x, ArrayList<Double> y)           
     {
-        Double varX = 0.0;
-        super.Sumatorias(y, x);
-        for(Integer i : y)
+        Double varY = 0.0;
+        Integer varX = 0;
+        super.Sumatorias(x, y);
+        for(int i =0; i < y.size(); i++)
         {
             varX = x.get(i);
+            varY = y.get(i);
             sumX += varX;
-            sumY += i;
-            sumXY += varX * i;
+            sumY += varY;
+            sumXY += varX * varY;
             sumX2 += Math.pow(varX, 2);
-            sumY2 += Math.pow(i, 2);
+            sumY2 += Math.pow(varY, 2);
         }
         n = y.size();
     }
@@ -47,8 +49,10 @@ public class ModeloLineal extends Modelo{
     @Override
     public void CalcularVariables()
     {
-        a = ((n*sumXY) - (sumX*sumY)) 
-                / ((n*sumX2) - Math.pow(sumX, 2));
+        Double numerador = (n*sumXY) - (sumX*sumY);
+        Double denominador = (n*sumX2) - Math.pow(sumX, 2);
+        
+        a = numerador / denominador;
         
         b = (sumY / n) - a*(sumX/n);
     }

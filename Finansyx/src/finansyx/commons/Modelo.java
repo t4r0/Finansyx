@@ -61,11 +61,12 @@ public class Modelo {
     void CalcularFactoresDeDecision()
     { 
        
-       CalcularVarianza();
-       r = ((n*sumXY) - (sumX*sumY)) /
-               Math.sqrt((n*sumX2-Math.pow(sumX, 2)) 
-               * n*sumY2 - Math.pow(sumY, 2));
+       Double numerador =(n*sumXY) - (sumX*sumY);
+       Double denominador = (n*sumX2) - Math.pow(sumX, 2);
+       denominador = denominador*((n*sumY2) - Math.pow(sumY, 2) );
+       r = numerador / Math.sqrt(denominador);
        r2 = Math.pow(r, 2);
+       CalcularVarianza();
       
     }
     
@@ -77,6 +78,9 @@ public class Modelo {
         CalcularFactoresDeDecision();       
     }
     
+    /**
+     * Reinicia esta instancia
+     */    
     public void Reset()
     {
         A=0.0;
@@ -98,9 +102,9 @@ public class Modelo {
     {
        ArrayList<Double> Ycalc = Calcular(keys);
        Double yCalc= 0.0;
-       for(Integer k : keys)
+       for(int k =0; k < keys.size(); k++)
            yCalc += Math.pow(Ycalc.get(k) - values.get(k), 2);
-       Sxy = Math.sqrt(yCalc/n-2);
+       Sxy = Math.sqrt(yCalc/(n-2));
     }
     
     
@@ -124,5 +128,9 @@ public class Modelo {
         return resultado;
     }
     
-    
+    @Override
+    public String toString()
+    {
+        return "r= " + r + "\nr^2= " + r2 + "\nSXY= "+ Sxy; 
+    }
 }
