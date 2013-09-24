@@ -4,20 +4,20 @@
  */
 package finansyx.commons.Pronosticos;
 
-import java.util.*;
+import java.util.ArrayList;
+
 /**
  *
  * @author t4r0
  */
-public class ModeloExponencial extends Modelo{
+public class ModeloLogaritmico extends Modelo{
     
-    Double sumLogY = 0.0, sumXLogY = 0.0, sumLogY2=0.0;
-    
-       public ModeloExponencial() {
+    Double sumLogX = 0., sumLogX2 = 0., sumLogXY = 0.;
+       public ModeloLogaritmico() {
         super ();
     }
     
-    public ModeloExponencial(ArrayList<Integer> x, ArrayList<Double> y)
+    public ModeloLogaritmico(ArrayList<Integer> x, ArrayList<Double> y)
     {
         Sumatorias(x, y);
         CalcularVariables();
@@ -28,15 +28,15 @@ public class ModeloExponencial extends Modelo{
     public void Reset()
     {
         super.Reset();
-        sumLogY = 0.0;
-        sumLogY2=0.0;
-       sumXLogY=0.0;
+        sumLogX = 0.;
+        sumLogX2 = 0.;
+        sumLogXY = 0.;
     }
     
     @Override
     public Double Calcular(Integer x)
     {
-        return A*Math.exp(b * x);
+        return b*Math.log(x) + a;
     }
     
     @Override
@@ -44,38 +44,38 @@ public class ModeloExponencial extends Modelo{
     {
         Double varY = 0.0;
         Integer varX = 0;
-        Double varX2 = 0.0, varLog=0.;
+        Double varY2 = 0.0, varLog=0.;
         super.Sumatorias(x, y);
         for(int i =0; i < y.size(); i++)
         {
             varX = x.get(i);
             varY = y.get(i);
-            varLog=Math.log(varY);
-            varX2 = Math.pow(varX, 2);
+            varLog=Math.log(varX);
+            varY2 = Math.pow(varY, 2);
             sumX += varX;
             sumY += varY;
-            sumX2 += varX2;
-            sumLogY += varLog;
-            sumLogY2 += Math.pow(varLog,2);
-            sumXLogY += varX * varLog;
+            sumY2 += varY2;
+            sumLogX += varLog;
+            sumLogX2 += Math.pow(varLog,2);
+            sumLogXY += varY * varLog;
         }
         n = y.size();
         yProm = sumY / n;
         sumX = sumX / n;
         sumY = sumY / n;
-        sumX2 = sumX2 / n;
-        sumLogY = sumLogY / n;
-        sumLogY2 = sumLogY2 / n;
-        sumXLogY = sumXLogY / n;
+        sumY2 = sumY2 / n;
+        sumLogX = sumLogX / n;
+        sumLogX2 = sumLogX2 / n;
+        sumLogXY = sumLogXY / n;
     }
     
     @Override
     public void CalcularVariables()
     {
-       b = sumXLogY - (sumX * sumLogY);
-       b = b / (sumX2 - Math.pow(sumX, 2));
+       b = sumLogXY - (sumLogX* sumY);
+       b = b / (sumLogX2 - Math.pow(sumLogX, 2));
        
-       a = sumLogY - b*sumX;
+       a = sumY - b*sumLogX;
        A = Math.exp(a);
     }
     
@@ -92,11 +92,12 @@ public class ModeloExponencial extends Modelo{
     @Override
      void CalcularFactoresDeDecision()
     { 
-       Double denominador = (sumX2 - Math.pow(sumX, 2)) *
-                                (sumLogY2 - Math.pow(sumLogY, 2));
+       Double denominador = (sumLogX2 - Math.pow(sumLogX, 2)) *
+                                (sumY2 - Math.pow(sumY, 2));
        CalcularVarianza();
-       r = (sumXLogY - (sumX * sumLogY)) / Math.sqrt(denominador);
+       r = (sumLogXY - (sumLogX * sumY)) / Math.sqrt(denominador);
        
        r2 = Math.pow(r, 2);
     }
+    
 }
