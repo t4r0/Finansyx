@@ -4,7 +4,7 @@
  */
 package finansyx;
 
-import finansyx.commons.ModeloLineal;
+import finansyx.commons.Pronosticos.ModeloLineal;
 import java.util.ArrayList;
 import java.util.Arrays;
 

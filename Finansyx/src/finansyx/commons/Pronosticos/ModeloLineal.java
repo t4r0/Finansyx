@@ -2,7 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package finansyx.commons;
+package finansyx.commons.Pronosticos;
 
 import java.util.ArrayList;
 
