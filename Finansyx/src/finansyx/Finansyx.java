@@ -4,7 +4,7 @@
  */
 package finansyx;
 
-import finansyx.commons.Pronosticos.ModeloLineal;
+import finansyx.commons.Pronosticos.*;
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -24,7 +24,8 @@ public class Finansyx {
         ArrayList<Double> values = new ArrayList<Double>(
                 Arrays.asList(new Double[]{29.0, 29.5, 39.0, 60.0}));
         ModeloLineal modl= new ModeloLineal(keys, values);
+        ModeloPolinomial modP = new ModeloPolinomial(keys, values);
         System.out.println(modl.toString());
-        
+        System.out.println(modP.toString());
     }
 }

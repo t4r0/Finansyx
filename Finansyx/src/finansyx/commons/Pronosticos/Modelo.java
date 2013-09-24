@@ -24,7 +24,7 @@ public class Modelo {
     
     
     //Variaciones
-    Double varTotal, varExp, varNExp;
+    Double varTotal = 0.0, varExp=0.0, varNExp=0.0;
     
     ArrayList<Integer> keys = new ArrayList<Integer>();
     ArrayList<Double> values = new ArrayList<Double>();

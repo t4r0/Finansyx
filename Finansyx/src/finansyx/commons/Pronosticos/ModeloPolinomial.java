@@ -20,7 +20,9 @@ public class ModeloPolinomial extends Modelo{
     
     public ModeloPolinomial(ArrayList<Integer> x, ArrayList<Double> y)
     {
-        super(x, y);
+        Sumatorias(x, y);
+        CalcularVariables();
+        CalcularFactoresDeDecision();
     }
     
     @Override
@@ -35,7 +37,7 @@ public class ModeloPolinomial extends Modelo{
     @Override
     public Double Calcular(Integer x)
     {
-        return a*x + b;
+        return a*Math.pow(x, 2) + b*x + c;
     }
     
     @Override
@@ -66,13 +68,40 @@ public class ModeloPolinomial extends Modelo{
     @Override
     public void CalcularVariables()
     {
-       double[][] matA = {{n, sumX, sumX2, sumY},
-                          {sumX, sumX2, sumX3, sumXY},
-                          {sumX2,sumX3, sumX4, sumX2Y }};
-               
+       double[][] matA = {{n, sumX, sumX2},
+                          {sumX, sumX2, sumX3},
+                          {sumX2,sumX3, sumX4}};
+       double[] matB = {sumY, sumXY, sumX2Y};
        Matrix A = new Matrix(matA);
-       Matrix B = A.inverse();
-
+       Matrix B = new Matrix(matB, 3);
+       Matrix C = A.solve(B);
+       
+       a = C.get(2,0);
+       b = C.get(1, 0);
+       c = C.get(0, 0);
     }
+    
+    @Override
+    void CalcularVarianza()
+    {
+       ArrayList<Double> Ycalc = Calcular(keys);
+       for(int k =0; k < keys.size(); k++)
+       {
+           varExp += Math.pow(Ycalc.get(k) - values.get(k), 2);
+           varTotal += Math.pow(values.get(k) - yProm, 2);
+           varNExp += Math.pow(Ycalc.get(k) - yProm, 2);
+       }
+       Sxy = Math.sqrt(varExp/(n-2));
+    }
+    
+    @Override
+     void CalcularFactoresDeDecision()
+    { 
+       CalcularVarianza();
+       r = Math.sqrt(varNExp/varTotal);
+       r2 = Math.pow(r, 2);
+    }
+    
+    
     
 }
