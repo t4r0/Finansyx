@@ -25,7 +25,9 @@ public class Finansyx {
                 Arrays.asList(new Double[]{29.0, 29.5, 39.0, 60.0}));
         ModeloLineal modl= new ModeloLineal(keys, values);
         ModeloPolinomial modP = new ModeloPolinomial(keys, values);
+        ModeloExponencial modE = new ModeloExponencial(keys, values);
         System.out.println(modl.toString());
         System.out.println(modP.toString());
+        System.out.println(modE.toString());
     }
 }
