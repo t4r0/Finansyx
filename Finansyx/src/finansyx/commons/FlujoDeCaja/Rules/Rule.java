@@ -3,7 +3,7 @@
  * and open the template in the editor.
  */
 package finansyx.commons.FlujoDeCaja.Rules;
-
+import finansyx.commons.FlujoDeCaja.Gastos;
 /**
  *
  * @author t4r0
@@ -14,8 +14,8 @@ public class Rule implements ICalcRule{
     }
 
     @Override
-    public void Calcular() {
-        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public void Calcular(Gastos a) {
+        
     }
     
     

@@ -12,7 +12,7 @@ import java.util.ArrayList;
  */
 public class FlujoDeCaja {
     
-    ArrayList<Ingresos> ingresos = new ArrayList<Ingresos>();
+    Ingresos ingresos = new Ingresos();
     ArrayList<Gastos> gastos = new ArrayList<Gastos>();
 
     public FlujoDeCaja() {
