@@ -10,13 +10,27 @@ import finansyx.commons.FlujoDeCaja.Gastos;
  */
 public class Rule implements ICalcRule{
 
+     Double Value = 0.;
+     Integer largo = 0;
     public Rule() {
     }
 
-    @Override
-    public void Calcular(Gastos a) {
-        
+    public Double getValue()
+    {
+        return Value;
     }
+    
+    public void setValue(Double value)
+    {
+        Value = value;
+    }        
+            
+    @Override
+    public void Calcular(Gastos a) {    }
+
+    @Override
+    public void Calcular(Gastos a, Integer inicio) {    }
+    
     
     
     

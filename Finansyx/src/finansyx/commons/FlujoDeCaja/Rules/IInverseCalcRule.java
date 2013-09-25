@@ -4,11 +4,13 @@
  */
 package finansyx.commons.FlujoDeCaja.Rules;
 import finansyx.commons.FlujoDeCaja.Gastos;
+import finansyx.commons.FlujoDeCaja.Ingresos;
+
 /**
  *
  * @author t4r0
  */
-public interface ICalcRule {
-    public void Calcular(Gastos a);
-    public void Calcular(Gastos a, Integer inicio);
+public interface IInverseCalcRule extends ICalcRule{
+    void CalcularInverso(Ingresos a, Gastos b);
+    void CalcularInverso(Ingresos a, Gastos b, Integer inicio);
 }

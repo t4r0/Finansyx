@@ -5,6 +5,8 @@
 package finansyx.commons.FlujoDeCaja.Rules;
 
 import finansyx.commons.FlujoDeCaja.Gastos;
+import java.util.ArrayList;
+import sun.security.util.Length;
 
 /**
  *
@@ -12,7 +14,6 @@ import finansyx.commons.FlujoDeCaja.Gastos;
  */
 public class StaticCalcRule extends Rule{
     
-    Double Value = 0.;
     public StaticCalcRule()
     {
         
@@ -26,9 +27,19 @@ public class StaticCalcRule extends Rule{
     @Override
     public void Calcular(Gastos gastos) {
        for(Double val : gastos.getValues())
-           val = Value;
-       
+           val = Value;       
     }
+
+    @Override
+    public void Calcular(Gastos a, Integer inicio) {
+       ArrayList<Double> val = a.getValues();
+      for(int i=inicio; i < largo; i++)
+      {
+          val.set(i, Value);
+      }
+    }
+    
+    
     
     
 }
