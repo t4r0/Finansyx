@@ -131,6 +131,11 @@ public class Modelo {
         return resultado;
     }
     
+    public Double LimiteSuperior()
+    {
+        return 0.0;
+    }
+    
     @Override
     public String toString()
     {
