@@ -45,5 +45,4 @@ public class PercentageCalcRule extends Rule implements IInverseCalcRule{
     
     
     
-    
 }
