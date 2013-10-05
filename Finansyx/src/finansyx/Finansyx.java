@@ -5,6 +5,7 @@
 package finansyx;
 
 import finansyx.commons.Pronosticos.*;
+import finansyx.commons.*;
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -33,6 +34,7 @@ public class Finansyx {
         System.out.println(modP.toString());
         System.out.println(modE.toString());
         System.out.println(modL.toString());
-        System.out.println(modPo.toString());
+        System.out.println(modPo.toString() + "\n===================\n");
+        System.out.println(Finanzas.GastosEscalonados(300., 0.1, 2011, 2021));
     }
 }

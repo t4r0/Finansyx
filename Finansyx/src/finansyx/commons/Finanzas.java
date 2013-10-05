@@ -20,4 +20,15 @@ public class Finanzas {
         return i + f + i*f;
     }
     
+    public static Double GastosEscalonados(Double base, Double percentage, Integer yearBase, Integer yearPronostic)
+    {
+        int cuenta = yearPronostic - yearBase;
+        Double valor = base;
+        for(int i = 0; i < cuenta; i ++)
+        {
+            valor += valor*percentage;
+        }
+        return valor;
+    }
+    
 }
