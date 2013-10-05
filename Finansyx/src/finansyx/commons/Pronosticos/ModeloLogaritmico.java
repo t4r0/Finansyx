@@ -15,6 +15,7 @@ public class ModeloLogaritmico extends Modelo{
     Double sumLogX = 0., sumLogX2 = 0., sumLogXY = 0.;
        public ModeloLogaritmico() {
         super ();
+        nombre = "Logaritmico";
     }
     
     public ModeloLogaritmico(ArrayList<Integer> x, ArrayList<Double> y)

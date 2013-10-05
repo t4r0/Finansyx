@@ -14,6 +14,8 @@ public class ModeloLineal extends Modelo{
 
     public ModeloLineal() {
         super ();
+        nombre = "Lineal";
+        
     }
     
     public ModeloLineal(ArrayList<Integer> x, ArrayList<Double> y)

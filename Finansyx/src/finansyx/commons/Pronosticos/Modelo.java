@@ -12,6 +12,7 @@ import finansyx.Exceptions.*;
  */
 public class Modelo {
 
+    String nombre = "Modelo";
     //Variables que forman parte de la ecuación
     Double A=0.0 ,  a= 0.0, b= 0.0, c= 0.0;
     Integer n=0;
@@ -42,6 +43,14 @@ public class Modelo {
         CalcularFactoresDeDecision();
     }
     
+    public Double getA(){return A;}
+    public Double geta(){return a;}
+    public Double getb(){return b;}
+    public Double getc(){return c;}
+    public Double getSXY(){return Sxy;}
+    public Double getr(){return r;}
+    public Double getr2(){return r2;}
+    public String getNombre(){return nombre;}
     /**
      * Hace las sumatorias respectivas de este modelo
      * @param y = Los valores independientes, del modelo

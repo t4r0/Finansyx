@@ -36,5 +36,7 @@ public class Finansyx {
         System.out.println(modL.toString());
         System.out.println(modPo.toString() + "\n===================\n");
         System.out.println(Finanzas.GastosEscalonados(300., 0.1, 2011, 2021));
+        
+        
     }
 }

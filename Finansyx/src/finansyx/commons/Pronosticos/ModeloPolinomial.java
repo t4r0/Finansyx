@@ -16,6 +16,7 @@ public class ModeloPolinomial extends Modelo{
     
         public ModeloPolinomial() {
         super ();
+        nombre = "Polinomial";
     }
     
     public ModeloPolinomial(ArrayList<Integer> x, ArrayList<Double> y)

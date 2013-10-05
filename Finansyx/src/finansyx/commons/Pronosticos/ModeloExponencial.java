@@ -15,6 +15,7 @@ public class ModeloExponencial extends Modelo{
     
        public ModeloExponencial() {
         super ();
+        nombre = "Exponencial";
     }
     
     public ModeloExponencial(ArrayList<Integer> x, ArrayList<Double> y)
