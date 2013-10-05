@@ -51,6 +51,7 @@ public class Modelo {
     public Double getr(){return r;}
     public Double getr2(){return r2;}
     public String getNombre(){return nombre;}
+    public void setNombre(String nombre){this.nombre = nombre;}
     /**
      * Hace las sumatorias respectivas de este modelo
      * @param y = Los valores independientes, del modelo

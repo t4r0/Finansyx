@@ -15,11 +15,12 @@ public class ModeloExponencial extends Modelo{
     
        public ModeloExponencial() {
         super ();
-        nombre = "Exponencial";
+        setNombre( "Exponencial");
     }
     
     public ModeloExponencial(ArrayList<Integer> x, ArrayList<Double> y)
     {
+        setNombre( "Exponencial");
         Sumatorias(x, y);
         CalcularVariables();
         CalcularFactoresDeDecision();

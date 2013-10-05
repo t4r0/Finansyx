@@ -15,11 +15,12 @@ public class ModeloLogaritmico extends Modelo{
     Double sumLogX = 0., sumLogX2 = 0., sumLogXY = 0.;
        public ModeloLogaritmico() {
         super ();
-        nombre = "Logaritmico";
+        setNombre("Logaritmico");
     }
     
     public ModeloLogaritmico(ArrayList<Integer> x, ArrayList<Double> y)
     {
+        setNombre("Logaritmico");
         Sumatorias(x, y);
         CalcularVariables();
         CalcularFactoresDeDecision();
@@ -77,7 +78,6 @@ public class ModeloLogaritmico extends Modelo{
        b = b / (sumLogX2 - Math.pow(sumLogX, 2));
        
        a = sumY - b*sumLogX;
-       A = Math.exp(a);
     }
     
     @Override

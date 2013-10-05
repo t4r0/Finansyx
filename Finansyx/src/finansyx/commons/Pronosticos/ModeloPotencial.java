@@ -16,11 +16,12 @@ public class ModeloPotencial extends Modelo{
             sumLogX = 0.0, sumLogX2 = 0.0; 
        public ModeloPotencial() {
         super ();
-        nombre = "Potencial";
+       setNombre("Potencial");
     }
     
     public ModeloPotencial(ArrayList<Integer> x, ArrayList<Double> y)
     {
+        setNombre("Potencial");
         Sumatorias(x, y);
         CalcularVariables();
         CalcularFactoresDeDecision();

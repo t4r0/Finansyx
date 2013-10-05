@@ -14,13 +14,15 @@ public class ModeloLineal extends Modelo{
 
     public ModeloLineal() {
         super ();
-        nombre = "Lineal";
+        setNombre("Lineal");
         
     }
     
     public ModeloLineal(ArrayList<Integer> x, ArrayList<Double> y)
     {
+        
         super(x, y);
+        setNombre("Lineal");
     }
     
     @Override

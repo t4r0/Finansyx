@@ -16,11 +16,12 @@ public class ModeloPolinomial extends Modelo{
     
         public ModeloPolinomial() {
         super ();
-        nombre = "Polinomial";
+        setNombre("Polinomial");
     }
     
     public ModeloPolinomial(ArrayList<Integer> x, ArrayList<Double> y)
     {
+        setNombre("Polinomial");
         Sumatorias(x, y);
         CalcularVariables();
         CalcularFactoresDeDecision();
