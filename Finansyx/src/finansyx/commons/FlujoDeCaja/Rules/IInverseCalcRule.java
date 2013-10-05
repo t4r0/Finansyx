@@ -3,14 +3,12 @@
  * and open the template in the editor.
  */
 package finansyx.commons.FlujoDeCaja.Rules;
-import finansyx.commons.FlujoDeCaja.Gastos;
-import finansyx.commons.FlujoDeCaja.Ingresos;
-
+import finansyx.commons.FlujoDeCaja.*;
 /**
  *
  * @author t4r0
  */
 public interface IInverseCalcRule extends ICalcRule{
-    void CalcularInverso(Ingresos a, Gastos b);
-    void CalcularInverso(Ingresos a, Gastos b, Integer inicio);
+    public Financiera CalcularInverso(Financiera a);
+    public Financiera CalcularInverso(Financiera a, Integer inicio);
 }

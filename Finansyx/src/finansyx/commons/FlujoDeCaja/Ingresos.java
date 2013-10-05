@@ -10,15 +10,10 @@ import java.util.ArrayList;
  *
  * @author t4r0
  */
-public class Ingresos {
+public class Ingresos extends Financiera{
 
     ArrayList<Double> valores = new ArrayList<Double>();
     public Ingresos() {
     }
-    
-    public ArrayList<Double> getValues()
-    {
-        return valores;
-    }
-    
+   
 }

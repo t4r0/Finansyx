@@ -11,19 +11,12 @@ import java.util.ArrayList;
  *
  * @author t4r0
  */
-public class Gastos {
+public class Gastos extends Financiera {
 
-    private String titulo = "Gastos";
-    private Boolean factura = false;
-    private Rule ReglaDeCalculo = new Rule();
-    private ArrayList<Double> valores = new ArrayList<Double>();
+  
     
     public Gastos() {
-    }
-    
-    public ArrayList<Double> getValues()
-    {
-        return valores;
-    }
+    }   
+  
     
 }

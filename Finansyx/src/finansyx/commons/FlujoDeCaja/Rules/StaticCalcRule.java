@@ -4,10 +4,8 @@
  */
 package finansyx.commons.FlujoDeCaja.Rules;
 
-import finansyx.commons.FlujoDeCaja.Gastos;
+import finansyx.commons.FlujoDeCaja.Financiera;
 import java.util.ArrayList;
-import sun.security.util.Length;
-
 /**
  *
  * @author t4r0
@@ -25,18 +23,19 @@ public class StaticCalcRule extends Rule{
     }
 
     @Override
-    public void Calcular(Gastos gastos) {
-       for(Double val : gastos.getValues())
-           val = Value;       
+    public Financiera Calcular() {
+       ArrayList<Double> val = new ArrayList<Double>();
+       for(int i =0; i < largo; i++);
+            val.add(Value);
+       return new Financiera(val);
     }
 
     @Override
-    public void Calcular(Gastos a, Integer inicio) {
-       ArrayList<Double> val = a.getValues();
+    public Financiera Calcular(Integer inicio) {
+       ArrayList<Double> val = new ArrayList<Double>();
       for(int i=inicio; i < largo; i++)
-      {
-          val.set(i, Value);
-      }
+          val.add(Value);
+      return new Financiera(val);
     }
     
     

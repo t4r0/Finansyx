@@ -31,4 +31,10 @@ public class Finanzas {
         return valor;
     }
     
+    public static Double Aproximar(Double numero, int decimales)
+    {
+        Double aprox = Math.pow(10, decimales);
+        aprox = Math.ceil(Math.round(numero*aprox))/aprox;
+        return aprox;
+    }
 }

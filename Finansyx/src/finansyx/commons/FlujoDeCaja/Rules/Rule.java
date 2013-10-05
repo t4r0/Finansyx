@@ -3,7 +3,7 @@
  * and open the template in the editor.
  */
 package finansyx.commons.FlujoDeCaja.Rules;
-import finansyx.commons.FlujoDeCaja.Gastos;
+import finansyx.commons.FlujoDeCaja.*;
 /**
  *
  * @author t4r0
@@ -26,10 +26,10 @@ public class Rule implements ICalcRule{
     }        
             
     @Override
-    public void Calcular(Gastos a) {    }
+    public Financiera Calcular() {  return null;  }
 
     @Override
-    public void Calcular(Gastos a, Integer inicio) {    }
+    public Financiera Calcular(Integer inicio) { return null; }
     
     
     

@@ -3,9 +3,7 @@
  * and open the template in the editor.
  */
 package finansyx.commons.FlujoDeCaja.Rules;
-
-import finansyx.commons.FlujoDeCaja.Gastos;
-import finansyx.commons.FlujoDeCaja.Ingresos;
+import finansyx.commons.FlujoDeCaja.*;
 import java.util.ArrayList;
 
 /**
@@ -24,22 +22,23 @@ public class PercentageCalcRule extends Rule implements IInverseCalcRule{
     }
     
     @Override
-    public void CalcularInverso(Ingresos a, Gastos b) {
+    public Financiera CalcularInverso(Financiera a) {
         ArrayList<Double> ing, gast;
         ing = a.getValues();
-        gast = b.getValues();
+        gast = new ArrayList<>();;
       for(int i=0; i < largo; i++)
-          gast.set(i, ing.get(i) * Value);
-      
+          gast.add(ing.get(i) * Value);
+      return new Financiera(gast);
     }
 
     @Override
-    public void CalcularInverso(Ingresos a, Gastos b, Integer inicio) {
+    public Financiera CalcularInverso(Financiera a, Integer inicio) {
         ArrayList<Double> ing, gast;
         ing = a.getValues();
-        gast = b.getValues();
+        gast = new ArrayList<Double>();
       for(int i=inicio; i < largo; i++)
-          gast.set(i, ing.get(i) * Value);
+          gast.add(ing.get(i) * Value);
+      return new Financiera(gast);
     }
     
     
