@@ -11,8 +11,12 @@ import java.util.*;
  */
 public class ModeloExponencial extends Modelo{
     
+    //Algunas variables adicionales para este modelo
     Double sumLogY = 0.0, sumXLogY = 0.0, sumLogY2=0.0;
     
+    /** 
+     * Inicializa una instancia de esta clase
+     */
        public ModeloExponencial() {
         super ();
         setNombre( "Exponencial");

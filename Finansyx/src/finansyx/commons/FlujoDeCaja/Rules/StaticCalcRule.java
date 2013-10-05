@@ -24,15 +24,15 @@ public class StaticCalcRule extends Rule{
 
     @Override
     public Financiera Calcular() {
-       ArrayList<Double> val = new ArrayList<Double>();
-       for(int i =0; i < largo; i++);
+       ArrayList<Double> val = new ArrayList<>();
+       for(int i =0; i < largo; i++)
             val.add(Value);
        return new Financiera(val);
     }
 
     @Override
     public Financiera Calcular(Integer inicio) {
-       ArrayList<Double> val = new ArrayList<Double>();
+       ArrayList<Double> val = new ArrayList<>();
       for(int i=inicio; i < largo; i++)
           val.add(Value);
       return new Financiera(val);

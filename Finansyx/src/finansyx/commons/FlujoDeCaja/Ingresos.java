@@ -12,7 +12,7 @@ import java.util.ArrayList;
  */
 public class Ingresos extends Financiera{
 
-    ArrayList<Double> valores = new ArrayList<Double>();
+    ArrayList<Double> valores = new ArrayList<>();
     public Ingresos() {
     }
    

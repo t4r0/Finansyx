@@ -69,13 +69,24 @@ public class Pronosticos extends javax.swing.JPanel {
     
     private void SetModel(ArrayList<Integer> keys, ArrayList<Double> values)
     {
+       
         manager = new ModelManager();
         manager.Add( new ModeloLineal(keys, values));
         manager.Add(new ModeloPolinomial(keys, values));
         manager.Add(new ModeloExponencial(keys, values));
         manager.Add(new ModeloLogaritmico(keys, values));
-        manager.Add( new ModeloPotencial(keys, values));
+        manager.Add( new ModeloPotencial(keys, values));       
+        lblModelo.setText(manager.getSelectedModel().getNombre());
         tblPronostico.setModel(new ModeloPronostico(manager));
+        SetLimites();       
+    }
+    
+    void SetLimites()
+    {
+         Double confianza = Double.parseDouble(spnrConfianza.getValue().toString()) / 100;
+         manager.setConfianza(confianza);
+         tblLimite.setModel(new ModeloLimite(manager));
+         lblModelo.setText(manager.getSelectedModel().getNombre());
     }
 
     private void CalcularModelos()
@@ -107,8 +118,8 @@ public class Pronosticos extends javax.swing.JPanel {
         tblPronostico = new javax.swing.JTable();
         jScrollPane4 = new javax.swing.JScrollPane();
         tblLimite = new javax.swing.JTable();
-        jSpinner1 = new javax.swing.JSpinner();
-        jLabel1 = new javax.swing.JLabel();
+        spnrConfianza = new javax.swing.JSpinner();
+        lblModelo = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
@@ -199,12 +210,21 @@ public class Pronosticos extends javax.swing.JPanel {
         jScrollPane4.setViewportView(tblLimite);
 
         add(jScrollPane4, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 400, 620, 110));
-        add(jSpinner1, new org.netbeans.lib.awtextra.AbsoluteConstraints(600, 380, 40, 20));
 
-        jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        jLabel1.setForeground(new java.awt.Color(0, 204, 204));
-        jLabel1.setText("Pronosticos");
-        add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 380, -1, -1));
+        spnrConfianza.setModel(new javax.swing.SpinnerNumberModel(95, 50, 100, 1));
+        spnrConfianza.setValue(95
+        );
+        spnrConfianza.addChangeListener(new javax.swing.event.ChangeListener() {
+            public void stateChanged(javax.swing.event.ChangeEvent evt) {
+                spnrConfianzaStateChanged(evt);
+            }
+        });
+        add(spnrConfianza, new org.netbeans.lib.awtextra.AbsoluteConstraints(600, 370, 40, 20));
+
+        lblModelo.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        lblModelo.setForeground(new java.awt.Color(0, 204, 204));
+        lblModelo.setText("Pronosticos");
+        add(lblModelo, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 380, -1, -1));
 
         jLabel2.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(0, 204, 204));
@@ -217,11 +237,13 @@ public class Pronosticos extends javax.swing.JPanel {
         add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 30, -1, -1));
 
         jLabel4.setText("Confianza");
-        add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(550, 380, -1, -1));
+        add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(540, 380, -1, -1));
     }// </editor-fold>//GEN-END:initComponents
 
     private void tblOrigenKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tblOrigenKeyPressed
         // TODO add your handling code here:
+        try
+        {
         DefaultTableModel model = (DefaultTableModel)tblOrigen.getModel();
         int selrow= tblOrigen.getSelectedRow();
         switch(evt.getKeyCode())
@@ -239,21 +261,36 @@ public class Pronosticos extends javax.swing.JPanel {
                 }
                 else
                 {
-                   tblOrigen.editCellAt(selrow+1, 1); 
+                   tblOrigen.editCellAt(-1, -1); 
                    CalcularModelos();
                    return;
                 }
-            }                
+            }      
+            case KeyEvent.VK_DELETE:
+            {
+                model.removeRow(selrow);
+                tblOrigen.editCellAt(-1, -1); 
+                CalcularModelos();
+            }
             default:
             {
                 model.setValueAt("", selrow, 1);
             }
         }
+        }
+        catch(Exception e)
+        {
+            return;
+        }
         
     }//GEN-LAST:event_tblOrigenKeyPressed
 
+    private void spnrConfianzaStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_spnrConfianzaStateChanged
+        // TODO add your handling code here:
+        SetLimites();
+    }//GEN-LAST:event_spnrConfianzaStateChanged
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -261,8 +298,9 @@ public class Pronosticos extends javax.swing.JPanel {
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JScrollPane jScrollPane4;
-    private javax.swing.JSpinner jSpinner1;
     private javax.swing.JTable jTable1;
+    private javax.swing.JLabel lblModelo;
+    private javax.swing.JSpinner spnrConfianza;
     private javax.swing.JTable tblLimite;
     private javax.swing.JTable tblOrigen;
     private javax.swing.JTable tblPronostico;

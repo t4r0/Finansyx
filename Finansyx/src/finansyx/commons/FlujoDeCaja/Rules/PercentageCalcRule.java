@@ -7,20 +7,32 @@ import finansyx.commons.FlujoDeCaja.*;
 import java.util.ArrayList;
 
 /**
- *
+ * Regla que calcula los valores de cierta información financiera a partir
+ * de un porcentaje dado
  * @author t4r0
  */
-public class PercentageCalcRule extends Rule implements IInverseCalcRule{
+public class PercentageCalcRule extends InverseRule{
 
    
     public PercentageCalcRule() {
     }
 
-    public PercentageCalcRule(Double value)
+    /**
+     * Inicializa una instancia de esta clase, con el porcentaje indicado
+     * @param percentage - El porcentaje que se utilizara para calcular los valores
+     */
+    public PercentageCalcRule(Double percentage)
     {
-        Value = value;
+        Value = percentage;
     }
     
+    /**
+     * Calcula los valores en base al porecntaje especificado
+     * y a la información almacenada 
+     * @param a - la información a partir de la cual se calculará la información almacenada
+     * en el propietarios de esta regla
+     * @return Información calculada en base al porcentaje e información dada
+     */
     @Override
     public Financiera CalcularInverso(Financiera a) {
         ArrayList<Double> ing, gast;
@@ -30,6 +42,15 @@ public class PercentageCalcRule extends Rule implements IInverseCalcRule{
           gast.add(ing.get(i) * Value);
       return new Financiera(gast);
     }
+    
+    /**
+     * Calcula información en base a al porcentaje dado y la información dada, 
+     * en el intervalo especificado
+     * @param a - La información que se tomará de base para calcular la nueva información
+     * financiera
+     * @param inicio - el periodo en que iniciará el cálculo de esta información
+     * @return Información financiera calculada en base a los porcentajes dados
+     */
 
     @Override
     public Financiera CalcularInverso(Financiera a, Integer inicio) {

@@ -6,6 +6,7 @@ package finansyx.commons.Pronosticos;
 import java.util.ArrayList;
 import finansyx.Exceptions.*;
 import finansyx.commons.Estadistica;
+
         
 /**
  *
@@ -13,23 +14,20 @@ import finansyx.commons.Estadistica;
  */
 public class Modelo {
 
+    // El nombre de este modelo
     String nombre = "Modelo";
     //Variables que forman parte de la ecuación
     Double A=0.0 ,  a= 0.0, b= 0.0, c= 0.0;
     Integer n=0;
     Double yProm = 0.0;
     //Variables que ayudan a la toma de decisión
-    Double Sxy=0.0, r=0.0, r2=0.0;
-    
+    Double Sxy=0.0, r=0.0, r2=0.0;    
     //Sumatorias
-    Double sumX=0.0, sumY=0.0, sumXY=0.0, sumX2=0.0, sumY2=0.0;
-    
-    
+    Double sumX=0.0, sumY=0.0, sumXY=0.0, sumX2=0.0, sumY2=0.0;       
     //Variaciones
     Double varTotal = 0.0, varExp=0.0, varNExp=0.0;
-    
-    ArrayList<Integer> keys = new ArrayList<Integer>();
-    ArrayList<Double> values = new ArrayList<Double>();
+    ArrayList<Integer> keys = new ArrayList<>();
+    ArrayList<Double> values = new ArrayList<>();
     /**
      * Crea una nueva instancia de este modelo
      */
@@ -37,8 +35,7 @@ public class Modelo {
     }
     
     public Modelo(ArrayList<Integer> yValues, ArrayList<Double> xValues)
-    {
-       
+    {       
         Sumatorias(yValues, xValues);
         CalcularVariables();
         CalcularFactoresDeDecision();
@@ -142,16 +139,26 @@ public class Modelo {
         return resultado;
     }
     
-    public Double LimiteSuperior(Double value, Double confianza)
+    public final Double LimiteSuperior(Double value, Double confianza)
     {
-        return value + Estadistica.zNormal(confianza)/Math.sqrt(n);
+        return value + Estadistica.zNormal(confianza)* (Sxy/Math.sqrt(n));
     }
     
-    public Double LimiteInferior(Double value, Double confianza)
+    public final Double LimiteSuperior(Integer punto, Double confianza)
     {
-        return value - Estadistica.zNormal(confianza)/Math.sqrt(n);
+         return Calcular(n + punto) + Estadistica.zNormal(confianza)* (Sxy/Math.sqrt(n));
     }
     
+    
+    public final Double LimiteInferior(Double value, Double confianza)
+    {
+        return value - Estadistica.zNormal(confianza)* (Sxy/Math.sqrt(n));
+    }
+    
+    public final Double LimiteInferior(Integer punto, Double confianza)
+    {
+        return Calcular(n + punto) - (Estadistica.zNormal(confianza)*Sxy/Math.sqrt(n));
+    }
     @Override
     public String toString()
     {
