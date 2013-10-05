@@ -5,6 +5,7 @@
 package finansyx.commons.Pronosticos;
 import java.util.ArrayList;
 import finansyx.Exceptions.*;
+import finansyx.commons.Estadistica;
         
 /**
  *
@@ -141,9 +142,14 @@ public class Modelo {
         return resultado;
     }
     
-    public Double LimiteSuperior()
+    public Double LimiteSuperior(Double value, Double confianza)
     {
-        return 0.0;
+        return value + Estadistica.zNormal(confianza)/Math.sqrt(n);
+    }
+    
+    public Double LimiteInferior(Double value, Double confianza)
+    {
+        return value - Estadistica.zNormal(confianza)/Math.sqrt(n);
     }
     
     @Override
