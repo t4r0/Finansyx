@@ -77,8 +77,7 @@ public class ModeloLogaritmico extends Modelo{
     {
        b = sumLogXY - (sumLogX* sumY);
        b = b / (sumLogX2 - Math.pow(sumLogX, 2));       
-       a = Finanzas.Aproximar( sumY - b*sumLogX, 4);
-       b = Finanzas.Aproximar(b, 4);
+       a = sumY - b*sumLogX;
     }
     
     @Override
@@ -87,7 +86,7 @@ public class ModeloLogaritmico extends Modelo{
        ArrayList<Double> Ycalc = Calcular(keys);
        for(int k =0; k < keys.size(); k++)
            varExp += Math.pow(Ycalc.get(k) - values.get(k), 2);       
-       Sxy = Finanzas.Aproximar(Math.sqrt(varExp/(n-2)), 4);
+       Sxy = Math.sqrt(varExp/(n-2));
     }
     
     @Override
@@ -97,8 +96,7 @@ public class ModeloLogaritmico extends Modelo{
                                 (sumY2 - Math.pow(sumY, 2));
        CalcularVarianza();
        r = (sumLogXY - (sumLogX * sumY)) / Math.sqrt(denominador);       
-       r2 =Finanzas.Aproximar( Math.pow(r, 2), 4);
-       r = Finanzas.Aproximar(r, 4);
+       r2 = Math.pow(r, 2);
     }
     
 }

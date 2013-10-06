@@ -84,8 +84,7 @@ public class ModeloPotencial extends Modelo{
        b = sumLogYLogX - (sumLogX * sumLogY);
        b = b / (sumLogX2 - Math.pow(sumLogX, 2));       
        a = sumLogY - b*sumLogX;
-       A = Finanzas.Aproximar(Math.exp(a), 4);
-       b = Finanzas.Aproximar(b ,4);
+       A = Math.exp(a);       
     }
     
     @Override
@@ -95,7 +94,7 @@ public class ModeloPotencial extends Modelo{
        for(int k =0; k < keys.size(); k++)
            varExp += Math.pow(Ycalc.get(k) - values.get(k), 2);
        
-       Sxy = Finanzas.Aproximar(Math.sqrt(varExp/(n-2)), 4);
+       Sxy = Math.sqrt(varExp/(n-2));
     }
     
     @Override
@@ -105,8 +104,7 @@ public class ModeloPotencial extends Modelo{
                                 (sumLogY2 - Math.pow(sumLogY, 2));
        CalcularVarianza();
        r = (sumLogYLogX - (sumLogX * sumLogY)) / Math.sqrt(denominador);       
-       r2 = Finanzas.Aproximar(Math.pow(r, 2), 4);
-       r = Finanzas.Aproximar(r, 4);
+       r2 = Math.pow(r, 2);
     }
     
 }

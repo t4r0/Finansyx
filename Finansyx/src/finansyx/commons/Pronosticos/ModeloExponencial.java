@@ -80,9 +80,9 @@ public class ModeloExponencial extends Modelo{
     public void CalcularVariables()
     {
        b = sumXLogY - (sumX * sumLogY);
-       b = Finanzas.Aproximar(b / (sumX2 - Math.pow(sumX, 2)) , 4);       
+       b = b / (sumX2 - Math.pow(sumX, 2));       
        a = sumLogY - b*sumX;
-       A = Finanzas.Aproximar(Math.exp(a), 4);       
+       A = Math.exp(a);       
     }
     
     @Override
@@ -91,7 +91,7 @@ public class ModeloExponencial extends Modelo{
        ArrayList<Double> Ycalc = Calcular(keys);
        for(int k =0; k < keys.size(); k++)
            varExp += Math.pow(Ycalc.get(k) - values.get(k), 2);       
-       Sxy = Finanzas.Aproximar(Math.sqrt(varExp/(n-2)), 4);
+       Sxy = Math.sqrt(varExp/(n-2));
     }
     
     @Override
@@ -101,7 +101,6 @@ public class ModeloExponencial extends Modelo{
                                 (sumLogY2 - Math.pow(sumLogY, 2));
        CalcularVarianza();
        r = (sumXLogY - (sumX * sumLogY)) / Math.sqrt(denominador);       
-       r2 =Finanzas.Aproximar( Math.pow(r, 2), 4);
-       r = Finanzas.Aproximar(r, 4);
+       r2 =Math.pow(r, 2);
     }
 }

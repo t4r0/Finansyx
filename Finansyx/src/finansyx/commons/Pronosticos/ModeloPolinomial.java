@@ -77,9 +77,9 @@ public class ModeloPolinomial extends Modelo{
        Matrix A = new Matrix(matA);
        Matrix B = new Matrix(matB, 3);
        Matrix C = A.solve(B);       
-       a = Finanzas.Aproximar(C.get(2,0), 4);
-       b = Finanzas.Aproximar(C.get(1, 0), 4);
-       c = Finanzas.Aproximar(C.get(0, 0), 4);
+       a = C.get(2,0);
+       b = C.get(1, 0);
+       c = C.get(0, 0);
     }
     
     @Override
@@ -92,7 +92,7 @@ public class ModeloPolinomial extends Modelo{
            varTotal += Math.pow(values.get(k) - yProm, 2);
            varNExp += Math.pow(Ycalc.get(k) - yProm, 2);
        }
-       Sxy = Finanzas.Aproximar(Math.sqrt(varExp/(n-2)), 4);
+       Sxy = Math.sqrt(varExp/(n-2));
     }
     
     @Override
@@ -100,7 +100,6 @@ public class ModeloPolinomial extends Modelo{
     { 
        CalcularVarianza();
        r = Math.sqrt(varNExp/varTotal);
-       r2 = Finanzas.Aproximar(Math.pow(r, 2), 4);
-       r = Finanzas.Aproximar(r,4);
+       r2 = Math.pow(r, 2);
     }   
 }

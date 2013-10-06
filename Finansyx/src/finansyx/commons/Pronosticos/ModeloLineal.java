@@ -56,7 +56,6 @@ public class ModeloLineal extends Modelo{
         Double numerador = (n*sumXY) - (sumX*sumY);
         Double denominador = (n*sumX2) - Math.pow(sumX, 2);        
         a = numerador / denominador;        
-        b = Finanzas.Aproximar((sumY / n) - a*(sumX/n), 4);
-        a = Finanzas.Aproximar(a, 4);
+        b = (sumY / n) - a*(sumX/n);
     }
 }
