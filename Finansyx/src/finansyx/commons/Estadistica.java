@@ -3,6 +3,7 @@
  * and open the template in the editor.
  */
 package finansyx.commons;
+import finansyx.commons.Finanzas.Finanzas;
 import org.apache.commons.math3.distribution.*;
 /**
  *
@@ -18,7 +19,11 @@ public class Estadistica {
      */
     public static Double zNormal(Double confianza)
     {
-        NormalDistribution dist = new NormalDistribution();
-        return dist.inverseCumulativeProbability(confianza);
+        
+        NormalDistribution dist = new NormalDistribution(0, 1);
+        Double a2 = (1 - confianza) / 2;
+        Double z = -1 * dist.inverseCumulativeProbability(a2);        
+        return Finanzas.Aproximar(z, 3);
+                
     }
 }

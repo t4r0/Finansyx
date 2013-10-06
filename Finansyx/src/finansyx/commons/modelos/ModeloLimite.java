@@ -4,7 +4,7 @@
  */
 package finansyx.commons.modelos;
 
-import finansyx.commons.Finanzas;
+import finansyx.commons.Finanzas.Finanzas;
 import finansyx.commons.Pronosticos.ModelManager;
 import javax.swing.table.AbstractTableModel;
 

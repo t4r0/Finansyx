@@ -8,6 +8,7 @@ import java.awt.event.KeyEvent;
 import finansyx.commons.modelos.*;
 import finansyx.commons.Pronosticos.*;
 import java.util.ArrayList;
+import javax.swing.JOptionPane;
 import javax.swing.table.*;
 /**
  *
@@ -19,7 +20,8 @@ public class Pronosticos extends javax.swing.JPanel {
      * Creates new form Pronosticos
      */
     
-      ModelManager manager = new ModelManager();
+    Integer modelIndex = 0;
+    ModelManager manager = new ModelManager();
     public Pronosticos() {
         initComponents();
     }
@@ -75,8 +77,7 @@ public class Pronosticos extends javax.swing.JPanel {
         manager.Add(new ModeloPolinomial(keys, values));
         manager.Add(new ModeloExponencial(keys, values));
         manager.Add(new ModeloLogaritmico(keys, values));
-        manager.Add( new ModeloPotencial(keys, values));       
-        lblModelo.setText(manager.getSelectedModel().getNombre());
+        manager.Add( new ModeloPotencial(keys, values));   
         tblPronostico.setModel(new ModeloPronostico(manager));
         SetLimites();       
     }
@@ -87,6 +88,14 @@ public class Pronosticos extends javax.swing.JPanel {
          manager.setConfianza(confianza);
          tblLimite.setModel(new ModeloLimite(manager));
          lblModelo.setText(manager.getSelectedModel().getNombre());
+         modelIndex = manager.getSelectedModelIndex();
+    }
+    
+    void SetLimites(int i)
+    {
+        manager.setSelectedModel(i);
+        tblLimite.setModel(new ModeloLimite(manager));
+        lblModelo.setText(manager.getSelectedModel().getNombre());
     }
 
     private void CalcularModelos()
@@ -224,7 +233,7 @@ public class Pronosticos extends javax.swing.JPanel {
         lblModelo.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         lblModelo.setForeground(new java.awt.Color(0, 204, 204));
         lblModelo.setText("Pronosticos");
-        add(lblModelo, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 380, -1, -1));
+        add(lblModelo, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 370, -1, -1));
 
         jLabel2.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(0, 204, 204));
@@ -237,50 +246,48 @@ public class Pronosticos extends javax.swing.JPanel {
         add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 30, -1, -1));
 
         jLabel4.setText("Confianza");
-        add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(540, 380, -1, -1));
+        add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(540, 370, -1, -1));
     }// </editor-fold>//GEN-END:initComponents
 
     private void tblOrigenKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tblOrigenKeyPressed
         // TODO add your handling code here:
         try
         {
-        DefaultTableModel model = (DefaultTableModel)tblOrigen.getModel();
-        int selrow= tblOrigen.getSelectedRow();
-        switch(evt.getKeyCode())
-        {
-            case KeyEvent.VK_ENTER:
-            {              
-               
-                if(selrow ==tblOrigen.getRowCount()-1)
-                {
-                    int count = tblOrigen.getRowCount();               
-                    model.insertRow(count, new Object[]{count+1,0.}); 
-                    tblOrigen.editCellAt(selrow+1, 1);
-                    CalcularModelos(selrow + 1);
-                    return;
-                }
-                else
-                {
-                   tblOrigen.editCellAt(-1, -1); 
-                   CalcularModelos();
-                   return;
-                }
-            }      
-            case KeyEvent.VK_DELETE:
+            DefaultTableModel model = (DefaultTableModel)tblOrigen.getModel();
+            int selrow= tblOrigen.getSelectedRow();
+            switch(evt.getKeyCode())
             {
-                model.removeRow(selrow);
-                tblOrigen.editCellAt(-1, -1); 
-                CalcularModelos();
+                case KeyEvent.VK_ENTER:
+                {              
+                    if(selrow ==tblOrigen.getRowCount()-1)
+                    {
+                        int count = tblOrigen.getRowCount();               
+                        model.insertRow(count, new Object[]{count+1,0.}); 
+                        tblOrigen.editCellAt(selrow+1, 1);
+                        CalcularModelos(selrow + 1);
+                        return;
+                    }
+                    else
+                    {
+                        tblOrigen.editCellAt(-1, -1); 
+                        CalcularModelos();
+                        return;
+                    }
+                }      
+                case KeyEvent.VK_DELETE:
+                {
+                    model.removeRow(selrow);                   
+                    CalcularModelos();
+                }
+                default:
+                {
+                    model.setValueAt("", selrow, 1);
+                }
             }
-            default:
-            {
-                model.setValueAt("", selrow, 1);
-            }
-        }
         }
         catch(Exception e)
         {
-            return;
+            JOptionPane.showMessageDialog(null,"Ha ocurrido un error: \n" + e.getMessage());
         }
         
     }//GEN-LAST:event_tblOrigenKeyPressed

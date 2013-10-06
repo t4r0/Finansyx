@@ -19,7 +19,8 @@ public class ModelManager {
     Modelo selectedModel = new Modelo();
     //El nivel de confianza que se utilizará para calcular valores estadísticos
     Double confianza = 0.;
-    
+    //El indice del modelo seleccionado
+    Integer index = -1;
     public ModelManager(){}
     
     /**
@@ -61,14 +62,17 @@ public class ModelManager {
       */
     public final void chooseModel()
     {
-        Double err = Double.POSITIVE_INFINITY;
         Modelo choos = modelos.get(0);
         Modelo mod  = new Modelo();
+        index = 0;
         for(int i=0; i< modelos.size(); i++)
         {
             mod = modelos.get(i);
             if(isCandidate(mod, choos))
+            {    
                 choos = mod;
+                index = i;
+            }
             else
                continue;
         }
@@ -126,9 +130,14 @@ public class ModelManager {
      */
     public Modelo get(int i)
     {
-        return modelos.get(i);
+        index = i;
+        return modelos.get(i);       
     }
     
+    public Integer getSelectedModelIndex()
+    {
+        return index;
+    }
     /**
      * Agrega un modelo de pronosticación a este gestor
      * @param modelo - el modelo que se desea agregar

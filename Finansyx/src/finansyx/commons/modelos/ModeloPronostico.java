@@ -5,7 +5,7 @@
 package finansyx.commons.modelos;
 import javax.swing.table.AbstractTableModel;
 import finansyx.commons.Pronosticos.*;
-import finansyx.commons.Finanzas;
+import finansyx.commons.Finanzas.Finanzas;
 /**
  *
  * @author t4r0

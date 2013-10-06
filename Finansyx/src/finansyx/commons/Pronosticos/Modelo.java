@@ -115,7 +115,6 @@ public class Modelo {
        ArrayList<Double> Ycalc = Calcular(keys);
        for(int k =0; k < keys.size(); k++)
            varExp += Math.pow(Ycalc.get(k) - values.get(k), 2);
-       Sxy = Math.sqrt(varExp/(n-2));
     }
     
     
@@ -141,18 +140,18 @@ public class Modelo {
     
     public final Double LimiteSuperior(Double value, Double confianza)
     {
-        return value + Estadistica.zNormal(confianza)* (Sxy/Math.sqrt(n));
+        return value + Estadistica.zNormal(confianza)* Sxy/Math.sqrt(n);
     }
     
     public final Double LimiteSuperior(Integer punto, Double confianza)
     {
-         return Calcular(n + punto) + Estadistica.zNormal(confianza)* (Sxy/Math.sqrt(n));
+         return Calcular(n + punto) + Estadistica.zNormal(confianza)* Sxy /Math.sqrt(n);
     }
     
     
     public final Double LimiteInferior(Double value, Double confianza)
     {
-        return value - Estadistica.zNormal(confianza)* (Sxy/Math.sqrt(n));
+        return value - Estadistica.zNormal(confianza)* Sxy/Math.sqrt(n);
     }
     
     public final Double LimiteInferior(Integer punto, Double confianza)

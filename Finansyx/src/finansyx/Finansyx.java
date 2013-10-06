@@ -4,8 +4,10 @@
  */
 package finansyx;
 
+import finansyx.commons.Finanzas.Finanzas;
 import finansyx.commons.Pronosticos.*;
 import finansyx.commons.*;
+import finansyx.commons.Finanzas.Cuota;
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -37,6 +39,21 @@ public class Finansyx {
         System.out.println(modPo.toString() + "\n===================\n");
         System.out.println(Finanzas.GastosEscalonados(300., 0.1, 2011, 2021));
         
+        ArrayList<Cuota> cuotas = Finanzas.CuotasNiveladas(250., 4, 3,0.2,1.);
+        for(Cuota cuota: cuotas)
+        {
+            System.out.println(cuota.toString());
+        }
         
+        System.out.println("\n =============  \n\n");
+        ArrayList<Cuota> cuotasAl = Finanzas.CuotasNoNiveladas(250., 4, 3,0.2,1.);
+        for(Cuota cuota: cuotasAl)
+        {
+            System.out.println(cuota.toString());
+        }
+        
+         System.out.println(Estadistica.zNormal(0.9));
+         System.out.println(Estadistica.zNormal(0.95));
+         System.out.println(Estadistica.zNormal(0.99));
     }
 }
