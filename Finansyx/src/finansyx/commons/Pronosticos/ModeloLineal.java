@@ -4,6 +4,7 @@
  */
 package finansyx.commons.Pronosticos;
 
+import finansyx.commons.Finanzas.Finanzas;
 import java.util.ArrayList;
 
 /**
@@ -19,8 +20,7 @@ public class ModeloLineal extends Modelo{
     }
     
     public ModeloLineal(ArrayList<Integer> x, ArrayList<Double> y)
-    {
-        
+    {       
         super(x, y);
         setNombre("Lineal");
     }
@@ -54,10 +54,9 @@ public class ModeloLineal extends Modelo{
     public void CalcularVariables()
     {
         Double numerador = (n*sumXY) - (sumX*sumY);
-        Double denominador = (n*sumX2) - Math.pow(sumX, 2);
-        
-        a = numerador / denominador;
-        
-        b = (sumY / n) - a*(sumX/n);
+        Double denominador = (n*sumX2) - Math.pow(sumX, 2);        
+        a = numerador / denominador;        
+        b = Finanzas.Aproximar((sumY / n) - a*(sumX/n), 4);
+        a = Finanzas.Aproximar(a, 4);
     }
 }

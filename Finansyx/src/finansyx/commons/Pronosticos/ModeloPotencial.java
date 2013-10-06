@@ -4,6 +4,7 @@
  */
 package finansyx.commons.Pronosticos;
 
+import finansyx.commons.Finanzas.Finanzas;
 import java.util.ArrayList;
 
 /**
@@ -81,10 +82,10 @@ public class ModeloPotencial extends Modelo{
     public void CalcularVariables()
     {
        b = sumLogYLogX - (sumLogX * sumLogY);
-       b = b / (sumLogX2 - Math.pow(sumLogX, 2));
-       
+       b = b / (sumLogX2 - Math.pow(sumLogX, 2));       
        a = sumLogY - b*sumLogX;
-       A = Math.exp(a);
+       A = Finanzas.Aproximar(Math.exp(a), 4);
+       b = Finanzas.Aproximar(b ,4);
     }
     
     @Override
@@ -94,7 +95,7 @@ public class ModeloPotencial extends Modelo{
        for(int k =0; k < keys.size(); k++)
            varExp += Math.pow(Ycalc.get(k) - values.get(k), 2);
        
-       Sxy = Math.sqrt(varExp/(n-2));
+       Sxy = Finanzas.Aproximar(Math.sqrt(varExp/(n-2)), 4);
     }
     
     @Override
@@ -103,9 +104,9 @@ public class ModeloPotencial extends Modelo{
        Double denominador = (sumLogX2 - Math.pow(sumLogX, 2)) *
                                 (sumLogY2 - Math.pow(sumLogY, 2));
        CalcularVarianza();
-       r = (sumLogYLogX - (sumLogX * sumLogY)) / Math.sqrt(denominador);
-       
-       r2 = Math.pow(r, 2);
+       r = (sumLogYLogX - (sumLogX * sumLogY)) / Math.sqrt(denominador);       
+       r2 = Finanzas.Aproximar(Math.pow(r, 2), 4);
+       r = Finanzas.Aproximar(r, 4);
     }
     
 }

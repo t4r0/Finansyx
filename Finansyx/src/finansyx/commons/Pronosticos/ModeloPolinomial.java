@@ -6,14 +6,14 @@ package finansyx.commons.Pronosticos;
 
 import java.util.ArrayList;
 import Jama.Matrix;
+import finansyx.commons.Finanzas.Finanzas;
 /**
  *
  * @author t4r0
  */
 public class ModeloPolinomial extends Modelo{
     
-    Double sumX2Y = 0.0, sumX3=0.0, sumX4=0.0;
-    
+    Double sumX2Y = 0.0, sumX3=0.0, sumX4=0.0;    
         public ModeloPolinomial() {
         super ();
         setNombre("Polinomial");
@@ -76,11 +76,10 @@ public class ModeloPolinomial extends Modelo{
        double[] matB = {sumY, sumXY, sumX2Y};
        Matrix A = new Matrix(matA);
        Matrix B = new Matrix(matB, 3);
-       Matrix C = A.solve(B);
-       
-       a = C.get(2,0);
-       b = C.get(1, 0);
-       c = C.get(0, 0);
+       Matrix C = A.solve(B);       
+       a = Finanzas.Aproximar(C.get(2,0), 4);
+       b = Finanzas.Aproximar(C.get(1, 0), 4);
+       c = Finanzas.Aproximar(C.get(0, 0), 4);
     }
     
     @Override
@@ -93,7 +92,7 @@ public class ModeloPolinomial extends Modelo{
            varTotal += Math.pow(values.get(k) - yProm, 2);
            varNExp += Math.pow(Ycalc.get(k) - yProm, 2);
        }
-       Sxy = Math.sqrt(varExp/(n-2));
+       Sxy = Finanzas.Aproximar(Math.sqrt(varExp/(n-2)), 4);
     }
     
     @Override
@@ -101,9 +100,7 @@ public class ModeloPolinomial extends Modelo{
     { 
        CalcularVarianza();
        r = Math.sqrt(varNExp/varTotal);
-       r2 = Math.pow(r, 2);
-    }
-    
-    
-    
+       r2 = Finanzas.Aproximar(Math.pow(r, 2), 4);
+       r = Finanzas.Aproximar(r,4);
+    }   
 }

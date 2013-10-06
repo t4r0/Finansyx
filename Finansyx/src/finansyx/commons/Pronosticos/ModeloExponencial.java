@@ -4,6 +4,7 @@
  */
 package finansyx.commons.Pronosticos;
 
+import finansyx.commons.Finanzas.Finanzas;
 import java.util.*;
 /**
  *
@@ -36,7 +37,7 @@ public class ModeloExponencial extends Modelo{
         super.Reset();
         sumLogY = 0.0;
         sumLogY2=0.0;
-       sumXLogY=0.0;
+        sumXLogY=0.0;
     }
     
     @Override
@@ -79,10 +80,9 @@ public class ModeloExponencial extends Modelo{
     public void CalcularVariables()
     {
        b = sumXLogY - (sumX * sumLogY);
-       b = b / (sumX2 - Math.pow(sumX, 2));
-       
+       b = Finanzas.Aproximar(b / (sumX2 - Math.pow(sumX, 2)) , 4);       
        a = sumLogY - b*sumX;
-       A = Math.exp(a);
+       A = Finanzas.Aproximar(Math.exp(a), 4);       
     }
     
     @Override
@@ -90,9 +90,8 @@ public class ModeloExponencial extends Modelo{
     {
        ArrayList<Double> Ycalc = Calcular(keys);
        for(int k =0; k < keys.size(); k++)
-           varExp += Math.pow(Ycalc.get(k) - values.get(k), 2);
-       
-       Sxy = Math.sqrt(varExp/(n-2));
+           varExp += Math.pow(Ycalc.get(k) - values.get(k), 2);       
+       Sxy = Finanzas.Aproximar(Math.sqrt(varExp/(n-2)), 4);
     }
     
     @Override
@@ -101,8 +100,8 @@ public class ModeloExponencial extends Modelo{
        Double denominador = (sumX2 - Math.pow(sumX, 2)) *
                                 (sumLogY2 - Math.pow(sumLogY, 2));
        CalcularVarianza();
-       r = (sumXLogY - (sumX * sumLogY)) / Math.sqrt(denominador);
-       
-       r2 = Math.pow(r, 2);
+       r = (sumXLogY - (sumX * sumLogY)) / Math.sqrt(denominador);       
+       r2 =Finanzas.Aproximar( Math.pow(r, 2), 4);
+       r = Finanzas.Aproximar(r, 4);
     }
 }

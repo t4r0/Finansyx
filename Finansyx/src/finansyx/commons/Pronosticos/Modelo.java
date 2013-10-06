@@ -6,6 +6,7 @@ package finansyx.commons.Pronosticos;
 import java.util.ArrayList;
 import finansyx.Exceptions.*;
 import finansyx.commons.Estadistica;
+import finansyx.commons.Finanzas.Finanzas;
 
         
 /**
@@ -15,17 +16,17 @@ import finansyx.commons.Estadistica;
 public class Modelo {
 
     // El nombre de este modelo
-    String nombre = "Modelo";
+    protected String nombre = "Modelo";
     //Variables que forman parte de la ecuación
-    Double A=0.0 ,  a= 0.0, b= 0.0, c= 0.0;
-    Integer n=0;
-    Double yProm = 0.0;
+    protected Double A=0.0 ,  a= 0.0, b= 0.0, c= 0.0;
+    protected Integer n=0;
+    protected Double yProm = 0.0;
     //Variables que ayudan a la toma de decisión
-    Double Sxy=0.0, r=0.0, r2=0.0;    
+    protected Double Sxy=0.0, r=0.0, r2=0.0;    
     //Sumatorias
-    Double sumX=0.0, sumY=0.0, sumXY=0.0, sumX2=0.0, sumY2=0.0;       
+    protected Double sumX=0.0, sumY=0.0, sumXY=0.0, sumX2=0.0, sumY2=0.0;       
     //Variaciones
-    Double varTotal = 0.0, varExp=0.0, varNExp=0.0;
+    protected Double varTotal = 0.0, varExp=0.0, varNExp=0.0;
     ArrayList<Integer> keys = new ArrayList<>();
     ArrayList<Double> values = new ArrayList<>();
     /**
@@ -48,6 +49,7 @@ public class Modelo {
     public Double getSXY(){return Sxy;}
     public Double getr(){return r;}
     public Double getr2(){return r2;}
+    public Integer getn(){return n;}
     public String getNombre(){return nombre;}
     public void setNombre(String nombre){this.nombre = nombre;}
     /**
@@ -76,8 +78,9 @@ public class Modelo {
        Double numerador =(n*sumXY) - (sumX*sumY);
        Double denominador = (n*sumX2) - Math.pow(sumX, 2);
        denominador = denominador*((n*sumY2) - Math.pow(sumY, 2) );
-       r = numerador / Math.sqrt(denominador);
-       r2 = Math.pow(r, 2);
+       r =numerador / Math.sqrt(denominador);
+       r2 = Finanzas.Aproximar(Math.pow(r, 2), 4);
+       r = Finanzas.Aproximar(r, 4);
        CalcularVarianza();
       
     }
@@ -115,6 +118,7 @@ public class Modelo {
        ArrayList<Double> Ycalc = Calcular(keys);
        for(int k =0; k < keys.size(); k++)
            varExp += Math.pow(Ycalc.get(k) - values.get(k), 2);
+       Sxy = Finanzas.Aproximar(Math.sqrt(varExp/(n-2)),4);
     }
     
     

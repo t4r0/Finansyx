@@ -4,6 +4,7 @@
  */
 package finansyx.commons.Pronosticos;
 
+import finansyx.commons.Finanzas.Finanzas;
 import java.util.ArrayList;
 
 /**
@@ -75,9 +76,9 @@ public class ModeloLogaritmico extends Modelo{
     public void CalcularVariables()
     {
        b = sumLogXY - (sumLogX* sumY);
-       b = b / (sumLogX2 - Math.pow(sumLogX, 2));
-       
-       a = sumY - b*sumLogX;
+       b = b / (sumLogX2 - Math.pow(sumLogX, 2));       
+       a = Finanzas.Aproximar( sumY - b*sumLogX, 4);
+       b = Finanzas.Aproximar(b, 4);
     }
     
     @Override
@@ -85,9 +86,8 @@ public class ModeloLogaritmico extends Modelo{
     {
        ArrayList<Double> Ycalc = Calcular(keys);
        for(int k =0; k < keys.size(); k++)
-           varExp += Math.pow(Ycalc.get(k) - values.get(k), 2);
-       
-       Sxy = Math.sqrt(varExp/(n-2));
+           varExp += Math.pow(Ycalc.get(k) - values.get(k), 2);       
+       Sxy = Finanzas.Aproximar(Math.sqrt(varExp/(n-2)), 4);
     }
     
     @Override
@@ -96,9 +96,9 @@ public class ModeloLogaritmico extends Modelo{
        Double denominador = (sumLogX2 - Math.pow(sumLogX, 2)) *
                                 (sumY2 - Math.pow(sumY, 2));
        CalcularVarianza();
-       r = (sumLogXY - (sumLogX * sumY)) / Math.sqrt(denominador);
-       
-       r2 = Math.pow(r, 2);
+       r = (sumLogXY - (sumLogX * sumY)) / Math.sqrt(denominador);       
+       r2 =Finanzas.Aproximar( Math.pow(r, 2), 4);
+       r = Finanzas.Aproximar(r, 4);
     }
     
 }
