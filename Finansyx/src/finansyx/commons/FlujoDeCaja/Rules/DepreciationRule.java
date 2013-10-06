@@ -10,4 +10,13 @@ package finansyx.commons.FlujoDeCaja.Rules;
  */
 public class DepreciationRule extends Rule{
     
+    public DepreciationRule ()
+    {
+        
+    }
+    
+    public DepreciationRule(Double value)
+    {
+        this.Value = value;
+    }
 }

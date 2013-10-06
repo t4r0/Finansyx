@@ -13,12 +13,12 @@ import finansyx.commons.FlujoDeCaja.Financiera;
 public class InverseRule extends Rule implements IInverseCalcRule{
 
     @Override
-    public Financiera CalcularInverso(Financiera a) {
+    public void CalcularInverso() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public Financiera CalcularInverso(Financiera a, Integer inicio) {
+    public void CalcularInverso(Integer inicio) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     

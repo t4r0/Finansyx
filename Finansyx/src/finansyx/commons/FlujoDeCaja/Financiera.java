@@ -32,7 +32,36 @@ public class Financiera {
     {
         this.valores = inicialvalues;
     }
-    
+
+    public Boolean hasFactura() {
+        return factura;
+    }
+
+    public void setFactura(Boolean factura) {
+        this.factura = factura;
+    }
+
+    public Rule getRule() {
+        return ReglaDeCalculo;
+    }
+
+    public void setRule(Rule ReglaDeCalculo) {
+        this.ReglaDeCalculo = ReglaDeCalculo;
+        this.ReglaDeCalculo.setDestino(this);
+    }
+
+    public String getTitulo() {
+        return titulo;
+    }
+
+    public void setTitulo(String titulo) {
+        this.titulo = titulo;
+    }
+        
+    public void setValues(ArrayList<Double> valores)
+    {
+        this.valores = valores;
+    }
     /**
      * 
      * @return los valores de esta instancia

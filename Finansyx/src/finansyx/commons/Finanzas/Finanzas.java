@@ -5,9 +5,7 @@
 package finansyx.commons.Finanzas;
 
 import java.math.BigDecimal;
-import java.math.RoundingMode;
 import java.util.ArrayList;
-import org.apache.commons.math3.dfp.DfpField;
 import org.apache.commons.math3.util.Precision;/**
  *
  * @author t4r0
@@ -109,5 +107,22 @@ public class Finanzas {
             cuotas.add(new Cuota(i+1, renta, interes,amortizacion,capital));
         }        
         return cuotas;
+    }
+    
+    /**
+     * Calcula el promedio porcentual, de b en relación de a.
+     * @param a Los datos que representan el total a partir del cual se
+     * calculará el promedio
+     * @param b Los datos de los que se calculará el promedio.
+     * @return El promedio porecntual de B en relación a A
+     */
+    public Double Promedio(ArrayList<Double> a, ArrayList<Double> b)
+    {
+        int i = 0;
+        Double promedio = 0.;
+        for(i = 0; i < b.size(); i ++)        
+            promedio += (b.get(i) / a.get(i));
+        promedio = promedio / b.size();
+        return Math.round(Aproximar(promedio, 2)*100)/100.;    
     }
 }
