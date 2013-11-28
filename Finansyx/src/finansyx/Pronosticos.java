@@ -110,6 +110,7 @@ public class Pronosticos extends javax.swing.JPanel {
         ArrayList<Double> values = getValues(limite);
         SetModel(keys, values);
     }
+        
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -275,9 +276,9 @@ public class Pronosticos extends javax.swing.JPanel {
                     }
                 }      
                 case KeyEvent.VK_DELETE:
-                {
-                    model.removeRow(selrow);                   
-                    CalcularModelos();
+                {                    
+                    model.removeRow(selrow);
+                    tblOrigen.editCellAt(-1, -1);                     
                 }
                 default:
                 {

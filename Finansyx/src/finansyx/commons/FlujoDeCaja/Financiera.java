@@ -17,7 +17,7 @@ public class Financiera {
     
     //Si se tiene un comprobante el cual será usado para pagar impuestos
     private Boolean factura = false;
-    
+    private Boolean escudo = false;
     //La Regla con la que se calcularan los valores de esta información
     private Rule ReglaDeCalculo = new Rule();
     private ArrayList<Double> valores = new ArrayList<>();
@@ -62,6 +62,17 @@ public class Financiera {
     {
         this.valores = valores;
     }
+    
+    public Boolean isEscudo()
+    {
+        return escudo;
+    }
+    
+    public void setEscudo(Boolean escudo)
+    {
+        this.escudo = escudo;
+    }
+    
     /**
      * 
      * @return los valores de esta instancia
@@ -79,5 +90,10 @@ public class Financiera {
     {
         valores.add(value);
     }
+     
+     public Double getAt(int value)
+     {
+         return valores.get(value);
+     }
     
 }

@@ -11,9 +11,9 @@ import finansyx.commons.FlujoDeCaja.*;
 public class Rule implements ICalcRule{
 
      Double Value = 0.;
-     Integer largo = 0;
-     Financiera origen = new Financiera();
-     Financiera destino = new Financiera();
+     Integer largo = 10;
+     Financiera origen = null;
+     Financiera destino = null;
      
     public Rule() {
     }

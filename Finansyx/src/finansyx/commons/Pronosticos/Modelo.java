@@ -79,8 +79,7 @@ public class Modelo {
        Double denominador = (n*sumX2) - Math.pow(sumX, 2);
        denominador = denominador*((n*sumY2) - Math.pow(sumY, 2) );
        r =numerador / Math.sqrt(denominador);
-       r2 = Finanzas.Aproximar(Math.pow(r, 2), 4);
-       r = Finanzas.Aproximar(r, 4);
+       r2 = Math.pow(r, 2);
        CalcularVarianza();
       
     }
@@ -118,7 +117,7 @@ public class Modelo {
        ArrayList<Double> Ycalc = Calcular(keys);
        for(int k =0; k < keys.size(); k++)
            varExp += Math.pow(Ycalc.get(k) - values.get(k), 2);
-       Sxy = Finanzas.Aproximar(Math.sqrt(varExp/(n-2)),4);
+       Sxy = Math.sqrt(varExp/(n-2));
     }
     
     

@@ -4,14 +4,24 @@
  */
 package finansyx.commons.FlujoDeCaja.Rules;
 
-import finansyx.commons.FlujoDeCaja.Financiera;
-
 /**
  *
  * @author t4r0
  */
 public class InverseRule extends Rule implements IInverseCalcRule{
 
+    @Override
+    public void Calcular()
+    {
+        CalcularInverso();
+    }
+    
+    @Override
+    public void Calcular(Integer inicio)
+    {
+        CalcularInverso(inicio);
+    }
+    
     @Override
     public void CalcularInverso() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.

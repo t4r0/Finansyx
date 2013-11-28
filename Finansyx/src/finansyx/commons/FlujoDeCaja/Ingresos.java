@@ -4,6 +4,7 @@
  */
 package finansyx.commons.FlujoDeCaja;
 
+import finansyx.commons.FlujoDeCaja.Rules.Rule;
 import java.util.ArrayList;
 
 /**
@@ -16,4 +17,10 @@ public class Ingresos extends Financiera{
     public Ingresos() {
     }
    
+    public Ingresos(String titulo, Rule regla)
+    {
+        setTitulo(titulo);
+        setRule(regla);
+        getRule().Calcular();
+    }
 }

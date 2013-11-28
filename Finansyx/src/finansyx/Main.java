@@ -25,7 +25,8 @@ public class Main extends javax.swing.JFrame {
      */
     public Main() {
         initComponents();      
-        Pronosticos pron = new Pronosticos();
+        CashFlow pron;
+          pron = new CashFlow();
         pron.setSize(550, 550);
         mainPanel.add(pron);
         //jTable1.setModel(new ModeloPronostico(manager));
