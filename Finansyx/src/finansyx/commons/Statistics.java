@@ -3,13 +3,13 @@
  * and open the template in the editor.
  */
 package finansyx.commons;
-import finansyx.commons.Finanzas.Finanzas;
+import finansyx.commons.Finanzas.Finances;
 import org.apache.commons.math3.distribution.*;
 /**
  *
  * @author t4r0
  */
-public class Estadistica {
+public class Statistics {
     
     /**
      * Calcula el valor z, en una distribución normal estándar
@@ -23,7 +23,7 @@ public class Estadistica {
         NormalDistribution dist = new NormalDistribution(0, 1);
         Double a2 = (1 - confianza) / 2;
         Double z = -1 * dist.inverseCumulativeProbability(a2);        
-        return Finanzas.Aproximar(z, 3);
+        return Finances.Round(z, 3);
                 
     }
     

@@ -10,14 +10,14 @@ import org.apache.commons.math3.util.Precision;/**
  *
  * @author t4r0
  */
-public class Finanzas {
+public class Finances {
     /**
      * Calcula la tasa minima atractiva de retorno
      * @param i = premio al riesgo
      * @param f = inflacion
      * @return la tasa minimia atractiva de retorno
      */
-    public static Double TMAR(Double i, Double f)
+    public static Double MARR(Double i, Double f)
     {
         return i + f + i*f;
     }
@@ -30,7 +30,7 @@ public class Finanzas {
      * @param yearPronostic = El año de pronóstico
      * @return El valor de un gasto en el año de pronostico
      */
-    public static Double GastosEscalonados(Double base, Double percentage, Integer yearBase, Integer yearPronostic)
+    public static Double TieredCosts(Double base, Double percentage, Integer yearBase, Integer yearPronostic)
     {
         int cuenta = yearPronostic - yearBase;
         Double valor = base;
@@ -47,7 +47,7 @@ public class Finanzas {
      * @param decimales = La cantidad de decimales a los que se desea aproximar
      * @return El numero aproximado
      */
-    public static Double Aproximar(Double numero, int decimales)
+    public static Double Round(Double numero, int decimales)
     {
         return Precision.round(numero, decimales, BigDecimal.ROUND_HALF_UP);
     }
@@ -61,10 +61,10 @@ public class Finanzas {
      * @param m - capitalizaciones
      * @return 
      */
-    public static ArrayList<Cuota> CuotasNiveladas(Double A, Integer P, Integer N,
+    public static ArrayList<Fee> ConstantPaymentMortgage(Double A, Integer P, Integer N,
             Double j, Double m)
     {
-        ArrayList<Cuota> cuotas = new ArrayList<>();
+        ArrayList<Fee> cuotas = new ArrayList<>();
         Double exp = j/m;
         Double renta =A * ( Math.pow(1 + exp, m/P) - 1)/
                 (1 - Math.pow(1 + exp, -m*N));
@@ -76,7 +76,7 @@ public class Finanzas {
             interes = capital*factor;
             amort = renta - interes;
             capital = capital - amort;
-            cuotas.add(new Cuota(i+1, renta, interes,amort,capital));
+            cuotas.add(new Fee(i+1, renta, interes,amort,capital));
         }        
         return cuotas;
     }
@@ -90,10 +90,10 @@ public class Finanzas {
      * @param m - capitalizaciones
      * @return 
      */
-    public static ArrayList<Cuota> CuotasNoNiveladas(Double A, Integer P, Integer N,
+    public static ArrayList<Fee> ConstantAmortizedMortgage(Double A, Integer P, Integer N,
             Double j, Double m)
     {
-        ArrayList<Cuota> cuotas = new ArrayList<>();
+        ArrayList<Fee> cuotas = new ArrayList<>();
         Double exp = j/m;
         Double amortizacion = A / (N*P);
         Double factor = Math.pow(1 + exp, m/P) - 1; 
@@ -104,12 +104,12 @@ public class Finanzas {
             interes = capital*factor;
             renta = interes + amortizacion;
             capital = capital - amortizacion;
-            cuotas.add(new Cuota(i+1, renta, interes,amortizacion,capital));
+            cuotas.add(new Fee(i+1, renta, interes,amortizacion,capital));
         }        
         return cuotas;
     }
     
-    public static ArrayList<Double> Resumen(ArrayList<Cuota> cuota, int pagos)
+    public static ArrayList<Double> InterestsSummary(ArrayList<Fee> cuota, int pagos)
     {
         Double payment=0.;
         ArrayList<Double> payments = new ArrayList<Double>();
@@ -134,13 +134,13 @@ public class Finanzas {
      * @param b Los datos de los que se calculará el promedio.
      * @return El promedio porecntual de B en relación a A
      */
-    public static  Double Promedio(ArrayList<Double> a, ArrayList<Double> b)
+    public static  Double Average(ArrayList<Double> a, ArrayList<Double> b)
     {
         int i = 0;
         Double promedio = 0.;
         for(i = 0; i < b.size(); i ++)        
             promedio += (b.get(i) / a.get(i));
         promedio = promedio / b.size();
-        return Math.round(Aproximar(promedio, 2)*100)/100.;    
+        return Math.round(Round(promedio, 2)*100)/100.;    
     }
 }

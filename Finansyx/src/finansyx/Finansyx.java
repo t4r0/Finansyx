@@ -4,10 +4,10 @@
  */
 package finansyx;
 
-import finansyx.commons.Finanzas.Finanzas;
+import finansyx.commons.Finanzas.Finances;
 import finansyx.commons.Pronosticos.*;
 import finansyx.commons.*;
-import finansyx.commons.Finanzas.Cuota;
+import finansyx.commons.Finanzas.Fee;
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -30,45 +30,45 @@ public class Finansyx {
                 Arrays.asList(new Double[]{94., 108., 146., 184., 196., 209., 225., 265.}));
         ArrayList<Double> promy = new ArrayList<Double>(
                 Arrays.asList(new Double[]{9., 14., 17., 18., 21., 24., 28., 32.}));
-        ModeloLineal modl= new ModeloLineal(keys, values);
-        ModeloPolinomial modP = new ModeloPolinomial(keys, values);
-        ModeloExponencial modE = new ModeloExponencial(keys, values);
-        ModeloLogaritmico modL = new ModeloLogaritmico(keys, values);
-        ModeloPotencial modPo = new ModeloPotencial(keys, values);
+        LinearModel modl= new LinearModel(keys, values);
+        PolynomialModel modP = new PolynomialModel(keys, values);
+        ExponentialModel modE = new ExponentialModel(keys, values);
+        LogarithmicModel modL = new LogarithmicModel(keys, values);
+        PotentialModel modPo = new PotentialModel(keys, values);
                 
         System.out.println(modl.toString());
         System.out.println(modP.toString());
         System.out.println(modE.toString());
         System.out.println(modL.toString());
         System.out.println(modPo.toString() + "\n===================\n");
-        System.out.println(Finanzas.GastosEscalonados(300., 0.1, 2011, 2021));
+        System.out.println(Finances.TieredCosts(300., 0.1, 2011, 2021));
         
-        ArrayList<Cuota> cuotas = Finanzas.CuotasNiveladas(250.,4, 3,0.2,1.);
-        for(Cuota cuota: cuotas)
+        ArrayList<Fee> cuotas = Finances.ConstantPaymentMortgage(250.,4, 3,0.2,1.);
+        for(Fee cuota: cuotas)
         {
             System.out.println(cuota.toString());
         }
-        ArrayList<Double> pruebas = Finanzas.Resumen(cuotas, 4);
+        ArrayList<Double> pruebas = Finances.InterestsSummary(cuotas, 4);
         for(Double payment: pruebas)
             System.out.println(payment);
         
         System.out.println("\n =============  \n\n");
-        ArrayList<Cuota> cuotasAl = Finanzas.CuotasNoNiveladas(250., 4, 3,0.2,1.);
-        for(Cuota cuota: cuotasAl)
+        ArrayList<Fee> cuotasAl = Finances.ConstantAmortizedMortgage(250., 4, 3,0.2,1.);
+        for(Fee cuota: cuotasAl)
         {
             System.out.println(cuota.toString());
         }
         
-        pruebas = Finanzas.Resumen(cuotasAl, 4);
+        pruebas = Finances.InterestsSummary(cuotasAl, 4);
         
         
         for(Double payment: pruebas)
             System.out.println(payment);
         
         
-         System.out.println(Finanzas.Promedio(promx, promy));
-         System.out.println(Estadistica.zNormal(0.9));
-         System.out.println(Estadistica.zNormal(0.95));
-         System.out.println(Estadistica.zNormal(0.99));
+         System.out.println(Finances.Average(promx, promy));
+         System.out.println(Statistics.zNormal(0.9));
+         System.out.println(Statistics.zNormal(0.95));
+         System.out.println(Statistics.zNormal(0.99));
     }
 }

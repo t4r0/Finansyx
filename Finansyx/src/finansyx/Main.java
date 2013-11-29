@@ -24,11 +24,7 @@ public class Main extends javax.swing.JFrame {
      * Creates new form Main
      */
     public Main() {
-        initComponents();      
-        CashFlow pron;
-          pron = new CashFlow();
-        pron.setSize(550, 550);
-        mainPanel.add(pron);
+        initComponents();     
         //jTable1.setModel(new ModeloPronostico(manager));
     }
 

@@ -4,7 +4,7 @@
  */
 package finansyx.commons.modelos;
 
-import finansyx.commons.Finanzas.Finanzas;
+import finansyx.commons.Finanzas.Finances;
 import finansyx.commons.Pronosticos.ModelManager;
 import javax.swing.table.AbstractTableModel;
 
@@ -39,11 +39,11 @@ public class ModeloLimite extends AbstractTableModel{
             return filas[rowIndex];       
         switch (rowIndex) {
             case 0: 
-                return Finanzas.Aproximar(modelo.UpperLimit(columnIndex), 2);
+                return Finances.Round(modelo.UpperLimit(columnIndex), 2);
             case 1:
-                return Finanzas.Aproximar(modelo.Calcular(columnIndex), 2);
+                return Finances.Round(modelo.Calcular(columnIndex), 2);
             case 2:
-                 return Finanzas.Aproximar(modelo.LowerLimit(columnIndex),2);
+                 return Finances.Round(modelo.LowerLimit(columnIndex),2);
         }
         return null;
     }

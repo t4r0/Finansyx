@@ -4,39 +4,39 @@
  */
 package finansyx.commons.Pronosticos;
 
-import finansyx.commons.Finanzas.Finanzas;
+import finansyx.commons.Finanzas.Finances;
 import java.util.ArrayList;
 
 /**
  *
  * @author t4r0
  */
-public class ModeloLineal extends Modelo{
+public class LinearModel extends Model{
 
-    public ModeloLineal() {
+    public LinearModel() {
         super ();
-        setNombre("Lineal");
+        setName("Lineal");
         
     }
     
-    public ModeloLineal(ArrayList<Integer> x, ArrayList<Double> y)
+    public LinearModel(ArrayList<Integer> x, ArrayList<Double> y)
     {       
         super(x, y);
-        setNombre("Lineal");
+        setName("Lineal");
     }
     
     @Override
-    public Double Calcular(Integer x)
+    public Double Calc(Integer x)
     {
         return a*x + b;
     }
     
     @Override
-    public void Sumatorias(ArrayList<Integer> x, ArrayList<Double> y)           
+    public void Sum(ArrayList<Integer> x, ArrayList<Double> y)           
     {
         Double varY = 0.0;
         Integer varX = 0;
-        super.Sumatorias(x, y);
+        super.Sum(x, y);
         for(int i =0; i < y.size(); i++)
         {
             varX = x.get(i);
@@ -51,7 +51,7 @@ public class ModeloLineal extends Modelo{
     }
     
     @Override
-    public void CalcularVariables()
+    public void CalcValues()
     {
         Double numerador = (n*sumXY) - (sumX*sumY);
         Double denominador = (n*sumX2) - Math.pow(sumX, 2);        

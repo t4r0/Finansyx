@@ -8,7 +8,7 @@ package finansyx.commons.Finanzas;
  * Representa cuotas de pago de prestamos y otros
  * @author t4r0
  */
-public class Cuota {
+public class Fee {
     private Integer numero = 0;
     private Double renta = 0.;
     private Double intereses = 0.;
@@ -18,7 +18,7 @@ public class Cuota {
     /**
      * Inicializa una instancia de la clase Cuota
      */
-    public Cuota(){}
+    public Fee(){}
     /**
      * Inicializa una instancia de la clase, con los valores dados
      * @param num - el numero de cuota, almacenada
@@ -27,7 +27,7 @@ public class Cuota {
      * @param amortizacion - la amortización de esta cuota
      * @param capital - el saldo después de pagar esta cuota
      */
-    public Cuota(Integer num, Double renta,
+    public Fee(Integer num, Double renta,
             Double intereses, Double amortizacion, Double capital)
     {
         this.numero = num;
@@ -114,10 +114,10 @@ public class Cuota {
     @Override
     public String toString() {
         return "||" + numero + " | "
-                + Finanzas.Aproximar(renta, 2) + " | " +
-                Finanzas.Aproximar(intereses, 2) + " | "
-                + Finanzas.Aproximar(amortizacion, 2) + " | "
-                + Finanzas.Aproximar(capital, 2 ) + " ||";//To change body of generated methods, choose Tools | Templates.
+                + Finances.Round(renta, 2) + " | " +
+                Finances.Round(intereses, 2) + " | "
+                + Finances.Round(amortizacion, 2) + " | "
+                + Finances.Round(capital, 2 ) + " ||";//To change body of generated methods, choose Tools | Templates.
     }
     
     

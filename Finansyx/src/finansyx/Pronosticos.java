@@ -73,11 +73,11 @@ public class Pronosticos extends javax.swing.JPanel {
     {
        
         manager = new ModelManager();
-        manager.Add( new ModeloLineal(keys, values));
-        manager.Add(new ModeloPolinomial(keys, values));
-        manager.Add(new ModeloExponencial(keys, values));
-        manager.Add(new ModeloLogaritmico(keys, values));
-        manager.Add( new ModeloPotencial(keys, values));   
+        manager.Add( new LinearModel(keys, values));
+        manager.Add(new PolynomialModel(keys, values));
+        manager.Add(new ExponentialModel(keys, values));
+        manager.Add(new LogarithmicModel(keys, values));
+        manager.Add( new PotentialModel(keys, values));   
         tblPronostico.setModel(new ModeloPronostico(manager));
         SetLimites();       
     }
@@ -87,7 +87,7 @@ public class Pronosticos extends javax.swing.JPanel {
          Double confianza = Double.parseDouble(spnrConfianza.getValue().toString()) / 100;
          manager.setConfianza(confianza);
          tblLimite.setModel(new ModeloLimite(manager));
-         lblModelo.setText(manager.getSelectedModel().getNombre());
+         lblModelo.setText(manager.getSelectedModel().getName());
          modelIndex = manager.getSelectedModelIndex();
     }
     
@@ -95,7 +95,7 @@ public class Pronosticos extends javax.swing.JPanel {
     {
         manager.setSelectedModel(i);
         tblLimite.setModel(new ModeloLimite(manager));
-        lblModelo.setText(manager.getSelectedModel().getNombre());
+        lblModelo.setText(manager.getSelectedModel().getName());
     }
 
     private void CalcularModelos()

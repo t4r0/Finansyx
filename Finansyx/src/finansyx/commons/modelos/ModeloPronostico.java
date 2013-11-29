@@ -5,7 +5,7 @@
 package finansyx.commons.modelos;
 import javax.swing.table.AbstractTableModel;
 import finansyx.commons.Pronosticos.*;
-import finansyx.commons.Finanzas.Finanzas;
+import finansyx.commons.Finanzas.Finances;
 /**
  *
  * @author t4r0
@@ -37,19 +37,19 @@ public class ModeloPronostico extends AbstractTableModel
         int col = columnIndex - 1;
         switch (rowIndex) {
             case 0: 
-                return Finanzas.Aproximar(modelo.get(col).geta(), 4);
+                return Finances.Round(modelo.get(col).geta(), 4);
             case 1:
-                return Finanzas.Aproximar(modelo.get(col).getA(), 4);
+                return Finances.Round(modelo.get(col).getA(), 4);
             case 2:
-                 return Finanzas.Aproximar(modelo.get(col).getb(), 4);
+                 return Finances.Round(modelo.get(col).getb(), 4);
             case 3:
-                 return Finanzas.Aproximar(modelo.get(col).getc(), 4);
+                 return Finances.Round(modelo.get(col).getc(), 4);
             case 4:
-                 return Finanzas.Aproximar(modelo.get(col).getSXY(), 4);
+                 return Finances.Round(modelo.get(col).getSXY(), 4);
             case 5:
-                 return Finanzas.Aproximar(modelo.get(col).getr(), 4);
+                 return Finances.Round(modelo.get(col).getr(), 4);
             case 6:
-                 return Finanzas.Aproximar(modelo.get(col).getr2(), 4);
+                 return Finances.Round(modelo.get(col).getr2(), 4);
         }
         return null;
     }
@@ -58,6 +58,6 @@ public class ModeloPronostico extends AbstractTableModel
     public String getColumnName(int column) {
         if(column == 0)
             return "";
-       return modelo.get(column-1).getNombre();
+       return modelo.get(column-1).getName();
     }
 }

@@ -4,13 +4,13 @@
  */
 package finansyx.commons.Pronosticos;
 
-import finansyx.commons.Finanzas.Finanzas;
+import finansyx.commons.Finanzas.Finances;
 import java.util.*;
 /**
  *
  * @author t4r0
  */
-public class ModeloExponencial extends Modelo{
+public class ExponentialModel extends Model{
     
     //Algunas variables adicionales para este modelo
     Double sumLogY = 0.0, sumXLogY = 0.0, sumLogY2=0.0;
@@ -18,17 +18,17 @@ public class ModeloExponencial extends Modelo{
     /** 
      * Inicializa una instancia de esta clase
      */
-       public ModeloExponencial() {
+       public ExponentialModel() {
         super ();
-        setNombre( "Exponencial");
+        setName( "Exponencial");
     }
     
-    public ModeloExponencial(ArrayList<Integer> x, ArrayList<Double> y)
+    public ExponentialModel(ArrayList<Integer> x, ArrayList<Double> y)
     {
-        setNombre( "Exponencial");
-        Sumatorias(x, y);
-        CalcularVariables();
-        CalcularFactoresDeDecision();
+        setName( "Exponencial");
+        Sum(x, y);
+        CalcValues();
+        CalcDecisionFactor();
     }
     
     @Override
@@ -41,18 +41,18 @@ public class ModeloExponencial extends Modelo{
     }
     
     @Override
-    public Double Calcular(Integer x)
+    public Double Calc(Integer x)
     {
         return A*Math.exp(b * x);
     }
     
     @Override
-    public void Sumatorias(ArrayList<Integer> x, ArrayList<Double> y)           
+    public void Sum(ArrayList<Integer> x, ArrayList<Double> y)           
     {
         Double varY = 0.0;
         Integer varX = 0;
         Double varX2 = 0.0, varLog=0.;
-        super.Sumatorias(x, y);
+        super.Sum(x, y);
         for(int i =0; i < y.size(); i++)
         {
             varX = x.get(i);
@@ -77,7 +77,7 @@ public class ModeloExponencial extends Modelo{
     }
     
     @Override
-    public void CalcularVariables()
+    public void CalcValues()
     {
        b = sumXLogY - (sumX * sumLogY);
        b = b / (sumX2 - Math.pow(sumX, 2));       
@@ -86,20 +86,20 @@ public class ModeloExponencial extends Modelo{
     }
     
     @Override
-    void CalcularVarianza()
+    void CalcVariance()
     {
-       ArrayList<Double> Ycalc = Calcular(keys);
+       ArrayList<Double> Ycalc = Calc(keys);
        for(int k =0; k < keys.size(); k++)
            varExp += Math.pow(Ycalc.get(k) - values.get(k), 2);       
        Sxy = Math.sqrt(varExp/(n-2));
     }
     
     @Override
-     void CalcularFactoresDeDecision()
+     void CalcDecisionFactor()
     { 
        Double denominador = (sumX2 - Math.pow(sumX, 2)) *
                                 (sumLogY2 - Math.pow(sumLogY, 2));
-       CalcularVarianza();
+       CalcVariance();
        r = (sumXLogY - (sumX * sumLogY)) / Math.sqrt(denominador);       
        r2 =Math.pow(r, 2);
     }

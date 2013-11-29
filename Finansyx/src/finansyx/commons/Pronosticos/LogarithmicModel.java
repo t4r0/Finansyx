@@ -4,27 +4,27 @@
  */
 package finansyx.commons.Pronosticos;
 
-import finansyx.commons.Finanzas.Finanzas;
+import finansyx.commons.Finanzas.Finances;
 import java.util.ArrayList;
 
 /**
  *
  * @author t4r0
  */
-public class ModeloLogaritmico extends Modelo{
+public class LogarithmicModel extends Model{
     
     Double sumLogX = 0., sumLogX2 = 0., sumLogXY = 0.;
-       public ModeloLogaritmico() {
+       public LogarithmicModel() {
         super ();
-        setNombre("Logaritmico");
+        setName("Logaritmico");
     }
     
-    public ModeloLogaritmico(ArrayList<Integer> x, ArrayList<Double> y)
+    public LogarithmicModel(ArrayList<Integer> x, ArrayList<Double> y)
     {
-        setNombre("Logaritmico");
-        Sumatorias(x, y);
-        CalcularVariables();
-        CalcularFactoresDeDecision();
+        setName("Logaritmico");
+        Sum(x, y);
+        CalcValues();
+        CalcDecisionFactor();
     }
     
     @Override
@@ -37,18 +37,18 @@ public class ModeloLogaritmico extends Modelo{
     }
     
     @Override
-    public Double Calcular(Integer x)
+    public Double Calc(Integer x)
     {
         return b*Math.log(x) + a;
     }
     
     @Override
-    public void Sumatorias(ArrayList<Integer> x, ArrayList<Double> y)           
+    public void Sum(ArrayList<Integer> x, ArrayList<Double> y)           
     {
         Double varY = 0.0;
         Integer varX = 0;
         Double varY2 = 0.0, varLog=0.;
-        super.Sumatorias(x, y);
+        super.Sum(x, y);
         for(int i =0; i < y.size(); i++)
         {
             varX = x.get(i);
@@ -73,7 +73,7 @@ public class ModeloLogaritmico extends Modelo{
     }
     
     @Override
-    public void CalcularVariables()
+    public void CalcValues()
     {
        b = sumLogXY - (sumLogX* sumY);
        b = b / (sumLogX2 - Math.pow(sumLogX, 2));       
@@ -81,20 +81,20 @@ public class ModeloLogaritmico extends Modelo{
     }
     
     @Override
-    void CalcularVarianza()
+    void CalcVariance()
     {
-       ArrayList<Double> Ycalc = Calcular(keys);
+       ArrayList<Double> Ycalc = Calc(keys);
        for(int k =0; k < keys.size(); k++)
            varExp += Math.pow(Ycalc.get(k) - values.get(k), 2);       
        Sxy = Math.sqrt(varExp/(n-2));
     }
     
     @Override
-     void CalcularFactoresDeDecision()
+     void CalcDecisionFactor()
     { 
        Double denominador = (sumLogX2 - Math.pow(sumLogX, 2)) *
                                 (sumY2 - Math.pow(sumY, 2));
-       CalcularVarianza();
+       CalcVariance();
        r = (sumLogXY - (sumLogX * sumY)) / Math.sqrt(denominador);       
        r2 = Math.pow(r, 2);
     }

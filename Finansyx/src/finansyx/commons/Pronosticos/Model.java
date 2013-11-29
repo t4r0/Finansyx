@@ -5,18 +5,18 @@
 package finansyx.commons.Pronosticos;
 import java.util.ArrayList;
 import finansyx.Exceptions.*;
-import finansyx.commons.Estadistica;
-import finansyx.commons.Finanzas.Finanzas;
+import finansyx.commons.Statistics;
+import finansyx.commons.Finanzas.Finances;
 
         
 /**
  *
  * @author t4r0
  */
-public class Modelo {
+public class Model {
 
-    // El nombre de este modelo
-    protected String nombre = "Modelo";
+    // El Name de este modelo
+    protected String Name= "Modelo";
     //Variables que forman parte de la ecuación
     protected Double A=0.0 ,  a= 0.0, b= 0.0, c= 0.0;
     protected Integer n=0;
@@ -25,21 +25,20 @@ public class Modelo {
     protected Double Sxy=0.0, r=0.0, r2=0.0;    
     //Sumatorias
     protected Double sumX=0.0, sumY=0.0, sumXY=0.0, sumX2=0.0, sumY2=0.0;       
-    //Variaciones
-    protected Double varTotal = 0.0, varExp=0.0, varNExp=0.0;
+    protected Double totalValue = 0.0, varExp=0.0, varNExp=0.0;
     ArrayList<Integer> keys = new ArrayList<>();
     ArrayList<Double> values = new ArrayList<>();
     /**
      * Crea una nueva instancia de este modelo
      */
-    public Modelo() {
+    public Model() {
     }
     
-    public Modelo(ArrayList<Integer> yValues, ArrayList<Double> xValues)
+    public Model(ArrayList<Integer> yValues, ArrayList<Double> xValues)
     {       
-        Sumatorias(yValues, xValues);
-        CalcularVariables();
-        CalcularFactoresDeDecision();
+        Sum(yValues, xValues);
+        CalcValues();
+        CalcDecisionFactor();
     }
     
     public Double getA(){return A;}
@@ -50,15 +49,15 @@ public class Modelo {
     public Double getr(){return r;}
     public Double getr2(){return r2;}
     public Integer getn(){return n;}
-    public String getNombre(){return nombre;}
-    public void setNombre(String nombre){this.nombre = nombre;}
+    public String getName(){return Name;}
+    public void setName(String Name){this.Name = Name;}
     /**
      * Hace las sumatorias respectivas de este modelo
      * @param y = Los valores independientes, del modelo
      * @param x = Los valores dependientes, del modelo
      * @throws DiferentSizeException 
      */
-    public void Sumatorias(ArrayList<Integer> y, ArrayList<Double> x)
+    public void Sum(ArrayList<Integer> y, ArrayList<Double> x)
     {
         keys = y;
         values = x;
@@ -67,12 +66,12 @@ public class Modelo {
     /**
      * Calcula las variables relacionadas con este modelo
      */
-    void CalcularVariables() {}
+    void CalcValues() {}
     
     /**
      * Calcula los factores de decision de este modelo
      */
-    void CalcularFactoresDeDecision()
+    void CalcDecisionFactor()
     { 
        
        Double numerador =(n*sumXY) - (sumX*sumY);
@@ -80,16 +79,16 @@ public class Modelo {
        denominador = denominador*((n*sumY2) - Math.pow(sumY, 2) );
        r =numerador / Math.sqrt(denominador);
        r2 = Math.pow(r, 2);
-       CalcularVarianza();
+       CalcVariance();
       
     }
     
-    public void CalcularModelo(ArrayList<Integer> yValues, ArrayList<Double> xValues)
+    public void CalcModel(ArrayList<Integer> yValues, ArrayList<Double> xValues)
     {
         Reset();
-        Sumatorias(yValues, xValues);
-        CalcularVariables();
-        CalcularFactoresDeDecision();       
+        Sum(yValues, xValues);
+        CalcValues();
+        CalcDecisionFactor();       
     }
     
     /**
@@ -112,9 +111,9 @@ public class Modelo {
     /**
      * Calcula la varianza 
      */
-    void CalcularVarianza()
+    void CalcVariance()
     {
-       ArrayList<Double> Ycalc = Calcular(keys);
+       ArrayList<Double> Ycalc = Calc(keys);
        for(int k =0; k < keys.size(); k++)
            varExp += Math.pow(Ycalc.get(k) - values.get(k), 2);
        Sxy = Math.sqrt(varExp/(n-2));
@@ -126,50 +125,60 @@ public class Modelo {
      * @param a =  El independiente,a partir del cual se calculará la proyección
      * @return Una proyección en base al modelo especificado
      */
-    public Double Calcular(Integer a){return 0.0;}
+    public Double Calc(Integer a){return 0.0;}
     
     /**
      * 
      */
-    public ArrayList<Double> Calcular(ArrayList<Integer> a)
+    public ArrayList<Double> Calc(ArrayList<Integer> a)
     {
         ArrayList<Double> resultado = new ArrayList<>();
         for(Integer num: a)
         {
-            resultado.add(Calcular(num));
+            resultado.add(Calc(num));
         }
         return resultado;
     }
     
     public final Double UpperLimit(Double value, Double confianza)
     {
-        return value + Estadistica.zNormal(confianza)* Sxy/Math.sqrt(n);
+        return value + Statistics.zNormal(confianza)* Sxy/Math.sqrt(n);
     }
     
-    public final Double LowerLimit(Integer punto, Double confianza)
+    public final Double UpperLimit(Integer punto, Double confianza)
     {
-         return Calcular(n + punto) + Estadistica.zNormal(confianza)* Sxy /Math.sqrt(n);
+         return Calc(n + punto) + Statistics.zNormal(confianza)* Sxy /Math.sqrt(n);
     }
     
     
     public final Double LowerLimit(Double value, Double confianza)
     {
-        return value - Estadistica.zNormal(confianza)* Sxy/Math.sqrt(n);
+        return value - Statistics.zNormal(confianza)* Sxy/Math.sqrt(n);
     }
     
-    public final Double UpperLimit(Integer punto, Double confianza)
+    public final Double LowerLimit(Integer punto, Double confianza)
     {
-        return Calcular(n + punto) - (Estadistica.zNormal(confianza)*Sxy/Math.sqrt(n));
+        return Calc(n + punto) - (Statistics.zNormal(confianza)*Sxy/Math.sqrt(n));
     }
     
     public final Double FixedUpperLimit(Double value, int confianza)
     {
-        return value + Estadistica.FixedZ(confianza)* Sxy/Math.sqrt(n);
+        return value + Statistics.FixedZ(confianza)* Sxy/Math.sqrt(n);
     }
     
     public final Double FixedUpperLimit(Integer punto, int confianza)
     {
-        return Calcular(n + punto) - (Estadistica.FixedZ(confianza)*Sxy/Math.sqrt(n));
+        return Calc(n + punto) + Statistics.FixedZ(confianza)* Sxy /Math.sqrt(n);
+    }
+    
+    public final Double FixedLowerLimit(Double value, int confianza)
+    {
+        return value - Statistics.FixedZ(confianza)* Sxy/Math.sqrt(n);
+    }
+    
+    public final Double FixedLowerLimit(Integer punto, int confianza)
+    {
+        return Calc(n + punto) - Statistics.FixedZ(confianza)* Sxy /Math.sqrt(n);
     }
     
     @Override

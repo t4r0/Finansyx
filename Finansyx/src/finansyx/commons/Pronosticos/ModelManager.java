@@ -14,9 +14,9 @@ public class ModelManager {
     
     
     // Los modelos almacenados en este gestor
-    ArrayList<Modelo> models = new ArrayList<>();
+    ArrayList<Model> models = new ArrayList<>();
     //El modelo que se usará para calcular los valores de salida de este gestor
-    Modelo selectedModel = new Modelo();
+    Model selectedModel = new Model();
     //El nivel de confianza que se utilizará para calcular valores estadísticos
     Double confianza = 0.;
     //El indice del modelo seleccionado
@@ -29,7 +29,7 @@ public class ModelManager {
      * para resolver el problema especifico
      * 
      */
-    public ModelManager(ArrayList<Modelo> modelos){
+    public ModelManager(ArrayList<Model> modelos){
         this.models= modelos;
         chooseModel();
     }
@@ -41,7 +41,7 @@ public class ModelManager {
      * @param confianza - Los grados de confianza que se usarán para resolver el
      * problema específico
      */
-     public ModelManager(ArrayList<Modelo> modelos, Double confianza){
+     public ModelManager(ArrayList<Model> modelos, Double confianza){
         this.models= modelos;
         this.confianza = confianza;
         chooseModel();
@@ -62,8 +62,8 @@ public class ModelManager {
       */
     public final void chooseModel()
     {
-        Modelo choos = models.get(0);
-        Modelo mod  = new Modelo();
+        Model choos = models.get(0);
+        Model mod  = new Model();
         index = 0;
         for(int i=0; i< models.size(); i++)
         {
@@ -84,18 +84,18 @@ public class ModelManager {
      * @return - El modelo escogido para calcular los datos de salida de este 
      * gestor
      */
-    public Modelo getSelectedModel()
+    public Model getSelectedModel()
     {
         return selectedModel;
     }
     
     /**
-     * Escoge si el Modelo a es candidato para reemplazar a b
+     * Escoge si el Model a es candidato para reemplazar a b
      * @param a - el modelo que se evaluará
      * @param b - el modelo que se pretende sustituir
      * @return si el modelo A, es candidato para sustituir a b.
      */
-    protected Boolean isCandidate(Modelo a, Modelo b)
+    protected Boolean isCandidate(Model a, Model b)
     {
          if(a.getSXY() < b.getSXY())
              return true;
@@ -128,7 +128,7 @@ public class ModelManager {
      * @param i - el indice de donde se obtendrá el modelo
      * @return - el modelo almacenado en el indice i
      */
-    public Modelo get(int i)
+    public Model get(int i)
     {
         index = i;
         return models.get(i);       
@@ -142,7 +142,7 @@ public class ModelManager {
      * Agrega un modelo de pronosticación a este gestor
      * @param modelo - el modelo que se desea agregar
      */
-    public void Add(Modelo modelo)
+    public void Add(Model modelo)
     {
         models.add(modelo);
     }
@@ -165,7 +165,7 @@ public class ModelManager {
      */
     public Double Calcular(Integer punto)
     {
-        return selectedModel.Calcular(punto + selectedModel.n);
+        return selectedModel.Calc(punto + selectedModel.n);
     }
     
     /**

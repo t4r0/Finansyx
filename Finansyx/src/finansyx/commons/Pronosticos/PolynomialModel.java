@@ -6,25 +6,25 @@ package finansyx.commons.Pronosticos;
 
 import java.util.ArrayList;
 import Jama.Matrix;
-import finansyx.commons.Finanzas.Finanzas;
+import finansyx.commons.Finanzas.Finances;
 /**
  *
  * @author t4r0
  */
-public class ModeloPolinomial extends Modelo{
+public class PolynomialModel extends Model{
     
     Double sumX2Y = 0.0, sumX3=0.0, sumX4=0.0;    
-        public ModeloPolinomial() {
+        public PolynomialModel() {
         super ();
-        setNombre("Polinomial");
+        setName("Polinomial");
     }
     
-    public ModeloPolinomial(ArrayList<Integer> x, ArrayList<Double> y)
+    public PolynomialModel(ArrayList<Integer> x, ArrayList<Double> y)
     {
-        setNombre("Polinomial");
-        Sumatorias(x, y);
-        CalcularVariables();
-        CalcularFactoresDeDecision();
+        setName("Polinomial");
+        Sum(x, y);
+        CalcValues();
+        CalcDecisionFactor();
     }
     
     @Override
@@ -37,18 +37,18 @@ public class ModeloPolinomial extends Modelo{
     }
     
     @Override
-    public Double Calcular(Integer x)
+    public Double Calc(Integer x)
     {
         return a*Math.pow(x, 2) + b*x + c;
     }
     
     @Override
-    public void Sumatorias(ArrayList<Integer> x, ArrayList<Double> y)           
+    public void Sum(ArrayList<Integer> x, ArrayList<Double> y)           
     {
         Double varY = 0.0;
         Integer varX = 0;
         Double varX2 = 0.0;
-        super.Sumatorias(x, y);
+        super.Sum(x, y);
         for(int i =0; i < y.size(); i++)
         {
             varX = x.get(i);
@@ -68,7 +68,7 @@ public class ModeloPolinomial extends Modelo{
     }
     
     @Override
-    public void CalcularVariables()
+    public void CalcValues()
     {
        double[][] matA = {{n, sumX, sumX2},
                           {sumX, sumX2, sumX3},
@@ -83,23 +83,23 @@ public class ModeloPolinomial extends Modelo{
     }
     
     @Override
-    void CalcularVarianza()
+    void CalcVariance()
     {
-       ArrayList<Double> Ycalc = Calcular(keys);
+       ArrayList<Double> Ycalc = Calc(keys);
        for(int k =0; k < keys.size(); k++)
        {
            varExp += Math.pow(Ycalc.get(k) - values.get(k), 2);
-           varTotal += Math.pow(values.get(k) - yProm, 2);
+           totalValue += Math.pow(values.get(k) - yProm, 2);
            varNExp += Math.pow(Ycalc.get(k) - yProm, 2);
        }
        Sxy = Math.sqrt(varExp/(n-2));
     }
     
     @Override
-     void CalcularFactoresDeDecision()
+     void CalcDecisionFactor()
     { 
-       CalcularVarianza();
-       r = Math.sqrt(varNExp/varTotal);
+       CalcVariance();
+       r = Math.sqrt(varNExp/totalValue);
        r2 = Math.pow(r, 2);
     }   
 }
