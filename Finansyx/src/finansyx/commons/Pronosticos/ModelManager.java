@@ -14,7 +14,7 @@ public class ModelManager {
     
     
     // Los modelos almacenados en este gestor
-    ArrayList<Modelo> modelos = new ArrayList<>();
+    ArrayList<Modelo> models = new ArrayList<>();
     //El modelo que se usará para calcular los valores de salida de este gestor
     Modelo selectedModel = new Modelo();
     //El nivel de confianza que se utilizará para calcular valores estadísticos
@@ -30,7 +30,7 @@ public class ModelManager {
      * 
      */
     public ModelManager(ArrayList<Modelo> modelos){
-        this.modelos= modelos;
+        this.models= modelos;
         chooseModel();
     }
     
@@ -42,7 +42,7 @@ public class ModelManager {
      * problema específico
      */
      public ModelManager(ArrayList<Modelo> modelos, Double confianza){
-        this.modelos= modelos;
+        this.models= modelos;
         this.confianza = confianza;
         chooseModel();
     }
@@ -62,12 +62,12 @@ public class ModelManager {
       */
     public final void chooseModel()
     {
-        Modelo choos = modelos.get(0);
+        Modelo choos = models.get(0);
         Modelo mod  = new Modelo();
         index = 0;
-        for(int i=0; i< modelos.size(); i++)
+        for(int i=0; i< models.size(); i++)
         {
-            mod = modelos.get(i);
+            mod = models.get(i);
             if(isCandidate(mod, choos))
             {    
                 choos = mod;
@@ -118,9 +118,9 @@ public class ModelManager {
      */
     public void setSelectedModel(int i)
     {
-        if(i >= modelos.size() || i < 0)
+        if(i >= models.size() || i < 0)
             return;
-        selectedModel = modelos.get(i);                
+        selectedModel = models.get(i);                
     }
     
     /**
@@ -131,7 +131,7 @@ public class ModelManager {
     public Modelo get(int i)
     {
         index = i;
-        return modelos.get(i);       
+        return models.get(i);       
     }
     
     public Integer getSelectedModelIndex()
@@ -144,7 +144,7 @@ public class ModelManager {
      */
     public void Add(Modelo modelo)
     {
-        modelos.add(modelo);
+        models.add(modelo);
     }
     
     /**
@@ -153,7 +153,7 @@ public class ModelManager {
      */
     public int Size()
     {
-        return modelos.size();
+        return models.size();
     }
     
     /**
@@ -173,18 +173,19 @@ public class ModelManager {
      * @param punto - el punto que se ploteará
      * @return el limite superior de confianza
      */
-    public Double LimiteSuperior(Integer punto)
+    public Double UpperLimit(Integer punto)
     {
-         return selectedModel.LimiteSuperior(punto, confianza);
+         return selectedModel.UpperLimit(punto, confianza);
     }
     
     /**
      * Calcula el limite inferior con los grados de confianza dados
      * @param punto - el punto que se ploteará
+     * 
      * @return el limite inferior de confianza
      */
-     public Double LimiteInferior(Integer punto)
+     public Double LowerLimit(Integer punto)
     {
-         return selectedModel.LimiteInferior(punto, confianza);
+         return selectedModel.LowerLimit(punto, confianza);
     }
 }

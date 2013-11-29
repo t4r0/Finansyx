@@ -109,6 +109,24 @@ public class Finanzas {
         return cuotas;
     }
     
+    public static ArrayList<Double> Resumen(ArrayList<Cuota> cuota, int pagos)
+    {
+        Double payment=0.;
+        ArrayList<Double> payments = new ArrayList<Double>();
+        int counter = 0;
+        for(int i=0; i<cuota.size(); i++)
+        {
+            payment += cuota.get(i).getIntereses();
+            counter ++;
+            if(counter == pagos)
+            {
+                payments.add(payment);
+                payment = 0.;
+                counter = 0;
+            }
+        }
+        return payments;
+    }
     /**
      * Calcula el promedio porcentual, de b en relación de a.
      * @param a Los datos que representan el total a partir del cual se
@@ -116,7 +134,7 @@ public class Finanzas {
      * @param b Los datos de los que se calculará el promedio.
      * @return El promedio porecntual de B en relación a A
      */
-    public Double Promedio(ArrayList<Double> a, ArrayList<Double> b)
+    public static  Double Promedio(ArrayList<Double> a, ArrayList<Double> b)
     {
         int i = 0;
         Double promedio = 0.;

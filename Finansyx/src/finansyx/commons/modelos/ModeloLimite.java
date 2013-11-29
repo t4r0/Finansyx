@@ -39,11 +39,11 @@ public class ModeloLimite extends AbstractTableModel{
             return filas[rowIndex];       
         switch (rowIndex) {
             case 0: 
-                return Finanzas.Aproximar(modelo.LimiteSuperior(columnIndex), 2);
+                return Finanzas.Aproximar(modelo.UpperLimit(columnIndex), 2);
             case 1:
                 return Finanzas.Aproximar(modelo.Calcular(columnIndex), 2);
             case 2:
-                 return Finanzas.Aproximar(modelo.LimiteInferior(columnIndex),2);
+                 return Finanzas.Aproximar(modelo.LowerLimit(columnIndex),2);
         }
         return null;
     }

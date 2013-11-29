@@ -26,4 +26,25 @@ public class Estadistica {
         return Finanzas.Aproximar(z, 3);
                 
     }
+    
+    /**
+     * Calcula los valores pre-establecidos para 3 niveles de confianza,
+     * en limites bilaterales con los grados de confianza dados.
+     * 
+     * @param confianza-cualquiera de los valores 90, 95, 99
+     * @return el valor de z de acuerdo a una distribución normal estándar
+     */
+    public static Double FixedZ(int confianza)
+    {
+        switch(confianza)
+        {
+            case 90:
+                return 1.65;
+            case 95:
+                return 1.96;
+            case 99:
+                return 2.58;
+        }
+        return 0.;
+    }
 }

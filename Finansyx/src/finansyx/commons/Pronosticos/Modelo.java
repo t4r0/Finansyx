@@ -141,26 +141,37 @@ public class Modelo {
         return resultado;
     }
     
-    public final Double LimiteSuperior(Double value, Double confianza)
+    public final Double UpperLimit(Double value, Double confianza)
     {
         return value + Estadistica.zNormal(confianza)* Sxy/Math.sqrt(n);
     }
     
-    public final Double LimiteSuperior(Integer punto, Double confianza)
+    public final Double LowerLimit(Integer punto, Double confianza)
     {
          return Calcular(n + punto) + Estadistica.zNormal(confianza)* Sxy /Math.sqrt(n);
     }
     
     
-    public final Double LimiteInferior(Double value, Double confianza)
+    public final Double LowerLimit(Double value, Double confianza)
     {
         return value - Estadistica.zNormal(confianza)* Sxy/Math.sqrt(n);
     }
     
-    public final Double LimiteInferior(Integer punto, Double confianza)
+    public final Double UpperLimit(Integer punto, Double confianza)
     {
         return Calcular(n + punto) - (Estadistica.zNormal(confianza)*Sxy/Math.sqrt(n));
     }
+    
+    public final Double FixedUpperLimit(Double value, int confianza)
+    {
+        return value + Estadistica.FixedZ(confianza)* Sxy/Math.sqrt(n);
+    }
+    
+    public final Double FixedUpperLimit(Integer punto, int confianza)
+    {
+        return Calcular(n + punto) - (Estadistica.FixedZ(confianza)*Sxy/Math.sqrt(n));
+    }
+    
     @Override
     public String toString()
     {

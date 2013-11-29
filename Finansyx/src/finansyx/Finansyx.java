@@ -26,6 +26,10 @@ public class Finansyx {
                 Arrays.asList(new Integer[]{1,2,3,4}));
         ArrayList<Double> values = new ArrayList<Double>(
                 Arrays.asList(new Double[]{29.0, 29.5, 39.0, 60.0}));
+        ArrayList<Double> promx = new ArrayList<Double>(
+                Arrays.asList(new Double[]{94., 108., 146., 184., 196., 209., 225., 265.}));
+        ArrayList<Double> promy = new ArrayList<Double>(
+                Arrays.asList(new Double[]{9., 14., 17., 18., 21., 24., 28., 32.}));
         ModeloLineal modl= new ModeloLineal(keys, values);
         ModeloPolinomial modP = new ModeloPolinomial(keys, values);
         ModeloExponencial modE = new ModeloExponencial(keys, values);
@@ -39,11 +43,14 @@ public class Finansyx {
         System.out.println(modPo.toString() + "\n===================\n");
         System.out.println(Finanzas.GastosEscalonados(300., 0.1, 2011, 2021));
         
-        ArrayList<Cuota> cuotas = Finanzas.CuotasNiveladas(250., 4, 3,0.2,1.);
+        ArrayList<Cuota> cuotas = Finanzas.CuotasNiveladas(250.,4, 3,0.2,1.);
         for(Cuota cuota: cuotas)
         {
             System.out.println(cuota.toString());
         }
+        ArrayList<Double> pruebas = Finanzas.Resumen(cuotas, 4);
+        for(Double payment: pruebas)
+            System.out.println(payment);
         
         System.out.println("\n =============  \n\n");
         ArrayList<Cuota> cuotasAl = Finanzas.CuotasNoNiveladas(250., 4, 3,0.2,1.);
@@ -52,6 +59,14 @@ public class Finansyx {
             System.out.println(cuota.toString());
         }
         
+        pruebas = Finanzas.Resumen(cuotasAl, 4);
+        
+        
+        for(Double payment: pruebas)
+            System.out.println(payment);
+        
+        
+         System.out.println(Finanzas.Promedio(promx, promy));
          System.out.println(Estadistica.zNormal(0.9));
          System.out.println(Estadistica.zNormal(0.95));
          System.out.println(Estadistica.zNormal(0.99));
