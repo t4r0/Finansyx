@@ -2,11 +2,11 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package finansyx.commons.Pronosticos;
+package finansyx.commons.Prognostication;
 import java.util.ArrayList;
 import finansyx.Exceptions.*;
 import finansyx.commons.Statistics;
-import finansyx.commons.Finanzas.Finances;
+import finansyx.commons.Finances.Finances;
 
         
 /**

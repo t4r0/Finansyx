@@ -4,10 +4,10 @@
  */
 package finansyx;
 
-import finansyx.commons.Finanzas.Finances;
-import finansyx.commons.Pronosticos.*;
+import finansyx.commons.Finances.Finances;
+import finansyx.commons.Prognostication.*;
 import finansyx.commons.*;
-import finansyx.commons.Finanzas.Fee;
+import finansyx.commons.Finances.Fee;
 import java.util.ArrayList;
 import java.util.Arrays;
 

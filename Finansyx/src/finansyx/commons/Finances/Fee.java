@@ -2,7 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package finansyx.commons.Finanzas;
+package finansyx.commons.Finances;
 
 /**
  * Representa cuotas de pago de prestamos y otros

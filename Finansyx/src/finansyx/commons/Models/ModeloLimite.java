@@ -2,10 +2,10 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package finansyx.commons.modelos;
+package finansyx.commons.models;
 
-import finansyx.commons.Finanzas.Finances;
-import finansyx.commons.Pronosticos.ModelManager;
+import finansyx.commons.Finances.Finances;
+import finansyx.commons.Prognostication.ModelManager;
 import javax.swing.table.AbstractTableModel;
 
 /**

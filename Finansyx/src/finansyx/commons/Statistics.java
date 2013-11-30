@@ -3,7 +3,7 @@
  * and open the template in the editor.
  */
 package finansyx.commons;
-import finansyx.commons.Finanzas.Finances;
+import finansyx.commons.Finances.Finances;
 import org.apache.commons.math3.distribution.*;
 /**
  *

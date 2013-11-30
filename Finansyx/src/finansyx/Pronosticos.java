@@ -5,8 +5,8 @@
 package finansyx;
 
 import java.awt.event.KeyEvent;
-import finansyx.commons.modelos.*;
-import finansyx.commons.Pronosticos.*;
+import finansyx.commons.models.*;
+import finansyx.commons.Prognostication.*;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
 import javax.swing.table.*;

@@ -6,8 +6,8 @@ package finansyx;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import finansyx.commons.Pronosticos.*;
-import finansyx.commons.modelos.ModeloPronostico;
+import finansyx.commons.Prognostication.*;
+import finansyx.commons.models.ModeloPronostico;
 /**
  *
  * @author t4r0
