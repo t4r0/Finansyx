@@ -2,27 +2,30 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package finansyx.commons.Prognostication;
+package finansyx.commons.Prognostication.Models;
 
 import finansyx.commons.Finances.Finances;
-import java.util.ArrayList;
-
+import java.util.*;
 /**
  *
  * @author t4r0
  */
-public class PotentialModel extends Model{
+public class ExponentialModel extends Model{
     
-    Double sumLogY = 0.0, sumLogYLogX = 0.0, sumLogY2=0.0,
-            sumLogX = 0.0, sumLogX2 = 0.0; 
-       public PotentialModel() {
+    //Algunas variables adicionales para este modelo
+    Double sumLogY = 0.0, sumXLogY = 0.0, sumLogY2=0.0;
+    
+    /** 
+     * Inicializa una instancia de esta clase
+     */
+       public ExponentialModel() {
         super ();
-       setName("Potencial");
+        setName( "Exponencial");
     }
     
-    public PotentialModel(ArrayList<Integer> x, ArrayList<Double> y)
+    public ExponentialModel(ArrayList<Integer> x, ArrayList<Double> y)
     {
-        setName("Potencial");
+        setName( "Exponencial");
         Sum(x, y);
         CalcValues();
         CalcDecisionFactor();
@@ -33,16 +36,14 @@ public class PotentialModel extends Model{
     {
         super.Reset();
         sumLogY = 0.0;
-        sumLogYLogX = 0.0;
         sumLogY2=0.0;
-        sumLogX = 0.0;
-        sumLogX2 = 0.0; 
+        sumXLogY=0.0;
     }
     
     @Override
     public Double Calc(Integer x)
     {
-        return A*Math.pow(x,b);
+        return A*Math.exp(b * x);
     }
     
     @Override
@@ -50,40 +51,37 @@ public class PotentialModel extends Model{
     {
         Double varY = 0.0;
         Integer varX = 0;
-        Double varX2 = 0.0, varLogY=0.
-                , varLogX= 0.;
+        Double varX2 = 0.0, varLog=0.;
         super.Sum(x, y);
         for(int i =0; i < y.size(); i++)
         {
             varX = x.get(i);
             varY = y.get(i);
-            varLogY=Math.log(varY);
-            varLogX = Math.log(varX);
+            varLog=Math.log(varY);
+            varX2 = Math.pow(varX, 2);
             sumX += varX;
             sumY += varY;
-            sumLogX+= varLogX;
-            sumLogY += varLogY;
-            sumLogX2 += Math.pow(varLogX, 2);
-            sumLogY2 += Math.pow(varLogY,2);
-            sumLogYLogX += varLogX * varLogY;
+            sumX2 += varX2;
+            sumLogY += varLog;
+            sumLogY2 += Math.pow(varLog,2);
+            sumXLogY += varX * varLog;
         }
         n = y.size();
         yProm = sumY / n;
         sumX = sumX / n;
         sumY = sumY / n;
-        sumLogX = sumLogX / n;
-        sumLogX2 = sumLogX2 / n;
+        sumX2 = sumX2 / n;
         sumLogY = sumLogY / n;
         sumLogY2 = sumLogY2 / n;
-        sumLogYLogX = sumLogYLogX / n;
+        sumXLogY = sumXLogY / n;
     }
     
     @Override
     public void CalcValues()
     {
-       b = sumLogYLogX - (sumLogX * sumLogY);
-       b = b / (sumLogX2 - Math.pow(sumLogX, 2));       
-       a = sumLogY - b*sumLogX;
+       b = sumXLogY - (sumX * sumLogY);
+       b = b / (sumX2 - Math.pow(sumX, 2));       
+       a = sumLogY - b*sumX;
        A = Math.exp(a);       
     }
     
@@ -92,19 +90,17 @@ public class PotentialModel extends Model{
     {
        ArrayList<Double> Ycalc = Calc(keys);
        for(int k =0; k < keys.size(); k++)
-           varExp += Math.pow(Ycalc.get(k) - values.get(k), 2);
-       
+           varExp += Math.pow(Ycalc.get(k) - values.get(k), 2);       
        Sxy = Math.sqrt(varExp/(n-2));
     }
     
     @Override
      void CalcDecisionFactor()
     { 
-       Double denominador = (sumLogX2 - Math.pow(sumLogX, 2)) *
+       Double denominador = (sumX2 - Math.pow(sumX, 2)) *
                                 (sumLogY2 - Math.pow(sumLogY, 2));
        CalcVariance();
-       r = (sumLogYLogX - (sumLogX * sumLogY)) / Math.sqrt(denominador);       
-       r2 = Math.pow(r, 2);
+       r = (sumXLogY - (sumX * sumLogY)) / Math.sqrt(denominador);       
+       r2 =Math.pow(r, 2);
     }
-    
 }

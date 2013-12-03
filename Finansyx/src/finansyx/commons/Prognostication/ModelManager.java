@@ -4,6 +4,7 @@
  */
 package finansyx.commons.Prognostication;
 
+import finansyx.commons.Prognostication.Models.Model;
 import java.util.ArrayList;
 
 /**
@@ -165,7 +166,7 @@ public class ModelManager {
      */
     public Double Calcular(Integer punto)
     {
-        return selectedModel.Calc(punto + selectedModel.n);
+        return selectedModel.Calc(punto + selectedModel.getn());
     }
     
     /**

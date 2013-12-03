@@ -4,6 +4,11 @@
  */
 package finansyx;
 
+import finansyx.commons.Prognostication.Models.LinearModel;
+import finansyx.commons.Prognostication.Models.LogarithmicModel;
+import finansyx.commons.Prognostication.Models.ExponentialModel;
+import finansyx.commons.Prognostication.Models.PotentialModel;
+import finansyx.commons.Prognostication.Models.PolynomialModel;
 import finansyx.commons.Finances.Finances;
 import finansyx.commons.Prognostication.*;
 import finansyx.commons.*;
