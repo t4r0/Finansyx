@@ -40,6 +40,7 @@ public class DataManager {
     
     /**
      * Calcula el valor en base a la regla de calculo especificada
+     * @throws finansyx.Exceptions.NotAValidOptionException
      */
     public void Calc() throws NotAValidOptionException
     {

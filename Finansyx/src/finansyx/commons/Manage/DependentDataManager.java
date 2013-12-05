@@ -27,6 +27,7 @@ public class DependentDataManager extends DataManager{
     /**
      * Calcula el valor en base a la regla de calculo especificada
      */
+    @Override
     public void Calc()
     {
         this.values = calcRule.getValuesFromRule(base);

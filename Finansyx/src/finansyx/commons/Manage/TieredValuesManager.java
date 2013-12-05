@@ -6,6 +6,7 @@
 
 package finansyx.commons.Manage;
 
+import finansyx.Exceptions.NotAValidOptionException;
 import finansyx.commons.Rules.TieredRule;
 
 /**
@@ -16,12 +17,12 @@ public class TieredValuesManager extends DataManager{
     
     public TieredValuesManager(){}
     
-    public TieredValuesManager(Double value, int baseYear, int firstYear, Double base)
+    public TieredValuesManager(Double value, int baseYear, int firstYear, Double base) throws NotAValidOptionException
     {
         super(new TieredRule(value, baseYear, base, firstYear));
     }
     
-    public TieredValuesManager(String value, int baseYear, int firstYear, Double base)
+    public TieredValuesManager(String value, int baseYear, int firstYear, Double base) throws NotAValidOptionException
     {
          super(new TieredRule(value, baseYear, base, firstYear));
     }

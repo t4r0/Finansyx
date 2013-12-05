@@ -7,18 +7,17 @@
 package finansyx.commons.Manage;
 
 import finansyx.Exceptions.NotAValidOptionException;
-import finansyx.commons.Rules.FlatValuesRule;
+import finansyx.commons.Rules.PrognosticRule;
+import java.util.ArrayList;
 
 /**
  *
  * @author t4r0
  */
-public class FlatValuesManager extends DataManager {
+public class PrognosticManager extends DataManager{
     
-    public FlatValuesManager(){}
-    
-    public FlatValuesManager(Double value, int limit) throws NotAValidOptionException
+    public PrognosticManager(ArrayList<Double> values, int firstYear, int option) throws NotAValidOptionException
     {
-        super(new FlatValuesRule(value, limit));
+        super(new PrognosticRule(values, firstYear, option));
     }
 }
