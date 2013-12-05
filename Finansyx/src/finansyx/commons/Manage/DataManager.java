@@ -5,6 +5,7 @@
  */
 package finansyx.commons.Manage;
 
+import finansyx.Exceptions.NotAValidOptionException;
 import finansyx.commons.Rules.Rule;
 import java.util.ArrayList;
 /**
@@ -19,7 +20,7 @@ public class DataManager {
     public DataManager() {
     }
     
-    public DataManager(Rule calcRule)
+    public DataManager(Rule calcRule) throws NotAValidOptionException
     {
         this.calcRule = calcRule;
         this.values = calcRule.getValuesFromRule();
@@ -40,7 +41,7 @@ public class DataManager {
     /**
      * Calcula el valor en base a la regla de calculo especificada
      */
-    public void Calc()
+    public void Calc() throws NotAValidOptionException
     {
         this.values = calcRule.getValuesFromRule();
     }

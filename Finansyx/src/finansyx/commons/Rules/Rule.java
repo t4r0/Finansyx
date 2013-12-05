@@ -3,6 +3,7 @@
  * and open the template in the editor.
  */
 package finansyx.commons.Rules;
+import finansyx.Exceptions.NotAValidOptionException;
 import finansyx.commons.Manage.DataManager;
 import java.util.ArrayList;
 /**
@@ -24,6 +25,10 @@ public class Rule{
      */
     public Rule(Double value){ this.Value = value; }
     
+    public void setValue(Double value){ this.Value = value;}
+    
+    public Double getValue(){ return this.Value; }
+    
     /**
      * Regresa los valores calculados, por esta regla de calculo
      * @param manager el manager base, a partir del cual se calcularán los nuevos valores
@@ -38,7 +43,7 @@ public class Rule{
      * Regresa los valores, calculados por esta regla
      * @return una lista de valores, calculados arbitrariamente.
      */
-    public ArrayList<Double> getValuesFromRule()
+    public ArrayList<Double> getValuesFromRule() throws NotAValidOptionException
     {
         return new ArrayList<>();
     }
