@@ -11,6 +11,7 @@ import finansyx.commons.Prognostication.Models.Model;
 import finansyx.commons.Prognostication.Models.PolynomialModel;
 import finansyx.commons.Prognostication.Models.PotentialModel;
 import java.util.ArrayList;
+import java.util.Objects;
 
 /**
  * Un gestor, que ayuda a controlar multiples modelos de pronosticación
@@ -22,7 +23,9 @@ public class ModelManager {
     // Los modelos almacenados en este gestor
     ArrayList<Model> models = new ArrayList<>();
     //El modelo que se usará para calcular los valores de salida de este gestor
-    Model selectedModel = new Model();
+    Model selectedModel = new Model();    
+    //El modelo con el minimo pronóstico
+    Model minimumPrognosticModel = new Model();
     //El nivel de confianza que se utilizará para calcular valores estadísticos
     Double confianza = 0.;
     //El indice del modelo seleccionado
@@ -32,16 +35,22 @@ public class ModelManager {
     
     public ModelManager(){}
     
-    /**
-     * Inicia una instancia de esta clase con valores inciales
-     * @param modelos los modelos dentro de los cuales se calculará el optimo
-     * para resolver el problema especifico
-     * 
-     */
-    public ModelManager(ArrayList<Model> modelos){
-        this.models= modelos;
-        chooseModel();
-    }
+     /**
+      * Crea un nuevo manager, desde un conjunto de datos
+      * @param pattern el conjunto de datos a partir del cual se creará el nuevo manager
+      * @return Un manager, inicializado con todos los modelos
+      */
+     public ModelManager(ArrayList<Double> pattern)
+     {
+       models = new ArrayList<>();
+       models.add(new LinearModel(pattern));
+       models.add(new PolynomialModel(pattern));
+       models.add(new LogarithmicModel(pattern));
+       models.add(new ExponentialModel(pattern));
+       models.add(new PotentialModel(pattern));       
+       findTrending(pattern);
+       chooseModel();
+     }
     
     /**
      * Inicia una nueva instancia de esta clase, con los modelos especificados y
@@ -56,6 +65,11 @@ public class ModelManager {
         chooseModel();
     }
      
+     /**
+      * Halla la tendencia de los valores especificados, la cual representará
+      * la tendencia de este Manager
+      * @param values los valores, cuya tendencia se debe evaluar
+      */
      void findTrending(ArrayList<Double> values)
      {
          this.trending = Trending.findTrending(values);
@@ -82,17 +96,45 @@ public class ModelManager {
         for(int i=0; i< models.size(); i++)
         {
             mod = models.get(i);
-            if(isCandidate(mod, choos))
+            if(isCandidate(mod, choos) && mod.getTrending() == this.trending)
             {    
                 choos = mod;
                 index = i;
-            }
-            else
-               continue;
+            }           
         }
         selectedModel= choos;
+        chooseMinimumModel();
     }
     
+    /**
+     * Escoge el modelo con el pronóstico minimo
+     */
+    public final void chooseMinimumModel()
+    {
+        Model choos = models.get(0);
+        Model mod = new Model();
+        Double currentMinimum = Double.POSITIVE_INFINITY;
+        Double res = 0.;
+        for(int i=0; i < models.size(); i++)
+        {
+            mod = models.get(i);
+            res = mod.Calc(1);     
+            if(Objects.equals(res, currentMinimum))
+                res = mod.Calc(2);
+            if (res < currentMinimum && mod.getTrending() == this.trending)
+            {
+                choos = mod;       
+                currentMinimum = res;
+            }
+        }
+        minimumPrognosticModel = choos;
+    }
+    
+    /**
+     * Regresa el modelo con el pronóstico mínimo
+     * @return 
+     */
+    public Model getMinimumPrognosticModel(){ return minimumPrognosticModel;}
     /***
      * 
      * @return - El modelo escogido para calcular los datos de salida de este 
@@ -122,8 +164,6 @@ public class ModelManager {
                 if (a.getr() == b.getr() && a.getr2() > b.getr2())
                     return true;                
             }
-          if(a.getTrending() != this.trending)
-              return false;
         return false;
     }
     
@@ -203,20 +243,5 @@ public class ModelManager {
      public Double LowerLimit(Integer punto)
     {
          return selectedModel.LowerLimit(punto, confianza);
-    }
-     
-     public static ModelManager getManagerFromPattern(ArrayList<Double> pattern)
-     {
-        ModelManager manager  = new ModelManager();
-        ArrayList<Model> models = new ArrayList<>();
-       models.add(new LinearModel(pattern));
-       models.add(new PolynomialModel(pattern));
-       models.add(new LogarithmicModel(pattern));
-       models.add(new ExponentialModel(pattern));
-       models.add(new PotentialModel(pattern));
-       
-       manager = new ModelManager(models);
-       manager.findTrending(pattern);
-       return manager;
-     }
+    }   
 }

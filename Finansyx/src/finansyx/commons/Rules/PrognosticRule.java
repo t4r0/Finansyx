@@ -27,7 +27,7 @@ public class PrognosticRule extends Rule{
     
     public PrognosticRule(ArrayList<Double> values, int firstYear, int option)
     {
-        manager = ModelManager.getManagerFromPattern(values);
+        manager = new ModelManager(values);
         this.firstYear = firstYear;
         this.option = option;
     }
