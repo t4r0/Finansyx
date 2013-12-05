@@ -149,4 +149,45 @@ public class Finances {
         promedio = promedio / b.size();
         return Math.round(Round(promedio, 2)*100)/100.;    
     }
+    
+    /**
+     * Calcula la depreciacion de un valor inicial
+     * @param initial el valor inicial del bien
+     * @param percentage el porcentaje de depreciacion
+     * @param years la cantidad de años para los que se palnifica
+     * @return Un conjunto de valores constantes de depreciacion anual
+     */
+    public static ArrayList<Double> flatDepreciation(Double initial, Double percentage,
+                int years)
+    {
+        ArrayList<Double> values = new ArrayList<>();
+        int depYears = (int)((int)years * percentage);
+        Double value = percentage * initial;
+        for(int i=0; i < depYears; i++)        
+            values.add(value);
+        return values;
+    }
+    
+    /**
+     * Calcula los valores depreciados de un bien
+     * @param initial el valor inicial del bien
+     * @param percentage el porcentaje de depreciacion
+     * @param years la cantidad de años para los que se palnifica
+     * @return Un conjunto de valores depreciados
+     */
+    
+    public static ArrayList<Double> Depreciate(Double initial, Double percentage,
+                int years)
+    {
+        ArrayList<Double> values = new ArrayList<>();
+        int depYears = (int)((int)years * percentage);
+        Double value = percentage * initial;
+        Double current = initial - value;
+        for(int i=0; i < depYears; i++) 
+        {
+            values.add(current);
+            current -= value;
+        }
+        return values;
+    }
 }
