@@ -6,7 +6,6 @@
 
 package finansyx.commons.Manage;
 
-import finansyx.commons.Rules.FlatValuesRule;
 import finansyx.commons.Rules.TieredRule;
 
 /**
