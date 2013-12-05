@@ -42,7 +42,7 @@ public class DataManager {
      */
     public void Calc()
     {
-        this.values = calcRule.getValuesFromRule(base);
+        this.values = calcRule.getValuesFromRule();
     }
 
     public DataManager getBase() {

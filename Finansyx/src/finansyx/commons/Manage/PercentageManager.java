@@ -12,16 +12,9 @@ import finansyx.commons.Rules.PercentageRule;
  *
  * @author t4r0
  */
-public class PercentageManager extends DataManager{
+public class PercentageManager extends DependentDataManager{
     
-    public PercentageManager(){}
-    
-    public PercentageManager(Double value, DataManager base)
-    {
-        super(new PercentageRule(value), base);
-    }
-    
-    public PercentageManager(String value, DataManager base)
+     public PercentageManager(String value, DataManager base)
     {
        super(new PercentageRule(value), base);
     }

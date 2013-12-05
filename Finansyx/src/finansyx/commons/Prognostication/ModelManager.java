@@ -189,4 +189,9 @@ public class ModelManager {
     {
          return selectedModel.LowerLimit(punto, confianza);
     }
+     
+     public static ModelManager getManagerFromPattern(ArrayList<Double> pattern)
+     {
+         return null;
+     }
 }
