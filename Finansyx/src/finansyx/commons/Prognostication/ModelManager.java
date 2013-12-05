@@ -38,7 +38,6 @@ public class ModelManager {
      /**
       * Crea un nuevo manager, desde un conjunto de datos
       * @param pattern el conjunto de datos a partir del cual se creará el nuevo manager
-      * @return Un manager, inicializado con todos los modelos
       */
      public ModelManager(ArrayList<Double> pattern)
      {
@@ -70,7 +69,7 @@ public class ModelManager {
       * la tendencia de este Manager
       * @param values los valores, cuya tendencia se debe evaluar
       */
-     void findTrending(ArrayList<Double> values)
+     final void findTrending(ArrayList<Double> values)
      {
          this.trending = Trending.findTrending(values);
      }
@@ -155,13 +154,13 @@ public class ModelManager {
     {
          if(a.getSXY() < b.getSXY())
              return true;
-           if (a.getSXY() == b.getSXY())
+           if (Objects.equals(a.getSXY(), b.getSXY()))
             {
                 if (a.getr() > b.getr())
                     return true;
                 if (a.getr() < b.getr() && a.getr() < b.getr())
                     return false;
-                if (a.getr() == b.getr() && a.getr2() > b.getr2())
+                if (Objects.equals(a.getr(), b.getr()) && a.getr2() > b.getr2())
                     return true;                
             }
         return false;
@@ -190,10 +189,15 @@ public class ModelManager {
         return models.get(i);       
     }
     
+    /**
+     * Regresa el indice en el que se encuentra el modelo escogido
+     * @return El inidce del modelo escogido
+     */
     public Integer getSelectedModelIndex()
     {
         return index;
     }
+    
     /**
      * Agrega un modelo de pronosticación a este gestor
      * @param modelo - el modelo que se desea agregar

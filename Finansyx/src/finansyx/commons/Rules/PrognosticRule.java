@@ -46,6 +46,7 @@ public class PrognosticRule extends Rule{
         Model model = manager.getSelectedModel();
         int n = model.getn();
         ArrayList<Double> values = new ArrayList<>();
+        Model minModel = manager.getMinimumPrognosticModel();
         switch(option)
         {
             case Options.PUNTUAL:
@@ -67,6 +68,25 @@ public class PrognosticRule extends Rule{
                 break; 
             }
             case Options.MINIMUM:
+            {
+               
+                for(int i=1; i < limit; i++)
+                    values.add(minModel.Calc(i+n));
+                break;
+            }
+            
+            case Options.MINIMUM_LOWER:
+            {
+                for(int i=1; i < limit; i++)
+                    values.add(minModel.FixedLowerLimit(i+ n,this.confianza));
+                break;   
+            }
+            case Options.MINIMUM_UPPER:
+            {
+                 for(int i=1; i < limit; i++)
+                    values.add(minModel.FixedUpperLimit(i+ n,this.confianza));
+                break; 
+            }
             default:
             {
                 throw new NotAValidOptionException("Esta opción no es válida, o no es soportada");
