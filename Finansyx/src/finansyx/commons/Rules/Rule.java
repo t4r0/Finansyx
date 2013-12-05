@@ -14,7 +14,7 @@ public class Rule{
     // El valor base que se utilizará de ser necesario
     // para calcular los valores dependientes
     Double Value=0.;
-    
+    int limit = 10;
     public Rule(){}
     
     /**

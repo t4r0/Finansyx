@@ -22,6 +22,12 @@ public class ExponentialModel extends Model{
         super ();
         setName( "Exponencial");
     }
+       
+    public ExponentialModel(ArrayList<Double> values)
+    {
+        super(values);
+        setName("Exponencial");
+    }
     
     public ExponentialModel(ArrayList<Integer> x, ArrayList<Double> y)
     {

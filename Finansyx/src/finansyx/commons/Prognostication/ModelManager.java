@@ -4,7 +4,12 @@
  */
 package finansyx.commons.Prognostication;
 
+import finansyx.commons.Prognostication.Models.ExponentialModel;
+import finansyx.commons.Prognostication.Models.LinearModel;
+import finansyx.commons.Prognostication.Models.LogarithmicModel;
 import finansyx.commons.Prognostication.Models.Model;
+import finansyx.commons.Prognostication.Models.PolynomialModel;
+import finansyx.commons.Prognostication.Models.PotentialModel;
 import java.util.ArrayList;
 
 /**
@@ -22,6 +27,9 @@ public class ModelManager {
     Double confianza = 0.;
     //El indice del modelo seleccionado
     Integer index = -1;
+    //La tendencia de los valores con los que se generó el modelo
+    int trending = -2;
+    
     public ModelManager(){}
     
     /**
@@ -47,6 +55,11 @@ public class ModelManager {
         this.confianza = confianza;
         chooseModel();
     }
+     
+     void findTrending(ArrayList<Double> values)
+     {
+         this.trending = Trending.findTrending(values);
+     }
      
      /**
       * Establece los grados de confianza que se usarán para calcular los limites
@@ -109,6 +122,8 @@ public class ModelManager {
                 if (a.getr() == b.getr() && a.getr2() > b.getr2())
                     return true;                
             }
+          if(a.getTrending() != this.trending)
+              return false;
         return false;
     }
     
@@ -192,6 +207,16 @@ public class ModelManager {
      
      public static ModelManager getManagerFromPattern(ArrayList<Double> pattern)
      {
-         return null;
+        ModelManager manager  = new ModelManager();
+        ArrayList<Model> models = new ArrayList<>();
+       models.add(new LinearModel(pattern));
+       models.add(new PolynomialModel(pattern));
+       models.add(new LogarithmicModel(pattern));
+       models.add(new ExponentialModel(pattern));
+       models.add(new PotentialModel(pattern));
+       
+       manager = new ModelManager(models);
+       manager.findTrending(pattern);
+       return manager;
      }
 }

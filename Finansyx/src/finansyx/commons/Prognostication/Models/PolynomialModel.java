@@ -18,6 +18,12 @@ public class PolynomialModel extends Model{
         super ();
         setName("Polinomial");
     }
+        
+    public PolynomialModel(ArrayList<Double> values)
+    {
+        super(values);
+        setName("Polinomial");
+    }
     
     public PolynomialModel(ArrayList<Integer> x, ArrayList<Double> y)
     {

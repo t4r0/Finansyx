@@ -27,6 +27,12 @@ public class LogarithmicModel extends Model{
         CalcDecisionFactor();
     }
     
+    public LogarithmicModel(ArrayList<Double> values)
+    {
+        super(values);
+        setName("Logarítmico");
+    }
+    
     @Override
     public void Reset()
     {

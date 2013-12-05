@@ -19,6 +19,12 @@ public class PotentialModel extends Model{
         super ();
        setName("Potencial");
     }
+       
+    public PotentialModel(ArrayList<Double> values)
+    {
+        super(values);
+        setName("Potencial");
+    }
     
     public PotentialModel(ArrayList<Integer> x, ArrayList<Double> y)
     {

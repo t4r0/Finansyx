@@ -19,6 +19,12 @@ public class LinearModel extends Model{
         
     }
     
+    public LinearModel(ArrayList<Double> values)
+    {
+        super(values);
+        setName("Lineal");
+    }
+    
     public LinearModel(ArrayList<Integer> x, ArrayList<Double> y)
     {       
         super(x, y);

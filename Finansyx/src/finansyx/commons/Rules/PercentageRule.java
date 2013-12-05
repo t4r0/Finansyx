@@ -14,7 +14,7 @@ import java.util.ArrayList;
  * @author t4r0
  */
 public class PercentageRule extends Rule{
-    
+
     public PercentageRule(Double value)
     {
         super(value);

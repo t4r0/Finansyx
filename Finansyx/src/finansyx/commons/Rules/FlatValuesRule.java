@@ -15,7 +15,6 @@ import java.util.ArrayList;
  */
 public class FlatValuesRule extends Rule{
     
-    int limit=10;
     
     public FlatValuesRule(){}
     /**

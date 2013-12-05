@@ -43,6 +43,15 @@ public class Model {
         CalcDecisionFactor();
     }
     
+    public Model(ArrayList<Double> yValues)
+    {
+        for(int i=0; i < yValues.size(); i++)
+            keys.add(i+1);
+        Sum(keys, yValues);
+        CalcValues();
+        CalcDecisionFactor();
+    }
+    
     /**
      * @return La constante A de este modelo
      */

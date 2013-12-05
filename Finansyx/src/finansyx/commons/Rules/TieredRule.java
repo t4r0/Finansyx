@@ -7,7 +7,6 @@
 package finansyx.commons.Rules;
 
 import finansyx.commons.Finances.Finances;
-import finansyx.commons.Manage.DataManager;
 import java.util.ArrayList;
 
 /**
@@ -40,7 +39,7 @@ public class TieredRule extends PercentageRule {
     public ArrayList<Double> getValuesFromRule()
     {
         ArrayList<Double> values = new ArrayList<>();
-        for(int i=1; i <= 10; i++ )
+        for(int i=1; i <= limit; i++ )
         {
             values.add(Finances.TieredCosts(base, Value, baseYear, firstYear + i));
         }
