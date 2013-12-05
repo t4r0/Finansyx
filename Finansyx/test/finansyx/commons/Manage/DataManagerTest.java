@@ -6,6 +6,7 @@
 
 package finansyx.commons.Manage;
 
+import finansyx.Exceptions.NotAValidOptionException;
 import finansyx.commons.Rules.Rule;
 import java.util.ArrayList;
 import org.junit.After;
@@ -42,9 +43,10 @@ public class DataManagerTest {
 
     /**
      * Test of Calc method, of class DataManager.
+     * @throws finansyx.Exceptions.NotAValidOptionException
      */
     @Test
-    public void testCalc() {
+    public void testCalc() throws NotAValidOptionException {
         System.out.println("Calc");
         DataManager instance = new DataManager();
         instance.Calc();

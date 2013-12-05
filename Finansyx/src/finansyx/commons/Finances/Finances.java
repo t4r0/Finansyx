@@ -109,10 +109,16 @@ public class Finances {
         return cuotas;
     }
     
+    /**
+     * Crea un resumen de pagos anuales
+     * @param cuota las cuotas que se deben pagar
+     * @param pagos la cantidad de pagos que se haran anualmente
+     * @return Un resumen de los pagos por hacer
+     */
     public static ArrayList<Double> InterestsSummary(ArrayList<Fee> cuota, int pagos)
     {
         Double payment=0.;
-        ArrayList<Double> payments = new ArrayList<Double>();
+        ArrayList<Double> payments = new ArrayList<>();
         int counter = 0;
         for(int i=0; i<cuota.size(); i++)
         {

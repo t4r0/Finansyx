@@ -17,4 +17,7 @@ public class Options {
     public static final int MINIMUM = 3;
     public static final int MINIMUM_UPPER = 4;
     public static final int MINIMUM_LOWER = 5;
+    
+    public static final int FRENCH = 7;
+    public static final int GERMAN = 8;
 }
