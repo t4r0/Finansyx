@@ -19,7 +19,7 @@ whiteSpace = [ \t\f]
 integer = [0-9]+
 floating = {integer}[\.]{integer} 
 identifier = [:jletter:][:jletterdigit:]* 
-percentage = {integer}['%']
+percentage = {floating}['%'] | {integer}['%']
 
 %%
 

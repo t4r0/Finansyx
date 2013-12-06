@@ -18,10 +18,9 @@ public class FlexGenerador {
           String archivo;
           try
           {
-          reader = new Scanner(System.in);
-          System.out.println("¿Que generaré?: ");
-          archivo = reader.next();
-        JFlex.Main.generate(new File(archivo) );
+         
+          archivo = "C:/Users/t4r0/Documents/GitHub/Finansyx/Finansyx/src/DynasT/Analysis/Files/DynasT-lex.flex";
+          JFlex.Main.generate(new File(archivo) );
           }
           catch(Exception e)
           {
