@@ -230,6 +230,56 @@ public class ModelManager {
     }
     
     /**
+     * Devuelve el calculo usando como base el minimo modelo
+     * @param punto El punto que se evaluara
+     * @return 
+     */
+    public Double Minimum(Integer punto)
+    {
+        Double value = minimumPrognosticModel.Calc(punto + selectedModel.getn());
+        return value + value*incremento;
+        
+    }
+    
+    /**
+     * Calcula el Limite superior en base a la confianza del manager.
+     * @param punto EL punto que se evaluará
+     * @return 
+     */
+    public Double MinimumUpperLimit(Integer punto)
+    {
+         Double value = minimumPrognosticModel.UpperLimit(punto + selectedModel.getn(), confianza);
+         return value + value*incremento;
+    }
+    
+    /**
+     * Calcula el limite inferior en base a la confianza de este manager
+     * @param punto El punto que evaluará la funcion del modelo.
+     * @return 
+     */
+    public Double MinimumLowerLimit(Integer punto)
+    {
+        Double value = minimumPrognosticModel.LowerLimit(punto, confianza);
+         return value + value*incremento;
+    }
+   
+    /**
+     * Calcula el limite inferior en 
+     * @param punto
+     * @return 
+     */
+    public Double MinimumFixedUpper(Integer punto)
+    {
+        Double value = minimumPrognosticModel.FixedUpperLimit(punto + selectedModel.getn(), fixedConfidence);
+        return value + value*incremento;
+    }
+    
+    public Double MinimumFixedLower(Integer punto)
+    {
+        Double value = minimumPrognosticModel.FixedLowerLimit(punto + selectedModel.getn(), fixedConfidence);
+        return value + value*incremento;
+    }
+    /**
      * Calcula un valor en base a un punto específico, haciendo uso del modelo 
      * escogido
      * @param punto - el valor independiente a partir del cual se calculará

@@ -6,7 +6,6 @@
 
 package finansyx.commons.Rules;
 
-import finansyx.Exceptions.NotAValidOptionException;
 import finansyx.commons.Prognostication.ModelManager;
 import finansyx.commons.Prognostication.Models.Model;
 
@@ -30,6 +29,7 @@ public class PrognosticRule extends RuleWithOption{
      * @param values valores base para pronosticar
      * @param confidence el nivel de confianza
      * @param option la forma en que se calcularán estos valores
+     * @param incremento cuanto aumentará el pronóstico
      */
     public PrognosticRule(ArrayList<Double> values, int confidence, int option, Double incremento)
     {
@@ -56,48 +56,47 @@ public class PrognosticRule extends RuleWithOption{
     @Override
     public ArrayList<Double> getValuesFromRule()
     {
-        Model model = manager.getSelectedModel();
-        int n = model.getn();
+       
         ArrayList<Double> values = new ArrayList<>();
-        Model minModel = manager.getMinimumPrognosticModel();
+      
         switch(option)
         {
             case Options.PUNTUAL:
             {
                 for(int i=1; i < limit; i ++)
-                    values.add(model.Calc(i+n));
+                    values.add(manager.Calcular(i));
                 break;
             }            
             case Options.LOWER_LIMIT:
             {
                 for(int i=1; i < limit; i++)
-                    values.add(model.FixedLowerLimit(i+ n,this.confianza));
+                    values.add(manager.fixedLowerLimit(i));
                 break;                    
             }            
             case Options.UPPER_LIMIT:
             {
                  for(int i=1; i < limit; i++)
-                    values.add(model.FixedUpperLimit(i+ n,this.confianza));
+                    values.add(manager.MinimumFixedUpper(i));
                 break; 
             }
             case Options.MINIMUM:
             {
                
                 for(int i=1; i < limit; i++)
-                    values.add(minModel.Calc(i+n));
+                    values.add(manager.Minimum(i));
                 break;
             }
             
             case Options.MINIMUM_LOWER:
             {
                 for(int i=1; i < limit; i++)
-                    values.add(minModel.FixedLowerLimit(i+ n,this.confianza));
+                    values.add(manager.MinimumFixedLower(i));
                 break;   
             }
             case Options.MINIMUM_UPPER:
             {
                  for(int i=1; i < limit; i++)
-                    values.add(minModel.FixedUpperLimit(i+ n,this.confianza));
+                    values.add(manager.MinimumFixedUpper(i));
                 break; 
             }
             default:

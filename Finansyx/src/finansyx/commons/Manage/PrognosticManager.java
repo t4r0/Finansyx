@@ -6,7 +6,6 @@
 
 package finansyx.commons.Manage;
 
-import finansyx.Exceptions.NotAValidOptionException;
 import finansyx.commons.Rules.PrognosticRule;
 import java.util.ArrayList;
 
