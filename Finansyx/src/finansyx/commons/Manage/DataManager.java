@@ -20,7 +20,7 @@ public class DataManager {
     public DataManager() {
     }
     
-    public DataManager(Rule calcRule) throws NotAValidOptionException
+    public DataManager(Rule calcRule)
     {
         this.calcRule = calcRule;
         this.values = calcRule.getValuesFromRule();

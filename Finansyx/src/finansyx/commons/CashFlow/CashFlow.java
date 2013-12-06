@@ -17,6 +17,9 @@ import java.util.HashMap;
  */
 public class CashFlow {
     
+    public static final int GROSS = 20;
+    public static final int NET = 24;
+     
     Double lastYearRevenue = 0.;
     Double lasYearCosts = 1.;
     Double percentage = 0.;
@@ -37,7 +40,7 @@ public class CashFlow {
     }
 
     public CashFlow() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+       
     }
     
     public void setLastYearRevenue(Double value){this.lastYearRevenue = value;}

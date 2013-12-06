@@ -54,7 +54,7 @@ public class PrognosticRule extends RuleWithOption{
     public void setConfidence(int value){ this.confianza = value; }
     
     @Override
-    public ArrayList<Double> getValuesFromRule() throws NotAValidOptionException
+    public ArrayList<Double> getValuesFromRule()
     {
         Model model = manager.getSelectedModel();
         int n = model.getn();
@@ -102,7 +102,7 @@ public class PrognosticRule extends RuleWithOption{
             }
             default:
             {
-                throw new NotAValidOptionException("Esta opción no es válida, o no es soportada");
+               return null;
             }
         }
         return values;        

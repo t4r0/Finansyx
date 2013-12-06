@@ -49,7 +49,7 @@ public class FeeRule extends RuleWithOption{
     public ArrayList<Fee> getFees(){return fees;}
     
     @Override
-    public ArrayList<Double> getValuesFromRule() throws NotAValidOptionException
+    public ArrayList<Double> getValuesFromRule()
     {
         
         switch(option)
@@ -67,7 +67,7 @@ public class FeeRule extends RuleWithOption{
             }
             
             default:
-                throw new NotAValidOptionException("Esa opción no es válida");
+               return null;
         }
     }
 }

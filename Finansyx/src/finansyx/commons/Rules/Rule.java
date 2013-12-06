@@ -61,7 +61,7 @@ public class Rule{
      * Regresa los valores, calculados por esta regla
      * @return una lista de valores, calculados arbitrariamente.
      */
-    public ArrayList<Double> getValuesFromRule() throws NotAValidOptionException
+    public ArrayList<Double> getValuesFromRule()
     {
         return new ArrayList<>();
     }
