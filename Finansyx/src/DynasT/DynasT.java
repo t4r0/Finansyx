@@ -4,7 +4,10 @@
  * and open the template in the editor.
  */
 
-package DynasT.Analysis.Classes;
+package DynasT;
+
+import DynasT.Analysis.Classes.LexicalAnalyzer;
+import DynasT.Analysis.Classes.SintaxAnalysis;
 
 /**
  *

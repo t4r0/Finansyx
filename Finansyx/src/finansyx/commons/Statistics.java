@@ -47,4 +47,14 @@ public class Statistics {
         }
         return 0.;
     }
+    
+    /**
+     * Calcula un valor en base a una cadena de porcentage
+     * @param g la cadena que debe convertirse
+     * @return 
+     */
+    public static Double percentageFromString(String g)
+    {
+        return Double.parseDouble(g.trim().replace("%"," "))/100;
+    }
 }

@@ -25,6 +25,7 @@ public class CashFlow {
     DataManager grossProfit = new DataManager();
     ArrayList<Double> grossProfitPercentage = new ArrayList<>();
     HashMap<String, DataManager> Outlays = new HashMap<>();
+    MARRManager marr = new MARRManager();
     
     public CashFlow(DataManager revenue, DataManager costs)
     {
@@ -33,6 +34,10 @@ public class CashFlow {
         grossProfit = new ArithmeticalManager(Options.SUBSTRACT, Revenue.getValues(),Costs);
         findPercentage();
         
+    }
+
+    public CashFlow() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     
     public void setLastYearRevenue(Double value){this.lastYearRevenue = value;}
@@ -69,6 +74,12 @@ public class CashFlow {
         String Name = name.toUpperCase();
         return Outlays.get(Name);
     }
-    
-    
+
+    public MARRManager getMarr() {
+        return marr;
+    }
+
+    public void setMarr(MARRManager marr) {
+        this.marr = marr;
+    }   
 }
