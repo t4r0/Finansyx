@@ -28,8 +28,7 @@ public class MARRManager extends FinancialManager{
     public void addInvestor(String name, MARRStructure marr)
     {
         this.MARRp.put(name, marr);
-        this.marr += marr.getMarr();
-        System.out.print("tmar =" + this.marr);
+        this.marr += marr.getPonderateMarr();       
     }
     
     public Double getMarr(){return marr;}

@@ -49,8 +49,8 @@ MARR_HEADER ::= MARR PERCENTAGE:percentage OPCURLYBRAC
 :}; 
 MARR_BODY ::= MARR_LINE MARR_BODY| MARR_LINE;
 MARR_LINE ::= IDENTIFIER:i POINTER MARR_PARAM:m {: marr.addInvestor(i,m);:};
-MARR_PARAM ::= PERCENTAGE:percentage COMMA PERCENTAGE:risk SEMICOLON {: RESULT = new MARRStructure(percentage, inflacion, risk);
-                                                                         System.out.print("tmar =" + RESULT.getMarr());:};
+MARR_PARAM ::= PERCENTAGE:risk COMMA PERCENTAGE:percentage SEMICOLON {: RESULT = new MARRStructure(percentage, inflacion, risk);
+                                                                         :};
 
 INFO_PART ::= INFO_HEADER INFO_BODY CLCURLYBRAC;
 INFO_HEADER ::= FLOW INFO OPCURLYBRAC;
