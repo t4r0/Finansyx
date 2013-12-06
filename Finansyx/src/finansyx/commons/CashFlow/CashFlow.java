@@ -23,8 +23,26 @@ public class CashFlow {
     ArrayList<Double> grossProfitPercentage = new ArrayList<>();
     HashMap<String, DataManager> Outlays = new HashMap<>();
     
-    public CashFlow()
+    public CashFlow(DataManager revenue, DataManager costs)
     {
-        
+        this.Revenue = revenue;
+        this.Costs = costs;
     }
+    
+    public void setLastYearRevenue(Double value){this.lastYearRevenue = value;}
+
+    public Double getLastYearRevenue() {
+        return lastYearRevenue;
+    }
+
+    public void setLasYearCosts(Double lasYearCosts) {
+        this.lasYearCosts = lasYearCosts;
+    }
+
+    public Double getLasYearCosts() {
+        return lasYearCosts;
+    }
+    
+    
+    
 }

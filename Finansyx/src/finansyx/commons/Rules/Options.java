@@ -20,4 +20,9 @@ public class Options {
     
     public static final int FRENCH = 7;
     public static final int GERMAN = 8;
+    
+    public static final int ADD = 9;
+    public static final int SUBSTRACT = 10;
+    public static final int DIVIDE = 11;
+    public static final int MULTIPLY = 12;
 }
