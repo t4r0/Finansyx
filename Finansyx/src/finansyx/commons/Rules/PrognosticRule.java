@@ -18,7 +18,6 @@ import java.util.ArrayList;
  */
 public class PrognosticRule extends RuleWithOption{
     
-    int firstYear = 0;
     ModelManager manager = new ModelManager();
     int confianza = 90;
     /**
@@ -29,14 +28,15 @@ public class PrognosticRule extends RuleWithOption{
     /**
      * Inicializa una nueva regla de pronostico
      * @param values valores base para pronosticar
-     * @param firstYear primer año de pronostico
+     * @param confidence el nivel de confianza
      * @param option la forma en que se calcularán estos valores
      */
-    public PrognosticRule(ArrayList<Double> values, int firstYear, int option)
+    public PrognosticRule(ArrayList<Double> values, int confidence, int option, Double incremento)
     {
         manager = new ModelManager(values);
-        this.firstYear = firstYear;
         this.option = option;
+        manager.setFixedConfidence(confidence);
+        manager.setIncremento(incremento);
     }
     
     /**

@@ -45,9 +45,10 @@ public class Model {
     
     public Model(ArrayList<Double> yValues)
     {
+        ArrayList<Integer> xValues = new ArrayList<>();
         for(int i=0; i < yValues.size(); i++)
-            keys.add(i+1);
-        Sum(keys, yValues);
+            xValues.add(i+1);
+        Sum(xValues, yValues);
         CalcValues();
         CalcDecisionFactor();
     }

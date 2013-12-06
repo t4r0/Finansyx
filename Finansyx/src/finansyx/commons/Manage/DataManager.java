@@ -71,4 +71,13 @@ public class DataManager {
         this.values = values;
     }  
     
+    @Override
+    public String toString()
+    {
+        String cadena = "";
+        for(Double value : values)
+            cadena += value + " | ";
+        return cadena;
+    }
+    
 }

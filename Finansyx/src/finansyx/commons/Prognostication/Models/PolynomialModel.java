@@ -21,8 +21,13 @@ public class PolynomialModel extends Model{
         
     public PolynomialModel(ArrayList<Double> values)
     {
-        super(values);
         setName("Polinomial");
+        ArrayList<Integer> xValues = new ArrayList<>();
+        for(int i=0; i < values.size(); i++)
+            xValues.add(i+1);
+        Sum(xValues, values);
+        CalcValues();
+        CalcDecisionFactor();
     }
     
     public PolynomialModel(ArrayList<Integer> x, ArrayList<Double> y)

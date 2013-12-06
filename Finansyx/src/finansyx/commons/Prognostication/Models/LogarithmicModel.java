@@ -29,8 +29,13 @@ public class LogarithmicModel extends Model{
     
     public LogarithmicModel(ArrayList<Double> values)
     {
-        super(values);
         setName("Logarítmico");
+        ArrayList<Integer> xValues = new ArrayList<>();
+        for(int i=0; i < values.size(); i++)
+            xValues.add(i+1);
+        Sum(xValues, values);
+        CalcValues();
+        CalcDecisionFactor();
     }
     
     @Override

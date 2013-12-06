@@ -25,8 +25,13 @@ public class ExponentialModel extends Model{
        
     public ExponentialModel(ArrayList<Double> values)
     {
-        super(values);
-        setName("Exponencial");
+         setName("Exponencial");
+        ArrayList<Integer> xValues = new ArrayList<>();
+        for(int i=0; i < values.size(); i++)
+            xValues.add(i+1);
+        Sum(xValues, values);
+        CalcValues();
+        CalcDecisionFactor();
     }
     
     public ExponentialModel(ArrayList<Integer> x, ArrayList<Double> y)

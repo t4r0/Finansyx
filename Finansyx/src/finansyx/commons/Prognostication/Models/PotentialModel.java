@@ -22,8 +22,13 @@ public class PotentialModel extends Model{
        
     public PotentialModel(ArrayList<Double> values)
     {
-        super(values);
         setName("Potencial");
+         ArrayList<Integer> xValues = new ArrayList<>();
+        for(int i=0; i < values.size(); i++)
+            xValues.add(i+1);
+        Sum(xValues, values);
+        CalcValues();
+        CalcDecisionFactor();
     }
     
     public PotentialModel(ArrayList<Integer> x, ArrayList<Double> y)

@@ -4,7 +4,6 @@
  */
 package finansyx.commons.Prognostication.Models;
 
-import finansyx.commons.Finances.Finances;
 import java.util.ArrayList;
 
 /**

@@ -16,8 +16,8 @@ import java.util.ArrayList;
  */
 public class PrognosticManager extends FinancialDataManager{
     
-    public PrognosticManager(ArrayList<Double> values, int firstYear, int option) throws NotAValidOptionException
+    public PrognosticManager(ArrayList<Double> values, int confidence, int option, Double incremento)
     {
-        super(new PrognosticRule(values, firstYear, option));
+        super(new PrognosticRule(values, confidence, option, incremento));
     }
 }

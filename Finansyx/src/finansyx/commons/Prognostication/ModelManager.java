@@ -33,6 +33,9 @@ public class ModelManager {
     //La tendencia de los valores con los que se generó el modelo
     int trending = -2;
     
+    Double incremento = 0.;
+    
+    Integer fixedConfidence = 90;
     public ModelManager(){}
     
      /**
@@ -48,7 +51,7 @@ public class ModelManager {
        models.add(new ExponentialModel(pattern));
        models.add(new PotentialModel(pattern));       
        findTrending(pattern);
-       chooseModel();
+       chooseModel();      
      }
     
     /**
@@ -63,6 +66,16 @@ public class ModelManager {
         this.confianza = confianza;
         chooseModel();
     }
+
+    public void setIncremento(Double incremento) {
+        this.incremento = incremento;
+    }
+
+    public void setFixedConfidence(Integer fixedConfidence) {
+        this.fixedConfidence = fixedConfidence;
+    }
+     
+     
      
      /**
       * Halla la tendencia de los valores especificados, la cual representará
@@ -225,9 +238,21 @@ public class ModelManager {
      */
     public Double Calcular(Integer punto)
     {
-        return selectedModel.Calc(punto + selectedModel.getn());
+        Double value = selectedModel.Calc(punto + selectedModel.getn());
+        return value + value*incremento;
     }
     
+    public Double fixedUpperLimit(Integer punto)
+    {
+        Double value = selectedModel.FixedUpperLimit(punto + selectedModel.getn(), fixedConfidence);
+        return value + value*incremento;
+    }
+    
+    public Double fixedLowerLimit(Integer punto)
+    {
+        Double value = selectedModel.FixedLowerLimit(punto + selectedModel.getn(), fixedConfidence);
+        return value + value*incremento;
+    }
     /**
      * Calcula el limite superior, con los grados de confianza dados
      * @param punto - el punto que se ploteará
@@ -235,7 +260,8 @@ public class ModelManager {
      */
     public Double UpperLimit(Integer punto)
     {
-         return selectedModel.UpperLimit(punto, confianza);
+         Double value = selectedModel.UpperLimit(punto + selectedModel.getn(), confianza);
+         return value + value*incremento;
     }
     
     /**
@@ -246,6 +272,7 @@ public class ModelManager {
      */
      public Double LowerLimit(Integer punto)
     {
-         return selectedModel.LowerLimit(punto, confianza);
+         Double value = selectedModel.LowerLimit(punto, confianza);
+         return value + value*incremento;
     }   
 }

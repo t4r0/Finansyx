@@ -15,7 +15,9 @@ import finansyx.commons.Prognostication.*;
 import finansyx.commons.*;
 import finansyx.commons.CashFlow.CashFlow;
 import finansyx.commons.Finances.Fee;
+import finansyx.commons.Manage.PrognosticManager;
 import finansyx.commons.Manage.TieredValuesManager;
+import finansyx.commons.Rules.Options;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Scanner;
@@ -80,15 +82,23 @@ public class Finansyx {
     
     public static void testCashFlow() throws NotAValidOptionException
     {
+        ArrayList<Double> prog = new ArrayList<>(
+                Arrays.asList(new Double[]{1132., 1259., 1459., 1712., 2479., 2512., 2788., 2800.,
+                 2865. , 2888.}));
         CashFlow flujo = new CashFlow();
         TieredValuesManager escal = new TieredValuesManager("5%", 2013, 2014, 12.);
+        System.out.println(escal);
+        escal = new TieredValuesManager("8%", 2013, 2014, 17.);
+        System.out.println(escal);
+        PrognosticManager progn = new PrognosticManager(prog, 95, Options.UPPER_LIMIT, 0.15);
+        System.out.println(progn);
     }
     
     public static  void testFinances()
     {
-            ArrayList<Double> promx = new ArrayList<Double>(
+            ArrayList<Double> promx = new ArrayList<>(
                 Arrays.asList(new Double[]{94., 108., 146., 184., 196., 209., 225., 265.}));
-        ArrayList<Double> promy = new ArrayList<Double>(
+        ArrayList<Double> promy = new ArrayList<>(
                 Arrays.asList(new Double[]{9., 14., 17., 18., 21., 24., 28., 32.}));
        System.out.println(Finances.TieredCosts(300., 0.1, 2011, 2021));
         

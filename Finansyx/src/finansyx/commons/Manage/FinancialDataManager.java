@@ -17,7 +17,7 @@ public class FinancialDataManager extends DataManager{
     public FinancialDataManager() {
     }
     
-    public FinancialDataManager(Rule calcRule) throws NotAValidOptionException
+    public FinancialDataManager(Rule calcRule) 
     {
         super(calcRule);
     }
