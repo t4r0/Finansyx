@@ -13,7 +13,7 @@ import finansyx.commons.Rules.FlatValuesRule;
  *
  * @author t4r0
  */
-public class FlatValuesManager extends DataManager {
+public class FlatValuesManager extends FinancialDataManager {
     
     public FlatValuesManager(){}
     

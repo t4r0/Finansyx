@@ -13,7 +13,7 @@ import java.util.ArrayList;
  * @author t4r0
  */
 public class DataManager {
-    DataManager base = new DataManager();
+    DataManager base = null;
     ArrayList<Double> values = new ArrayList<Double>();
     Rule calcRule = new Rule();
 

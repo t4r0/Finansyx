@@ -16,15 +16,22 @@ import java.util.ArrayList;
  *
  * @author t4r0
  */
-public class PrognosticRule extends Rule{
+public class PrognosticRule extends RuleWithOption{
     
     int firstYear = 0;
     ModelManager manager = new ModelManager();
-    int option = -1;
     int confianza = 90;
-    
+    /**
+     * Inicializa una nueva instancia de esta clase
+     */
     public PrognosticRule(){}
     
+    /**
+     * Inicializa una nueva regla de pronostico
+     * @param values valores base para pronosticar
+     * @param firstYear primer año de pronostico
+     * @param option la forma en que se calcularán estos valores
+     */
     public PrognosticRule(ArrayList<Double> values, int firstYear, int option)
     {
         manager = new ModelManager(values);
@@ -32,13 +39,19 @@ public class PrognosticRule extends Rule{
         this.option = option;
     }
     
+    /**
+     * Obtiene el nivel de confianza del pronostico
+     * @return 
+     */
     public int getConfidence(){return confianza;}
     
+    /**
+     * Establece el nivel de confianza del pronóstico.
+     * No es util si se calculara con opción:
+     *  
+     * @param value El nivel de confianza de los limites que se calcularan
+     */
     public void setConfidence(int value){ this.confianza = value; }
-    
-    public int getOption(){return option; }
-    
-    public void setOption(int option){this.option = option;}
     
     @Override
     public ArrayList<Double> getValuesFromRule() throws NotAValidOptionException

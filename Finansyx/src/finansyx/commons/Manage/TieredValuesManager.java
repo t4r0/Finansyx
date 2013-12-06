@@ -13,7 +13,7 @@ import finansyx.commons.Rules.TieredRule;
  *
  * @author t4r0
  */
-public class TieredValuesManager extends DataManager{
+public class TieredValuesManager extends FinancialDataManager{
     
     public TieredValuesManager(){}
     

@@ -15,9 +15,9 @@ import java.util.ArrayList;
  *
  * @author t4r0
  */
-public class FeeRule extends Rule{
+public class FeeRule extends RuleWithOption{
     
-    int option = -1;
+   
     Double A = 0.;
     int p = 1;
     int n = 1;

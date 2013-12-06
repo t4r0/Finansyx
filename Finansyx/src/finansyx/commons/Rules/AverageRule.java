@@ -17,8 +17,16 @@ import java.util.ArrayList;
 public class AverageRule extends Rule{
     
     ArrayList<Double> values = new ArrayList<>();
+    
+    /**
+     * inicializa una nueva instacia de esta clase
+     */
     public AverageRule(){}
     
+    /**
+     * Inicializa una nueva instancia de esta clase
+     * @param values los valores base para calcular el promedio
+     */
     public AverageRule(ArrayList<Double> values){ this.values = values;}
     
     @Override

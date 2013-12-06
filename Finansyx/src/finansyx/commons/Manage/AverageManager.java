@@ -13,14 +13,14 @@ import java.util.ArrayList;
  *
  * @author t4r0
  */
-public class Average extends DependentDataManager{
+public class AverageManager extends DependentDataManager{
 
     /**
      * Crea un nuevo Manager usando como regla el promedio
      * @param manager El manager en el que se basarán los valores de este
      * @param values Los valores iniciales para calcular el promedio
      */
-    public Average(DataManager manager, ArrayList<Double> values) {
+    public AverageManager(DataManager manager, ArrayList<Double> values) {
         super(new AverageRule(values), manager);
     }
     

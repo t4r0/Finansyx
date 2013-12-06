@@ -12,10 +12,20 @@ import java.util.ArrayList;
  */
 public class Rule{
     
-    // El valor base que se utilizará de ser necesario
-    // para calcular los valores dependientes
+    /** 
+     * El valor base que se utilizará de ser necesario
+    * para calcular los valores dependientes
+    */
     Double Value=0.;
+    
+    /**
+     * El limite de esta regla
+     */
     int limit = 10;
+    
+    /**
+     * Crea una nueva instancia de esta clase
+     */
     public Rule(){}
     
     /**
@@ -25,8 +35,16 @@ public class Rule{
      */
     public Rule(Double value){ this.Value = value; }
     
+    /**
+     * Cambia el valor base del calculo de esta regla de calculo
+     * @param value El valor base de la regla de calculo
+     */
     public void setValue(Double value){ this.Value = value;}
     
+    /**
+     * Devuelve el valor base de esta regla de calculo.
+     * @return 
+     */
     public Double getValue(){ return this.Value; }
     
     /**

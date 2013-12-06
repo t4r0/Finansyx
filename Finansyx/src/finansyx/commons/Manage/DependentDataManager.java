@@ -12,7 +12,7 @@ import finansyx.commons.Rules.Rule;
  *
  * @author t4r0
  */
-public class DependentDataManager extends DataManager{
+public class DependentDataManager extends FinancialDataManager{
     
     /**
      * Inicializa una nueva instancia de esta clase
