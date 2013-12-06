@@ -23,11 +23,11 @@ public class CupGenerator {
         Scanner reader;
         String archivo;
         String directorio;
-        reader = new Scanner(System.in);
-        System.out.println("¿Que generaré?: ");
-        archivo = reader.next();
-        System.out.println("¿Donde debo ponerlo?: ");
-        directorio= reader.next();
+        //reader = new Scanner(System.in);
+        //System.out.println("¿Que generaré?: ");
+        archivo = "C:/Users/t4r0/Documents/GitHub/Finansyx/Finansyx/src/DynasT/Analysis/Files/DynasT-cup.cup";
+        //System.out.println("¿Donde debo ponerlo?: ");
+        directorio= "C:/Users/t4r0/Documents/GitHub/Finansyx/Finansyx/src/DynasT/Analysis/Classes";
                String opciones[] = new String[5];
                opciones[0]="-destdir";
                opciones[1]=directorio;
