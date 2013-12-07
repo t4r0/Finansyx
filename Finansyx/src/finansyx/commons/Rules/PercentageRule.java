@@ -42,7 +42,7 @@ public class PercentageRule extends Rule{
     public ArrayList<Double> getValuesFromRule()
     {
         ArrayList<Double> values = new ArrayList<>();
-        for(int i=0; i < 10; i++)
+        for(int i=0; i < limit; i++)
             values.add(Value * Math.random());
         return values;
     }

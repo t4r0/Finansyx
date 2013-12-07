@@ -3,7 +3,6 @@
  * and open the template in the editor.
  */
 package finansyx.commons.Rules;
-import finansyx.Exceptions.NotAValidOptionException;
 import finansyx.commons.Manage.DataManager;
 import java.util.ArrayList;
 /**
@@ -34,6 +33,22 @@ public class Rule{
      * de calculo
      */
     public Rule(Double value){ this.Value = value; }
+
+    /**
+     * Obtiene el límite del calculo de esta regla
+     * @return 
+     */
+    public int getLimit() {
+        return limit;
+    }
+
+    /**
+     * Establece el limite de calculo de esta regla
+     * @param limit la cantidad de veces que se calculará un valor
+     */
+    public void setLimit(int limit) {
+        this.limit = limit;
+    }    
     
     /**
      * Cambia el valor base del calculo de esta regla de calculo

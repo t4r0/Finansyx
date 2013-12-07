@@ -63,7 +63,7 @@ public class Finansyx {
                 } catch (NotAValidOptionException ex) {
                     Logger.getLogger(Finansyx.class.getName()).log(Level.SEVERE, null, ex);
                 }
-                    scan.next();
+                   
                    return;
                 }
                 
@@ -100,8 +100,9 @@ public class Finansyx {
         PercentageManager com = new PercentageManager("4%", new PercentageManager("45%", progn));
         System.out.println(com);
         PercentageManager indenm = new PercentageManager("8.33%", escal);
-         System.out.println(indenm);
-        
+        System.out.println(indenm);
+        PercentageManager acc = new PercentageManager("1.5%", progn);
+        System.out.println(acc);
     }
     
     public static  void testFinances()
