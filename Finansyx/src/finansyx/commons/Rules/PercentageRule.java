@@ -30,7 +30,8 @@ public class PercentageRule extends Rule{
     public ArrayList<Double> getValuesFromRule(DataManager manager)            
     {
         ArrayList<Double> values = new ArrayList<>();
-        for(Double value: manager.getValues())
+        ArrayList<Double> manV = manager.getValues();
+        for(Double value: manV)
         {
             values.add(value * this.Value);
         }

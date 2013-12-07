@@ -64,7 +64,7 @@ public class Finansyx {
                     Logger.getLogger(Finansyx.class.getName()).log(Level.SEVERE, null, ex);
                 }
                     scan.next();
-                    break;
+                   return;
                 }
                 
                 default: break;
@@ -76,16 +76,32 @@ public class Finansyx {
     
     public static void testCashFlow() throws NotAValidOptionException
     {
+        PrognosticManager progn, gasM;
         ArrayList<Double> prog = new ArrayList<>(
                 Arrays.asList(new Double[]{1132., 1259., 1459., 1712., 2479., 2512., 2788., 2800.,
                  2865. , 2888.}));
+        ArrayList<Double> tel= new ArrayList<>(
+                Arrays.asList(new Double[]{21., 25., 30., 38., 43., 48., 51., 55.}));
+         ArrayList<Double> gas= new ArrayList<>(
+                Arrays.asList(new Double[]{60., 68., 75., 76., 89., 95., 103., 115.}));
         CashFlow flujo = new CashFlow();
         TieredValuesManager escal = new TieredValuesManager("5%", 2013, 2014, 12.);
         System.out.println(escal);
         escal = new TieredValuesManager("8%", 2013, 2014, 17.);
         System.out.println(escal);
-        PrognosticManager progn = new PrognosticManager(prog, 95, Options.UPPER_LIMIT, 0.15);
+        progn = new PrognosticManager(prog, 95, Options.UPPER_LIMIT, 0.15);
         System.out.println(progn);
+        gasM = new PrognosticManager(gas, 99,Options.MINIMUM_LOWER, 0.);
+        System.out.println(gasM);
+        PercentageManager luz = new PercentageManager("1%", progn);
+        System.out.println(luz);
+        PrognosticManager telm = new PrognosticManager(tel, 99,Options.MINIMUM_UPPER, 0.);
+        System.out.println(telm);
+        PercentageManager com = new PercentageManager("4%", new PercentageManager("45%", progn));
+        System.out.println(com);
+        PercentageManager indenm = new PercentageManager("8.33%", escal);
+         System.out.println(indenm);
+        
     }
     
     public static  void testFinances()

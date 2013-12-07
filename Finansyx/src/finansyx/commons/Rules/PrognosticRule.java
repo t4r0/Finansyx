@@ -63,39 +63,39 @@ public class PrognosticRule extends RuleWithOption{
         {
             case Options.PUNTUAL:
             {
-                for(int i=1; i < limit; i ++)
+                for(int i=1; i <= limit; i ++)
                     values.add(manager.Calcular(i));
                 break;
             }            
             case Options.LOWER_LIMIT:
             {
-                for(int i=1; i < limit; i++)
+                for(int i=1; i <= limit; i++)
                     values.add(manager.fixedLowerLimit(i));
                 break;                    
             }            
             case Options.UPPER_LIMIT:
             {
-                 for(int i=1; i < limit; i++)
+                 for(int i=1; i <= limit; i++)
                     values.add(manager.fixedUpperLimit(i));
                 break; 
             }
             case Options.MINIMUM:
             {
                
-                for(int i=1; i < limit; i++)
+                for(int i=1; i <= limit; i++)
                     values.add(manager.Minimum(i));
                 break;
             }
             
             case Options.MINIMUM_LOWER:
             {
-                for(int i=1; i < limit; i++)
+                for(int i=1; i <= limit; i++)
                     values.add(manager.MinimumFixedLower(i));
                 break;   
             }
             case Options.MINIMUM_UPPER:
             {
-                 for(int i=1; i < limit; i++)
+                 for(int i=1; i <= limit; i++)
                     values.add(manager.MinimumFixedUpper(i));
                 break; 
             }

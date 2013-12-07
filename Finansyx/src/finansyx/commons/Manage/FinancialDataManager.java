@@ -2,7 +2,6 @@
 
 package finansyx.commons.Manage;
 
-import finansyx.Exceptions.NotAValidOptionException;
 import finansyx.commons.Rules.Rule;
 
 /**

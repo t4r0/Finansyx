@@ -39,7 +39,7 @@ public class TieredRule extends PercentageRule {
     public ArrayList<Double> getValuesFromRule()
     {
         ArrayList<Double> values = new ArrayList<>();
-        for(int i=0; i <= limit; i++ )
+        for(int i=0; i < limit; i++ )
         {
             values.add(Finances.TieredCosts(base, Value, baseYear, firstYear + i));
         }
