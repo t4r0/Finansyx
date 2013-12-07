@@ -236,7 +236,7 @@ public class ModelManager {
      */
     public Double Minimum(Integer punto)
     {
-        Double value = minimumPrognosticModel.Calc(punto + selectedModel.getn());
+        Double value = minimumPrognosticModel.Calc(punto);
         return value + value*incremento;
         
     }
@@ -248,7 +248,7 @@ public class ModelManager {
      */
     public Double MinimumUpperLimit(Integer punto)
     {
-         Double value = minimumPrognosticModel.UpperLimit(punto + selectedModel.getn(), confianza);
+         Double value = minimumPrognosticModel.UpperLimit(punto, confianza);
          return value + value*incremento;
     }
     
@@ -270,13 +270,13 @@ public class ModelManager {
      */
     public Double MinimumFixedUpper(Integer punto)
     {
-        Double value = minimumPrognosticModel.FixedUpperLimit(punto + selectedModel.getn(), fixedConfidence);
+        Double value = minimumPrognosticModel.FixedUpperLimit(punto, fixedConfidence);
         return value + value*incremento;
     }
     
     public Double MinimumFixedLower(Integer punto)
     {
-        Double value = minimumPrognosticModel.FixedLowerLimit(punto + selectedModel.getn(), fixedConfidence);
+        Double value = minimumPrognosticModel.FixedLowerLimit(punto, fixedConfidence);
         return value + value*incremento;
     }
     /**
@@ -288,19 +288,19 @@ public class ModelManager {
      */
     public Double Calcular(Integer punto)
     {
-        Double value = selectedModel.Calc(punto + selectedModel.getn());
+        Double value = selectedModel.Calc(punto);
         return value + value*incremento;
     }
     
     public Double fixedUpperLimit(Integer punto)
     {
-        Double value = selectedModel.FixedUpperLimit(punto + selectedModel.getn(), fixedConfidence);
+        Double value = selectedModel.FixedUpperLimit(punto, fixedConfidence);
         return value + value*incremento;
     }
     
     public Double fixedLowerLimit(Integer punto)
     {
-        Double value = selectedModel.FixedLowerLimit(punto + selectedModel.getn(), fixedConfidence);
+        Double value = selectedModel.FixedLowerLimit(punto, fixedConfidence);
         return value + value*incremento;
     }
     /**
@@ -310,7 +310,7 @@ public class ModelManager {
      */
     public Double UpperLimit(Integer punto)
     {
-         Double value = selectedModel.UpperLimit(punto + selectedModel.getn(), confianza);
+         Double value = selectedModel.UpperLimit(punto, confianza);
          return value + value*incremento;
     }
     

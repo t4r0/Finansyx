@@ -76,7 +76,7 @@ public class PrognosticRule extends RuleWithOption{
             case Options.UPPER_LIMIT:
             {
                  for(int i=1; i < limit; i++)
-                    values.add(manager.MinimumFixedUpper(i));
+                    values.add(manager.fixedUpperLimit(i));
                 break; 
             }
             case Options.MINIMUM:

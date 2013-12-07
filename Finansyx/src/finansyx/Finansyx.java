@@ -5,18 +5,12 @@
 package finansyx;
 
 import finansyx.Exceptions.NotAValidOptionException;
-import finansyx.commons.Prognostication.Models.LinearModel;
-import finansyx.commons.Prognostication.Models.LogarithmicModel;
-import finansyx.commons.Prognostication.Models.ExponentialModel;
-import finansyx.commons.Prognostication.Models.PotentialModel;
-import finansyx.commons.Prognostication.Models.PolynomialModel;
+import finansyx.commons.Prognostication.Models.*;
 import finansyx.commons.Finances.Finances;
-import finansyx.commons.Prognostication.*;
 import finansyx.commons.*;
 import finansyx.commons.CashFlow.CashFlow;
 import finansyx.commons.Finances.Fee;
-import finansyx.commons.Manage.PrognosticManager;
-import finansyx.commons.Manage.TieredValuesManager;
+import finansyx.commons.Manage.*;
 import finansyx.commons.Rules.Options;
 import java.util.ArrayList;
 import java.util.Arrays;

@@ -7,6 +7,7 @@ package finansyx.commons.Prognostication.Models;
 import java.util.ArrayList;
 import Jama.Matrix;
 import finansyx.commons.Finances.Finances;
+import finansyx.commons.Prognostication.Trending;
 /**
  *
  * @author t4r0
@@ -93,6 +94,14 @@ public class PolynomialModel extends Model{
        c = C.get(0, 0);
     }
     
+  
+    @Override
+    public int getTrending() {
+       ArrayList<Double> values = new ArrayList<>();
+       for(int i = 0; i < 10; i++)
+           values.add(Calc(i+n));
+       return Trending.findTrending(values);
+    }
     @Override
     void CalcVariance()
     {
