@@ -18,6 +18,10 @@ public class Rule{
     Double Value=0.;
     
     /**
+     * Verifica si una regla es dependiente de otros valores
+     */
+    Boolean independence = false;
+    /**
      * El limite de esta regla
      */
     int limit = 10;
@@ -42,6 +46,23 @@ public class Rule{
         return limit;
     }
 
+    /**
+     * Dice si una regla es independiente o no
+     * @return 
+     */    
+    public Boolean isIndependient()
+    {
+        return independence;
+    }
+    
+    /**
+     * Establece si una regla es independiente o no
+     * @param value 
+     */
+    public void setIndependence(Boolean value)
+    {
+        this.independence = value;
+    }
     /**
      * Establece el limite de calculo de esta regla
      * @param limit la cantidad de veces que se calculará un valor

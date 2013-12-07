@@ -16,6 +16,7 @@ public class ArithmeticalRule extends RuleWithOption{
     {
         super(option);
         this.base = base;
+        setIndependence(true);
     }
     
     @Override

@@ -18,6 +18,7 @@ public class PercentageRule extends Rule{
     public PercentageRule(Double value)
     {
         super(value);
+        setIndependence(true);
     }
     
     public PercentageRule(String value)

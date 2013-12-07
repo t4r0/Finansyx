@@ -27,7 +27,10 @@ public class AverageRule extends Rule{
      * Inicializa una nueva instancia de esta clase
      * @param values los valores base para calcular el promedio
      */
-    public AverageRule(ArrayList<Double> values){ this.values = values;}
+    public AverageRule(ArrayList<Double> values){ 
+        this.values = values;
+        setIndependence(true);
+    }
     
     @Override
     public ArrayList<Double> getValuesFromRule(DataManager manager)
