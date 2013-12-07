@@ -13,7 +13,7 @@ import java.util.HashMap;
  *
  * @author t4r0
  */
-public class MARRManager extends FinancialManager{
+public class MARRManager{
     
     private Double inflation=0.;
     private HashMap<String,MARRStructure> MARRp = new HashMap<>();

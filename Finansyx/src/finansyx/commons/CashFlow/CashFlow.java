@@ -23,20 +23,22 @@ public class CashFlow {
     Double lastYearRevenue = 0.;
     Double lasYearCosts = 1.;
     Double percentage = 0.;
+    
+    MARRManager marr = new MARRManager();
+    
     DataManager Revenue = new DataManager();
     DataManager Costs = new DataManager();
     DataManager grossProfit = new DataManager();
     ArrayList<Double> grossProfitPercentage = new ArrayList<>();
     HashMap<String, DataManager> Outlays = new HashMap<>();
-    MARRManager marr = new MARRManager();
+  
     
     public CashFlow(DataManager revenue, DataManager costs)
     {
         this.Revenue = revenue;
         this.Costs = costs;
         grossProfit = new ArithmeticalManager(Options.SUBSTRACT, Revenue.getValues(),Costs);
-        findPercentage();
-        
+        findPercentage();        
     }
 
     public CashFlow() {
