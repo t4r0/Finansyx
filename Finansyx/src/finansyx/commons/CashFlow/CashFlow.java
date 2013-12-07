@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 
 package finansyx.commons.CashFlow;
 
@@ -20,9 +15,14 @@ public class CashFlow {
     public static final int GROSS = 20;
     public static final int NET = 24;
      
+    Integer start = 2013;
+    Integer type = 0;
+    
+    Double assets = 0.;
     Double lastYearRevenue = 0.;
     Double lasYearCosts = 1.;
     Double percentage = 0.;
+    Boolean commerce = true;
     
     MARRManager marr = new MARRManager();
     
@@ -43,6 +43,87 @@ public class CashFlow {
 
     public CashFlow() {
        
+    }
+
+    public Double getAssets() {
+        return assets;
+    }
+
+    public void setAssets(Double assets) {
+        this.assets = assets;
+    }
+    
+    public Boolean isCommerce() {
+        return commerce;
+    }
+
+    public void setCommerce(Boolean commerce) {
+        this.commerce = commerce;
+    }
+    
+    public void setStart(Integer value)
+    {
+        this.start = value;
+    }
+
+    public Integer getStart() {
+        return start;
+    }   
+
+    public Integer getType() {
+        return type;
+    }
+
+    public void setType(Integer type) {
+        this.type = type;
+    }
+
+    public DataManager getCosts() {
+        return Costs;
+    }
+
+    public DataManager getGrossProfit() {
+        return grossProfit;
+    }
+
+    public ArrayList<Double> getGrossProfitPercentage() {
+        return grossProfitPercentage;
+    }
+
+    public HashMap<String, DataManager> getOutlays() {
+        return Outlays;
+    }
+
+    public Double getPercentage() {
+        return percentage;
+    }
+
+    public DataManager getRevenue() {
+        return Revenue;
+    }
+
+    public void setCosts(DataManager Costs) {
+        this.Costs = Costs;
+    }
+
+    public void setGrossProfit(DataManager grossProfit) {
+        this.grossProfit = grossProfit;
+    }
+
+    public void setGrossProfitPercentage(ArrayList<Double> grossProfitPercentage) {
+        this.grossProfitPercentage = grossProfitPercentage;
+    }
+
+    public void setOutlays(HashMap<String, DataManager> Outlays) {
+        this.Outlays = Outlays;
+    }
+
+    public void setPercentage(Double percentage) {
+        this.percentage = percentage;
+    }
+
+    public void setRevenue(DataManager Revenue) {
+        this.Revenue = Revenue;
     }
     
     public void setLastYearRevenue(Double value){this.lastYearRevenue = value;}

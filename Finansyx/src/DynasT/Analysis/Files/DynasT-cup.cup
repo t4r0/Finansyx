@@ -6,6 +6,7 @@ import finansyx.commons.CashFlow.*;
 
 action code {:
 
+    public CashFlow flujo = new CashFlow();
     MARRManager marr = new MARRManager();
     String inflacion = "0%";
 :}
@@ -15,32 +16,36 @@ parser code {:
 :}
 
 terminal OPBRAC,CLBRAC, PLUS, MINUS, TIMES, DIVIDE, POLKADOT, OPCURLYBRAC, CLCURLYBRAC, COMMA , OPSQBRAC, 
-CLSQBRAC, SEMICOLON, EQUALS, POINTER, ASSETS, LAST, GERMAN, TREE, GROSS, COSTS, TIERED,
-SCENARIO, END, FLOW, FRENCH, OUTLAY, INFO, FIRST, INF, INFMIN, REVENUE, INTERESTS, NET, PATENT, PROGNOSTIC, OPTIMIZER, 
+CLSQBRAC, SEMICOLON, EQUALS, POINTER, ASSETS, LAST, GERMAN, TREE, COSTS, TIERED,
+SCENARIO, END, FLOW, FRENCH, OUTLAY, INFO, FIRST, INF, INFMIN, REVENUE, INTERESTS, PATENT, PROGNOSTIC, OPTIMIZER, 
 UPPER, UPPER_MIN, MARR;
-terminal Integer INTEGER;
-terminal Double FLOAT;
+terminal Double NUMBER;
 terminal String IDENTIFIER, PERCENTAGE;
 terminal Boolean YES, NO;
+terminal Integer GROSS, NET;
 
 non terminal FILE, HEADER_PART, BODY_PART, FOOTER_PART;
-non terminal MARR_BODY, INFO_PART, INFO_HEADER, INFO_BODY, INFO_OPTION,INFO_LINE, BOOL, TYPE, LAST_INFO, MARR_LINE;
+non terminal MARR_BODY, INFO_PART, INFO_HEADER, INFO_BODY, INFO_OPTION,INFO_LINE, LAST_INFO, MARR_LINE;
 non terminal MARRManager MARR_PART, MARR_HEADER;
 non terminal MARRStructure MARR_PARAM;
+non terminal Integer  TYPE;
+non terminal Boolean BOOL;
 start with FILE;
 
 FILE ::= HEADER_PART BODY_PART CLCURLYBRAC;
 
-BOOL ::= YES | NO;
-TYPE ::= GROSS | NET;
+BOOL ::= YES{:RESULT = true;:} | NO {:RESULT = false;:};
+TYPE ::= GROSS {:RESULT = CashFlow.GROSS; :} | NET{:RESULT = CashFlow.NET;:};
 
 HEADER_PART ::=  FLOW IDENTIFIER OPCURLYBRAC;
 BODY_PART ::= MARR_PART INFO_PART;
 
 MARR_PART ::= MARR_HEADER MARR_BODY CLCURLYBRAC
 {:
+ flujo.setMarr(marr);
  System.out.println("tmar= " + marr.getMarr());
 :};
+
 MARR_HEADER ::= MARR PERCENTAGE:percentage OPCURLYBRAC 
 {:
     RESULT = new MARRManager(percentage);
@@ -49,14 +54,21 @@ MARR_HEADER ::= MARR PERCENTAGE:percentage OPCURLYBRAC
 :}; 
 MARR_BODY ::= MARR_LINE MARR_BODY| MARR_LINE;
 MARR_LINE ::= IDENTIFIER:i POINTER MARR_PARAM:m {: marr.addInvestor(i,m);:};
-MARR_PARAM ::= PERCENTAGE:risk COMMA PERCENTAGE:percentage SEMICOLON {: RESULT = new MARRStructure(percentage, inflacion, risk);
-                                                                         :};
+MARR_PARAM ::= PERCENTAGE:risk COMMA PERCENTAGE:percentage SEMICOLON 
+{: 
+   RESULT = new MARRStructure(percentage, inflacion, risk);
+:};
 
 INFO_PART ::= INFO_HEADER INFO_BODY CLCURLYBRAC;
-INFO_HEADER ::= FLOW INFO OPCURLYBRAC;
+INFO_HEADER ::= INFO OPCURLYBRAC;
 INFO_BODY ::= INFO_LINE INFO_BODY | INFO_LINE;
 INFO_LINE ::= INFO_OPTION SEMICOLON;
-INFO_OPTION ::= FIRST EQUALS INTEGER | PATENT EQUALS BOOL | TYPE | ASSETS EQUALS INTEGER | LAST_INFO;
-LAST_INFO ::= LAST REVENUE EQUALS INTEGER | LAST COSTS EQUALS INTEGER;
+INFO_OPTION ::= FIRST EQUALS NUMBER:n {: flujo.setStart(n.intValue()); :} 
+              | PATENT EQUALS BOOL:b {: flujo.setCommerce(b); :}
+              | TYPE:t {: flujo.setType(t);:} 
+              | ASSETS EQUALS NUMBER:n {: flujo.setAssets(n);:} 
+              | LAST_INFO;
+LAST_INFO ::= LAST REVENUE EQUALS NUMBER:n {: flujo.setLastYearRevenue(n);:} 
+            | LAST COSTS EQUALS NUMBER:n {: flujo.setLasYearCosts(n); :};
 
 

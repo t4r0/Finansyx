@@ -19,8 +19,8 @@ whiteSpace = [ \t\f]
 integer = [0-9]+
 floating = {integer}[\.]{integer} 
 identifier = [:jletter:][:jletterdigit:]* 
-percentage = {floating}['%'] | {integer}['%']
-
+numb = {integer} | {floating}
+percentage = {numb}['%'] 
 %%
 
 <YYINITIAL>
@@ -67,8 +67,7 @@ percentage = {floating}['%'] | {integer}['%']
     ";"           { return new Symbol(sym.SEMICOLON); }
     "="           { return new Symbol(sym.EQUALS); }
     "->"          { return new Symbol(sym.POINTER); } 
-    {integer}     { return new Symbol(sym.INTEGER, new Integer(yytext()));}
-    {floating}    { return new Symbol(sym.FLOAT, new Double(yytext()));} 
+    {numb}        { return new Symbol(sym.NUMBER, new Double(yytext()));} 
     {identifier}  { return new Symbol(sym.IDENTIFIER, yytext()); }
     {percentage}  { return new Symbol(sym.PERCENTAGE,yytext()); }
     {whiteSpace}  {/* ignoring */}
