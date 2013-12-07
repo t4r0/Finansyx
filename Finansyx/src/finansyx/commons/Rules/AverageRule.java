@@ -38,7 +38,7 @@ public class AverageRule extends Rule{
          ArrayList<Double> newValues = new ArrayList<>();
          ArrayList<Double> manValues = manager.getValues();
          this.Value = Finances.Average( manValues, values);
-         for(int i=0; i < limit; i++)
+         for(int i=start; i < limit; i++)
              newValues.add(Value * manValues.get(i));
          return newValues;
     }

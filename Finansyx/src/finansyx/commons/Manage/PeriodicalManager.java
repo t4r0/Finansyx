@@ -6,9 +6,8 @@
 
 package finansyx.commons.Manage;
 
-import finansyx.commons.Rules.Rule;
-import java.util.HashMap;
-import javax.print.attribute.HashAttributeSet;
+import java.util.ArrayList;
+
 
 /**
  *
@@ -16,10 +15,23 @@ import javax.print.attribute.HashAttributeSet;
  */
 public class PeriodicalManager extends FinancialDataManager{
 
-    HashMap<Integer, Rule> rules = new HashMap<>();
-    
-    public PeriodicalManager(HashMap<Integer, Rule> rules) {
-        this.rules = rules;
+    ArrayList<DataManager> managers = new ArrayList<>();
+    Integer now = 0;
+    public PeriodicalManager(ArrayList<DataManager> managers) {
+        this.managers= managers;
+        this.Calc();
+    }
+
+    public void addManager(DataManager manager, Integer limit)
+    {
+        manager.setLimit( limit + now, now);
+        now += limit;
+        Calc();
+    }
+    @Override
+    public final void Calc(){
+        for(DataManager manager : managers)
+          values.addAll(manager.values);        
     }
     
     

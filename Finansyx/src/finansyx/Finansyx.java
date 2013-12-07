@@ -85,26 +85,55 @@ public class Finansyx {
          ArrayList<Double> gas= new ArrayList<>(
                 Arrays.asList(new Double[]{60., 68., 75., 76., 89., 95., 103., 115.}));
         CashFlow flujo = new CashFlow();
-        TieredValuesManager escal = new TieredValuesManager("5%", 2013, 2014, 12.);
-        System.out.println(escal);
-        escal = new TieredValuesManager("8%", 2013, 2014, 17.);
-        System.out.println(escal);
+        
         progn = new PrognosticManager(prog, 95, Options.UPPER_LIMIT, 0.15);
         System.out.println(progn);
+        
+        PeriodicalManager costos = new PeriodicalManager(getManagers(progn));
+         System.out.println(costos);
+        
+        TieredValuesManager escal = new TieredValuesManager("5%", 2013, 2014, 12.);
+        System.out.println(escal);
+        
+        escal = new TieredValuesManager("8%", 2013, 2014, 17.);
+        System.out.println(escal);     
+        
         gasM = new PrognosticManager(gas, 99,Options.MINIMUM_LOWER, 0.);
         System.out.println(gasM);
+        
         PercentageManager luz = new PercentageManager("1%", progn);
         System.out.println(luz);
+        
         PrognosticManager telm = new PrognosticManager(tel, 99,Options.MINIMUM_UPPER, 0.);
         System.out.println(telm);
+        
         PercentageManager com = new PercentageManager("4%", new PercentageManager("45%", progn));
         System.out.println(com);
+        
         PercentageManager indenm = new PercentageManager("8.33%", escal);
         System.out.println(indenm);
+        
         PercentageManager acc = new PercentageManager("1.5%", progn);
         System.out.println(acc);
     }
     
+ 
+    public static ArrayList<DataManager> getManagers(DataManager man)
+    {
+        ArrayList<DataManager> managers = new ArrayList<>();
+        String[] perc = new String[]{"97%", "96%", "60%", "75%", "70%"};
+        Integer[] lim = new Integer[]{1, 1, 2, 3, 3};
+        PercentageManager mana = null;
+        int add = 0;
+         for(int i=0; i < perc.length; i++)
+         {
+             mana = new PercentageManager(perc[i], man);             
+             mana.setLimit(lim[i] + add, add);
+             managers.add(mana);
+             add += lim[i];
+         }
+        return managers;
+    }
     public static  void testFinances()
     {
             ArrayList<Double> promx = new ArrayList<>(
@@ -144,9 +173,9 @@ public class Finansyx {
     
     public static void testModels()
     {
-        ArrayList<Integer> keys = new ArrayList<Integer>(
+        ArrayList<Integer> keys = new ArrayList<>(
                 Arrays.asList(new Integer[]{1,2,3,4}));
-        ArrayList<Double> values = new ArrayList<Double>(
+        ArrayList<Double> values = new ArrayList<>(
                 Arrays.asList(new Double[]{29.0, 29.5, 39.0, 60.0}));    
         LinearModel modl= new LinearModel(keys, values);
         PolynomialModel modP = new PolynomialModel(keys, values);

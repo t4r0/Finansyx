@@ -7,7 +7,6 @@
 package finansyx.commons.Rules;
 
 import finansyx.commons.Prognostication.ModelManager;
-import finansyx.commons.Prognostication.Models.Model;
 
 import java.util.ArrayList;
 
@@ -63,19 +62,19 @@ public class PrognosticRule extends RuleWithOption{
         {
             case Options.PUNTUAL:
             {
-                for(int i=1; i <= limit; i ++)
+                for(int i=start + 1; i <= limit; i ++)
                     values.add(manager.Calcular(i));
                 break;
             }            
             case Options.LOWER_LIMIT:
             {
-                for(int i=1; i <= limit; i++)
+                for(int i= start + 1; i <= limit; i++)
                     values.add(manager.fixedLowerLimit(i));
                 break;                    
             }            
             case Options.UPPER_LIMIT:
             {
-                 for(int i=1; i <= limit; i++)
+                 for(int i= start + 1; i <= limit; i++)
                     values.add(manager.fixedUpperLimit(i));
                 break; 
             }
@@ -89,13 +88,13 @@ public class PrognosticRule extends RuleWithOption{
             
             case Options.MINIMUM_LOWER:
             {
-                for(int i=1; i <= limit; i++)
+                for(int i= start + 1; i <= limit; i++)
                     values.add(manager.MinimumFixedLower(i));
                 break;   
             }
             case Options.MINIMUM_UPPER:
             {
-                 for(int i=1; i <= limit; i++)
+                 for(int i= start + 1; i <= limit; i++)
                     values.add(manager.MinimumFixedUpper(i));
                 break; 
             }

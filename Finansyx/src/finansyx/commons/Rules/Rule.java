@@ -21,6 +21,11 @@ public class Rule{
      * Verifica si una regla es dependiente de otros valores
      */
     Boolean independence = false;
+    
+    /**
+     * El limite inicial de esta regla
+     */
+    int start = 0;
     /**
      * El limite de esta regla
      */
@@ -47,6 +52,14 @@ public class Rule{
     }
 
     /**
+     * Devuelve el inicio del calculo de esta regla
+     * @return 
+     */
+    public int getStart()
+    {
+        return start;
+    }
+    /**
      * Dice si una regla es independiente o no
      * @return 
      */    
@@ -66,9 +79,11 @@ public class Rule{
     /**
      * Establece el limite de calculo de esta regla
      * @param limit la cantidad de veces que se calculará un valor
+     * @param start el inicio de los calculos de este valor
      */
-    public void setLimit(int limit) {
+    public void setLimit(int limit, int start) {
         this.limit = limit;
+        this.start = start;
     }    
     
     /**

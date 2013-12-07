@@ -32,8 +32,10 @@ public class PercentageRule extends Rule{
     {
         ArrayList<Double> values = new ArrayList<>();
         ArrayList<Double> manV = manager.getValues();
-        for(Double value: manV)
+        Double value = 0.;
+        for(int i=start; i < limit; i++)
         {
+            value = manV.get(i);
             values.add(value * this.Value);
         }
         return values;
@@ -43,7 +45,7 @@ public class PercentageRule extends Rule{
     public ArrayList<Double> getValuesFromRule()
     {
         ArrayList<Double> values = new ArrayList<>();
-        for(int i=0; i < limit; i++)
+        for(int i=start; i < limit; i++)
             values.add(Value * Math.random());
         return values;
     }

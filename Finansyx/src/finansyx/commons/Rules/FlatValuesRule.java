@@ -34,7 +34,7 @@ public class FlatValuesRule extends Rule{
     public ArrayList<Double> getValuesFromRule()
     {
         ArrayList<Double> array = new ArrayList<>();
-        for(int i=0; i < limit; i++)
+        for(int i=start; i < limit; i++)
             array.add(Value);
         return array;
     }

@@ -28,18 +28,18 @@ public class ArithmeticalRule extends RuleWithOption{
         {
             case Options.ADD:
             {
-                for(int i=0; i < limit; i++)
+                for(int i=start; i < limit; i++)
                     values.add(base.get(i)+manValues.get(i));
             }
             case Options.SUBSTRACT:
             {
-                  for(int i=0; i < limit; i++)
+                  for(int i=start; i < limit; i++)
                     values.add(base.get(i)- manValues.get(i));
             }
             case Options.DIVIDE:
             {
                 
-                  for(int i=0; i < limit; i++)
+                  for(int i=start; i < limit; i++)
                   {
                     Double num = manValues.get(i);
                     if(num != 0)
@@ -51,7 +51,7 @@ public class ArithmeticalRule extends RuleWithOption{
             }
             case Options.MULTIPLY:
             {
-                 for(int i=0; i < limit; i++)
+                 for(int i=start; i < limit; i++)
                     values.add(base.get(i)*manValues.get(i));
             }          
         }
