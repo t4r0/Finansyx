@@ -18,6 +18,7 @@ public class CashFlow {
     Integer start = 2013;
     Integer type = 0;
     
+    Double investment = 0.;
     Double assets = 0.;
     Double lastYearRevenue = 0.;
     Double lasYearCosts = 1.;
@@ -45,6 +46,14 @@ public class CashFlow {
        
     }
 
+    public Double getInvestment() {
+        return investment;
+    }
+
+    public void setInvestment(Double investment) {
+        this.investment = investment;
+    }
+    
     public Double getAssets() {
         return assets;
     }

@@ -38,6 +38,7 @@ percentage = {numb}['%']
     "frances"     { return new Symbol(sym.FRENCH);}
     "gastos"      { return new Symbol(sym.OUTLAY);}
     "info"        { return new Symbol(sym.INFO);}
+    "inicio"      { return new Symbol(sym.START);}
     "inicial"     { return new Symbol(sym.FIRST);}
     "inferior"    { return new Symbol(sym.INF); }
     "infer-min"   { return new Symbol(sym.INFMIN);}
