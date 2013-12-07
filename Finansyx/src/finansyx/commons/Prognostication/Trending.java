@@ -6,6 +6,8 @@
 
 package finansyx.commons.Prognostication;
 
+import java.util.Objects;
+
 
 
 /**
@@ -23,7 +25,7 @@ public class Trending {
     
     public static int findTrending(Iterable<Double> numbers)
     {
-        int current = 0;
+        Double current = 0.;
         int trending = FLAT;
         Boolean through = false;
         for(Double i : numbers)
@@ -31,7 +33,9 @@ public class Trending {
             if(i > current)
             {
                 if(trending == FLAT)
-                    trending = INCREASING;
+                {
+                    trending = INCREASING;                    
+                }
                 else
                 {
                     if(trending == DECREASING && ! through)
@@ -39,6 +43,7 @@ public class Trending {
                         trending = CONCAVE_UPWARD;
                         through = true;
                     }
+                    else
                     if(trending == DECREASING && through)
                         trending = ALTERNANT;       
                 }
@@ -55,16 +60,18 @@ public class Trending {
                         trending = CONCAVE_DOWNWARD;
                         through = true;
                     }
+                    else
                     if(trending == DECREASING && through)
                         trending = ALTERNANT;
                 }                
             } 
             
-            if (i == current)
+            if (Objects.equals(i, current))
             {
                 if(through)
                     trending = ALTERNANT;
             }
+            current = i;
         }
         return trending;
     }
