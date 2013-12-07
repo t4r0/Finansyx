@@ -3,6 +3,7 @@ package finansyx.commons.CashFlow;
 
 import finansyx.commons.Manage.ArithmeticalManager;
 import finansyx.commons.Manage.DataManager;
+import finansyx.commons.Manage.FinancialDataManager;
 import finansyx.commons.Rules.Options;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -11,30 +12,106 @@ import java.util.HashMap;
  * @author t4r0
  */
 public class CashFlow {
-    
+    /**
+     * Indica si las cantidades de este flujo de caja son brutas
+     */
     public static final int GROSS = 20;
+    
+    /**
+     * Indica si las cantidades de este flujo de caja son netas
+     */
     public static final int NET = 24;
      
+    /**
+     * El año de inicio
+     */
     Integer start = 2013;
+    
+    /**
+     * Indica la forma en que se tratarán las cantidades
+     */
     Integer type = 0;
     
+    /**
+     * La inversión inicial
+     */
     Double investment = 0.;
+    
+    /**
+     * Los activos que posee la empresa
+     */
     Double assets = 0.;
+    
+    /**
+     * Los ingresos del año pasado
+     */
     Double lastYearRevenue = 0.;
+    
+    /**
+     * Los costos del año pasado
+     */
     Double lasYearCosts = 1.;
+    
+    /**
+     * El porcentaje de utilidad del año pasado
+     */
     Double percentage = 0.;
+    
+    /**
+     * Indica si es una empresa que se dedica al comercio
+     */
     Boolean commerce = true;
     
+    /**
+     * Un administrador de los inversionistas y la tasa menor atractiva
+     * de retorno.
+     */
     MARRManager marr = new MARRManager();
     
-    DataManager Revenue = new DataManager();
-    DataManager Costs = new DataManager();
-    DataManager grossProfit = new DataManager();
-    ArrayList<Double> grossProfitPercentage = new ArrayList<>();
-    HashMap<String, DataManager> Outlays = new HashMap<>();
-  
+    /**
+     * Los ingresos de este año
+     */
     
-    public CashFlow(DataManager revenue, DataManager costs)
+    /**
+     * Los ingresos de este año
+     */
+    FinancialDataManager Revenue = new FinancialDataManager();
+    
+    /**
+     * Los costos de este año
+     */
+    FinancialDataManager Costs = new FinancialDataManager();
+    
+    /**
+     * La utilidad bruta de la pronosticación
+     */
+    DataManager grossProfit = new DataManager();
+    
+    /**
+     * El porcentaje de utilidad bruta
+     */
+    ArrayList<Double> grossProfitPercentage = new ArrayList<>();
+    
+    /**
+     * Los outgoings de esta pronosticacion
+     */
+    HashMap<String, FinancialDataManager> Outlays = new HashMap<>();
+  
+    ArrayList<Double> outgoings = new  ArrayList<>();
+    
+    ArrayList<Double> PBT = new ArrayList<>();
+    
+    ArrayList<Double> outlaysWithBill  = new ArrayList<>();
+    
+    ArrayList<Double> outlaysWithOutBill  = new ArrayList<>();
+    
+    ArrayList<Double> shields = new ArrayList<>();
+    /**
+     * Crea una nueva instancia de esta clase
+     * @param revenue los ingresos 
+     * @param costs los costos
+     */
+    public CashFlow(FinancialDataManager revenue, FinancialDataManager costs)
     {
         this.Revenue = revenue;
         this.Costs = costs;
@@ -42,6 +119,9 @@ public class CashFlow {
         findPercentage();        
     }
 
+    /**
+     * Inicializa una instancia de esta clase
+     */
     public CashFlow() {
        
     }
@@ -99,7 +179,7 @@ public class CashFlow {
         return grossProfitPercentage;
     }
 
-    public HashMap<String, DataManager> getOutlays() {
+    public HashMap<String, FinancialDataManager> getOutlays() {
         return Outlays;
     }
 
@@ -111,8 +191,13 @@ public class CashFlow {
         return Revenue;
     }
 
-    public void setCosts(DataManager Costs) {
+    public void setCosts(FinancialDataManager Costs) {
         this.Costs = Costs;
+        if(!Revenue.getValues().isEmpty() && !Costs.getValues().isEmpty())
+        {
+            grossProfit = new ArithmeticalManager(Options.SUBSTRACT,Revenue.getValues(), Costs);
+            findPercentage();
+        }
     }
 
     public void setGrossProfit(DataManager grossProfit) {
@@ -123,7 +208,7 @@ public class CashFlow {
         this.grossProfitPercentage = grossProfitPercentage;
     }
 
-    public void setOutlays(HashMap<String, DataManager> Outlays) {
+    public void setOutlays(HashMap<String, FinancialDataManager> Outlays) {
         this.Outlays = Outlays;
     }
 
@@ -131,11 +216,19 @@ public class CashFlow {
         this.percentage = percentage;
     }
 
-    public void setRevenue(DataManager Revenue) {
+    public void setRevenue(FinancialDataManager Revenue) {
         this.Revenue = Revenue;
+        if(!Revenue.getValues().isEmpty() && !Costs.getValues().isEmpty())
+        {
+            grossProfit = new ArithmeticalManager(Options.SUBSTRACT,Revenue.getValues(), Costs);
+            findPercentage();
+        }
     }
     
-    public void setLastYearRevenue(Double value){this.lastYearRevenue = value;}
+    public void setLastYearRevenue(Double value){
+        this.lastYearRevenue = value;
+        this.percentage =  percentage =  1 - (lastYearRevenue / lasYearCosts);
+    }
 
     public Double getLastYearRevenue() {
         return lastYearRevenue;
@@ -143,6 +236,7 @@ public class CashFlow {
 
     public void setLasYearCosts(Double lasYearCosts) {
         this.lasYearCosts = lasYearCosts;
+        this.percentage =  percentage =  1 - (lastYearRevenue / lasYearCosts);
     }
 
     public Double getLasYearCosts() {
@@ -154,14 +248,15 @@ public class CashFlow {
         ArrayList<Double> rvnue = Revenue.getValues();
         ArrayList<Double> csts = Costs.getValues();
         for(int i=0; i< rvnue.size(); i++)
-            grossProfitPercentage.add(1 - (rvnue.get(i) / csts.get(i)));
+            grossProfitPercentage.add(1 - (csts.get(i) / rvnue.get(i)));
         percentage =  1 - (lastYearRevenue / lasYearCosts);
     }
     
-    public void AddOutlay(String name, DataManager manager)
+    public void AddOutlay(String name, FinancialDataManager manager)
     {
         String Name = name.toUpperCase();
-        this.Outlays.put(Name, Revenue);
+        this.Outlays.put(Name, manager);
+        makeSum();
     }
     
     public DataManager getOutLay(String name)
@@ -177,4 +272,51 @@ public class CashFlow {
     public void setMarr(MARRManager marr) {
         this.marr = marr;
     }   
+    
+    public void makeSum()
+    {
+        int size=0;
+        ArrayList<Double> values = null;
+        Double sum = 0.;
+        Double pbt = 0.;
+        Double bill = 0.;       
+        Double current = 0.;
+        Double shield = 0.;
+        
+        outgoings.clear();
+        PBT.clear();
+        outlaysWithBill.clear();
+        outlaysWithOutBill.clear();
+        shields.clear();
+        for(int i=0; i<10; i++)
+        {
+            sum = 0.;
+            bill = 0.;          
+            shield = 0.;
+            if(Costs.hasBill())
+                    bill = Costs.getValues().get(i);
+            for(FinancialDataManager man : Outlays.values())
+            {
+                values = man.getValues();
+                size = values.size();
+                
+                if(i < size)
+                {
+                    current = values.get(i);
+                    if(man.hasBill())
+                        bill += current;                    
+                    sum += values.get(i);
+                    
+                    if(man.isShield())
+                        shield += current;
+                }                   
+            }
+            pbt = grossProfit.getValues().get(i) - sum;
+            PBT.add(pbt);
+            outgoings.add(sum);
+            outlaysWithBill.add(bill);
+            outlaysWithOutBill.add(bill - sum);
+            shields.add(shield);
+        }
+    }
 }

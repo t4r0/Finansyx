@@ -18,10 +18,14 @@ public class FeeManager extends FinancialDataManager{
     public FeeManager(Double A, int p, int n, Double j, int option)
     {
         super(new FeeRule(A, p, n, j, option));
+        this.hasBill = false;
+        this.isShield = false;
     }
     
      public FeeManager(Double A, int p, int n, String j, int option)
     {
         super(new FeeRule(A, p, n, Statistics.percentageFromString(j), option));
+        this.hasBill = false;
+        this.isShield = false;
     }
 }
