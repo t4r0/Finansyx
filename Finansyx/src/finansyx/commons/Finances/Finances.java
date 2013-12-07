@@ -154,16 +154,14 @@ public class Finances {
      * Calcula la depreciacion de un valor inicial
      * @param initial el valor inicial del bien
      * @param percentage el porcentaje de depreciacion
-     * @param years la cantidad de años para los que se palnifica
      * @return Un conjunto de valores constantes de depreciacion anual
      */
-    public static ArrayList<Double> flatDepreciation(Double initial, Double percentage,
-                int years)
+    public static ArrayList<Double> flatDepreciation(Double initial, Double percentage)
     {
         ArrayList<Double> values = new ArrayList<>();
-        int depYears = (int)((int)years * percentage);
+        int depYears = (int)(1/percentage);
         Double value = percentage * initial;
-        for(int i=0; i < depYears; i++)        
+        for(int i=0; i < depYears && i < 10; i++)        
             values.add(value);
         return values;
     }
@@ -172,18 +170,16 @@ public class Finances {
      * Calcula los valores depreciados de un bien
      * @param initial el valor inicial del bien
      * @param percentage el porcentaje de depreciacion
-     * @param years la cantidad de años para los que se palnifica
      * @return Un conjunto de valores depreciados
      */
     
-    public static ArrayList<Double> Depreciate(Double initial, Double percentage,
-                int years)
+    public static ArrayList<Double> Depreciate(Double initial, Double percentage)
     {
         ArrayList<Double> values = new ArrayList<>();
-        int depYears = (int)((int)years * percentage);
+         int depYears = (int)(1/percentage);
         Double value = percentage * initial;
         Double current = initial - value;
-        for(int i=0; i < depYears; i++) 
+        for(int i=0; i < depYears && i < 10; i++) 
         {
             values.add(current);
             current -= value;

@@ -115,8 +115,34 @@ public class Finansyx {
         
         PercentageManager acc = new PercentageManager("1.5%", progn);
         System.out.println(acc);
+        
+        depreciate();
+        
+        PercentageManager uni = new PercentageManager("0.8%", costos);
+         System.out.println(uni);
+         
+        FeeManager inte = new FeeManager(2200., 12, 10,"16%" ,Options.FRENCH);
+        System.out.println(inte);
     }
     
+    public static void depreciate()
+    {
+        DepreciationManager mach = new DepreciationManager("20%", 550.);
+        System.out.println(mach);
+        
+        DepreciationManager vehi = new DepreciationManager("20%", 200.);
+        System.out.println(vehi);
+        
+        DepreciationManager buil = new DepreciationManager("5%", 945.);
+        System.out.println(buil);
+        
+         DepreciationManager furn = new DepreciationManager("20%", 50.);
+        System.out.println(furn);
+        
+         DepreciationManager gast= new DepreciationManager("20%", 50.);
+        System.out.println(gast);
+        
+    }
  
     public static ArrayList<DataManager> getManagers(DataManager man)
     {
