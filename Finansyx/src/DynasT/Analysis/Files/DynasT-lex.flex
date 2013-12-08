@@ -30,10 +30,10 @@ percentage = {numb}['%']
     "aleman"  {return new Symbol(sym.GERMAN);}
     "arbol"   {return new Symbol(sym.TREE);} 
     "bruto"   {return new Symbol(sym.GROSS);}
-    "costos"  {return new Symbol(sym.COSTS);}       
+    "costos"  {return new Symbol(sym.COSTS);}   
+    "depreciar" {return new Symbol(sym.DEPRECIATE);}
     "escalonados" {return new Symbol(sym.TIERED);}
     "escenario"   {return new Symbol(sym.SCENARIO);}
-    "fin"         { return new Symbol(sym.END);}  
     "flujo"       { return new Symbol(sym.FLOW);}  
     "frances"     { return new Symbol(sym.FRENCH);}
     "gastos"      { return new Symbol(sym.OUTLAY);}
@@ -58,7 +58,6 @@ percentage = {numb}['%']
     "+"           { return new Symbol(sym.PLUS); }  
     "-"           { return new Symbol(sym.MINUS); }  
     "*"           { return new Symbol(sym.TIMES); }  
-    "/"           { return new Symbol(sym.DIVIDE); }  
     ":"           { return new Symbol(sym.POLKADOT); }
     "{"           { return new Symbol(sym.OPCURLYBRAC); }
     "}"           { return new Symbol(sym.CLCURLYBRAC); } 
@@ -67,7 +66,6 @@ percentage = {numb}['%']
     "]"           { return new Symbol(sym.CLSQBRAC); }
     ";"           { return new Symbol(sym.SEMICOLON); }
     "="           { return new Symbol(sym.EQUALS); }
-    "->"          { return new Symbol(sym.POINTER); } 
     {numb}        { return new Symbol(sym.NUMBER, new Double(yytext()));} 
     {identifier}  { return new Symbol(sym.IDENTIFIER, yytext()); }
     {percentage}  { return new Symbol(sym.PERCENTAGE,yytext()); }
