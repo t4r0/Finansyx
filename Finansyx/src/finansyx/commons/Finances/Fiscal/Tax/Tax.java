@@ -2,7 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package finansyx.commons.Finances.Taxes;
+package finansyx.commons.Finances.Fiscal.Tax;
 
 import finansyx.commons.CashFlow.CashFlow;
 import java.util.ArrayList;
@@ -30,6 +30,17 @@ public class Tax {
     public void makeSum()
     {
         
+    }
+
+    public ArrayList<Double> getPayment() {
+        return payment;
+    }   
+    
+    public Double getPay(Integer i)
+    {
+        if(i < 0 || i >= payment.size())
+            return 0.0;
+        return payment.get(i);
     }
     
      @Override

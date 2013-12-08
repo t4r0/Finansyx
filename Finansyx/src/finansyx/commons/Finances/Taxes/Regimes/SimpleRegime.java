@@ -4,7 +4,9 @@
  * and open the template in the editor.
  */
 
-package finansyx.commons.Finances.Taxes;
+package finansyx.commons.Finances.Taxes.Regimes;
+
+import finansyx.commons.Finances.Taxes.Regimes.Regime;
 
 /**
  *

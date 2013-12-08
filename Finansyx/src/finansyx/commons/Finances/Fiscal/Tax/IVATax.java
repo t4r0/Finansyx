@@ -2,8 +2,9 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package finansyx.commons.Finances.Taxes;
+package finansyx.commons.Finances.Fiscal.Tax;
 
+import finansyx.commons.Finances.Fiscal.Tax.Tax;
 import finansyx.commons.CashFlow.CashFlow;
 import finansyx.commons.Manage.DataManager;
 import java.util.ArrayList;

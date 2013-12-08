@@ -2,8 +2,12 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package finansyx.commons.Finances.Taxes;
+package finansyx.commons.Finances.Fiscal.Tax;
 
+import finansyx.commons.Finances.Fiscal.Tax.Tax;
+import finansyx.commons.Finances.Taxes.Regimes.SimpleRegime;
+import finansyx.commons.Finances.Taxes.Regimes.Regime;
+import finansyx.commons.Finances.Taxes.Regimes.ProfitRegime;
 import finansyx.commons.CashFlow.CashFlow;
 import finansyx.commons.Manage.DataManager;
 import java.util.ArrayList;
@@ -23,6 +27,10 @@ public class ISRTax extends Tax{
         
     }
     
+    public ArrayList<Regime> getRegimes()
+    {
+        return regimes;
+    }
     @Override
     public void calcTax(CashFlow cashFlow)
     {

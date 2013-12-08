@@ -10,8 +10,9 @@ import finansyx.commons.Finances.Finances;
 import finansyx.commons.*;
 import finansyx.commons.CashFlow.CashFlow;
 import finansyx.commons.Finances.Fee;
-import finansyx.commons.Finances.Taxes.ISRTax;
-import finansyx.commons.Finances.Taxes.IVATax;
+import finansyx.commons.Finances.Fiscal.GTAcreditation;
+import finansyx.commons.Finances.Fiscal.GtTaxesManager;
+import finansyx.commons.Finances.Fiscal.Tax.*;
 import finansyx.commons.Manage.*;
 import finansyx.commons.Rules.Options;
 import java.util.ArrayList;
@@ -89,7 +90,8 @@ public class Finansyx {
         ArrayList<Double> seg= new ArrayList<>(
                 Arrays.asList(new Double[]{21., 29., 38., 49., 53., 57., 58., 59., 60.}));
         CashFlow flujo = new CashFlow();
-        
+        flujo.setLastYearRevenue(2888.0);
+        flujo.setLasYearCosts(2773.0);
         flujo.setRevenue(new PrognosticManager(prog, 95, Options.UPPER_LIMIT, 0.15));
         
         flujo.setCosts(new PeriodicalManager(getManagers(flujo.getRevenue())));
@@ -127,15 +129,19 @@ public class Finansyx {
         ISRTax isr = new ISRTax();
         isr.calcTax(flujo);
         System.out.println(isr);
+        ISOTax iso = new ISOTax(isr);
+        iso.calcTax(flujo);
+        System.out.println(iso);
+        GtTaxesManager man= new GtTaxesManager(GTAcreditation.ISR_ISO, flujo);
     }
     
     public static void depreciate(CashFlow flujo)
     {
-        flujo.AddOutlay("maquinaria",new DepreciationManager("20%", 550.));
-        flujo.AddOutlay("vehiculos", new DepreciationManager("20%", 200.));
-        flujo.AddOutlay("edificio", new DepreciationManager("5%", 945.));
-        flujo.AddOutlay("mobiliario",new DepreciationManager("20%", 50.));
-        flujo.AddOutlay("instalacion",new DepreciationManager("20%", 50.));
+        flujo.AddAsset("maquinaria",new DepreciationManager("20%", 550.00));
+        flujo.AddAsset("vehiculos", new DepreciationManager("20%", 200.0));
+        flujo.AddAsset("edificio", new DepreciationManager("5%", 945.0));
+        flujo.AddAsset("mobiliario",new DepreciationManager("20%", 50.0));
+        flujo.AddAsset("instalacion",new DepreciationManager("20%", 50.0));
     }
  
     public static ArrayList<DataManager> getManagers(DataManager man)

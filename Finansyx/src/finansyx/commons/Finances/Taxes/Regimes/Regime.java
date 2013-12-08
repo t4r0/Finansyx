@@ -2,7 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package finansyx.commons.Finances.Taxes;
+package finansyx.commons.Finances.Taxes.Regimes;
 
 /**
  *

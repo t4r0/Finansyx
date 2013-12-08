@@ -246,6 +246,13 @@ public class CashFlow {
         return lastYearRevenue;
     }
 
+    public ArrayList<Double> getAllRevenues()
+    {
+        ArrayList<Double> arr = new ArrayList<>();
+        arr.add(lastYearRevenue);
+        arr.addAll(Revenue.getValues());
+        return arr;
+    }
     public void setLasYearCosts(Double lasYearCosts) {
         this.lasYearCosts = lasYearCosts;
         this.percentage =  percentage =  1 - (lastYearRevenue / lasYearCosts);
@@ -283,16 +290,19 @@ public class CashFlow {
     {
         int size = manager.getValues().size();
         ArrayList<Double> val = manager.getActualValues();
+        int aSize = asset.size();
         if(asset.isEmpty())
             asset.addAll(val);
         else
         {
             for(int i=0; i < size; i ++)
             {
-                if(i > asset.size())
+                if(i >= aSize)
                     asset.add(val.get(i));
                 else
-                    asset.set(i,asset.get(i) + val.get(i));
+                {           
+                        asset.set(i,asset.get(i) + val.get(i));
+                }
             }
         }
         this.AddOutlay(name, manager);
@@ -300,6 +310,8 @@ public class CashFlow {
     
     public Double getAsset(Integer i)
     {
+        if(i >= asset.size())
+            return 0.;
         return asset.get(i);
     }
     
@@ -321,6 +333,14 @@ public class CashFlow {
     public void setMarr(MARRManager marr) {
         this.marr = marr;
     }   
+    
+    public ArrayList<Double> getAllProfitPercentage()
+    {
+        ArrayList<Double> per = new ArrayList<>();
+        per.add(percentage);
+        per.addAll(grossProfitPercentage);
+        return per;
+    }
     
     public void makeSum()
     {
