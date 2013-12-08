@@ -31,7 +31,7 @@ public class CashFlow {
     /**
      * Indica la forma en que se tratarán las cantidades
      */
-    Integer type = 0;
+    Integer type = CashFlow.NET;
     
     /**
      * La inversión inicial

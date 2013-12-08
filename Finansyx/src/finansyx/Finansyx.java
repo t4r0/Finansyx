@@ -10,6 +10,8 @@ import finansyx.commons.Finances.Finances;
 import finansyx.commons.*;
 import finansyx.commons.CashFlow.CashFlow;
 import finansyx.commons.Finances.Fee;
+import finansyx.commons.Finances.Taxes.ISRTax;
+import finansyx.commons.Finances.Taxes.IVATax;
 import finansyx.commons.Manage.*;
 import finansyx.commons.Rules.Options;
 import java.util.ArrayList;
@@ -119,7 +121,12 @@ public class Finansyx {
         inc.setHasBill(false);
         inc.setIsShield(true);
         flujo.AddOutlay("incobrables",inc);
-        
+        IVATax iva = new  IVATax();
+        iva.calcTax(flujo);
+        System.out.println(iva);
+        ISRTax isr = new ISRTax();
+        isr.calcTax(flujo);
+        System.out.println(isr);
     }
     
     public static void depreciate(CashFlow flujo)

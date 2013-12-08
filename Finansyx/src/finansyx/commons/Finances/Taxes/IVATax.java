@@ -57,12 +57,12 @@ public class IVATax  extends Tax{
         for(int i=0; i < debit.size() || i < credit.size(); i++)
         {
             cred = credit.get(i);
-            deb = credit.get(i);
-            paym = cred - deb - acred;
+            deb = debit.get(i);
+            paym = deb- cred - acred;
             
             if(paym < 0)
             {
-                acred = paym;
+                acred = -1*paym;
                 paym = 0.;
             }
             

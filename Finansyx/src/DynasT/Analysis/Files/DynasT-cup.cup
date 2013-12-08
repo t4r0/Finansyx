@@ -63,7 +63,10 @@ COSTS_LINE ::=
               {:
                 in.setHasBill(i.hasBill());
                 in.setIsShield(i.isShield());
-                flujo.AddOutlay(i.getName(), in);
+                if(in.isAsset())
+                    flujo.AddAsset(i.getName(), in);
+                else
+                    flujo.AddOutlay(i.getName(), in);
                 System.out.println(in);
               :};
 

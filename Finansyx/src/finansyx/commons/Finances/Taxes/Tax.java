@@ -31,4 +31,13 @@ public class Tax {
     {
         
     }
+    
+     @Override
+    public String toString()
+    {
+        String cadena = "";
+        for(Double value : payment)
+            cadena += value + " | ";
+        return cadena;
+    }
 }

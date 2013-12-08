@@ -27,8 +27,10 @@ public class ISRTax extends Tax{
     public void calcTax(CashFlow cashFlow)
     {
         DataManager rev = cashFlow.getRevenue();
+        DataManager csts = cashFlow.getCosts();
         ArrayList<Double> fact = cashFlow.getOutlaysWithBill();
         ArrayList<Double> noFact = cashFlow.getOutlaysWithOutBill();
+        ArrayList<Double> outl = cashFlow.getOutgoings();
         Double revs = 0.;
         Double exps = 0.;
         Double perc = 0.;
@@ -38,7 +40,7 @@ public class ISRTax extends Tax{
             if(type == CashFlow.NET)
             {
                  revs = rev.getValues().get(i);
-                 exps = fact.get(i) + noFact.get(i);
+                 exps = outl.get(i) + csts.getValues().get(i);
             }
             else
             {
@@ -49,7 +51,7 @@ public class ISRTax extends Tax{
             if(perc > percentages.get(i))            
                 regimes.add(new SimpleRegime(revs));            
             else
-                regimes.add(new ProfitRegime(revs - exps, 53 - percentages.get(i)));
+                regimes.add(new ProfitRegime(revs-exps, 0.53 - percentages.get(i)));
         }
         makeSum();
     }
