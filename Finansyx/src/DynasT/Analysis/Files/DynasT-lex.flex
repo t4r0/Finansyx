@@ -23,7 +23,7 @@ identifier = [:jletter:][:jletterdigit:]*
 numb = {integer} | {floating}
 InputCharacter = [^\r\n]
 percentage = {numb}['%'] 
-comment = "//" {InputCharacter}* {newLine}
+comment = "#"* {InputCharacter}* {newLine}* 
 %%
 
 <YYINITIAL>
