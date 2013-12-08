@@ -16,7 +16,7 @@ public class DataManager {
     DataManager base = null;
     ArrayList<Double> values = new ArrayList<>();
     Rule calcRule = new Rule();
-
+    String name = "";
     public DataManager() {
     }
     
@@ -75,6 +75,15 @@ public class DataManager {
         return calcRule.getLimit();
     }
     
+    public String getName()
+    {
+        return this.name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+   
     public void setLimit(Integer limit, Integer start)
     {
         calcRule.setLimit(limit, start);

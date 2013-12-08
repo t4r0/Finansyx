@@ -3,7 +3,8 @@ package DynasT.Analysis.Classes;
 import java_cup.runtime.*;
 import finansyx.commons.*;
 import finansyx.commons.CashFlow.*;
-
+import finansyx.commons.Manage.*;
+import java.util.*;
 action code {:
 
     public CashFlow flujo = new CashFlow();
@@ -15,9 +16,9 @@ parser code {:
 
 :}
 
-terminal OPBRAC,CLBRAC, PLUS, MINUS, TIMES, POLKADOT, OPCURLYBRAC, CLCURLYBRAC, COMMA , OPSQBRAC, 
+terminal OPBRAC,CLBRAC, PLUS, MINUS, TIMES, POINTER, POLKADOT, OPCURLYBRAC, CLCURLYBRAC, COMMA , OPSQBRAC, 
 CLSQBRAC, SEMICOLON, EQUALS, ASSETS, LAST, GERMAN, TREE, COSTS, TIERED, START,
-SCENARIO, FLOW, FRENCH, OUTLAY, INFO, FIRST, INF, INFMIN, REVENUE, INTERESTS, PATENT, PROGNOSTIC, OPTIMIZER, 
+SCENARIO, FLOW, FRENCH, OUTLAY, INFO, FIRST, INF, INFMIN, REVENUE, PATENT, PROGNOSTIC, OPTIMIZER, MINIMUM;
 UPPER, UPPER_MIN, MARR, DEPRECIATE;
 terminal Double NUMBER;
 terminal String IDENTIFIER, PERCENTAGE;
@@ -26,8 +27,14 @@ terminal Integer GROSS, NET;
 
 non terminal FILE, HEADER_PART, BODY_PART;
 non terminal MARR_BODY, INFO_PART, INFO_HEADER, INFO_BODY, INFO_OPTION,INFO_LINE, LAST_INFO, MARR_LINE,
-COSTS_PART, COSTS_BODY,COSTS_HEAD, COSTS_LINE, ID_PART, INSTRUCTION, PERCENT, STAIR, STAIR_OPTIONS,
-PROGNOSTICS,P_OPTIONS, INCREASE, NUM_LIST, LIMIT, LIMIT_PART, DEPRECIATION, INTER, OPERATE;
+COSTS_PART, COSTS_BODY,COSTS_HEAD, COSTS_LINE, INCREASE;
+
+non terminal FinancialDataManager ID_PART, INSTRUCTION, LIMIT, STAIR, PROGNOSTICS, PERCENT, DEPRECIATION,
+INTERESTS, OPERATE, LIMIT_PART, STAIR_OPTIONS;
+
+non terminal ArrayList<Double> NUM_LIST;
+non terminal Double INCREASE;
+non terminal ModelManager P_OPTIONS;
 non terminal MARRManager MARR_PART, MARR_HEADER;
 non terminal MARRStructure MARR_PARAM;
 non terminal Integer  TYPE;
@@ -45,28 +52,179 @@ BODY_PART ::= MARR_PART INFO_PART COSTS_PART;
 COSTS_PART ::= COSTS_HEAD COSTS_BODY CLCURLYBRAC;
 COSTS_HEAD ::= OUTLAY OPCURLYBRAC;
 COSTS_BODY ::= COSTS_BODY COSTS_LINE | COSTS_LINE;
-COSTS_LINE ::= COSTS_LINE SEMICOLON | ID_PART EQUALS INSTRUCTION;
-ID_PART ::= IDENTIFIER| ID_PART OPSQBRAC BOOL COMMA BOOL CLSQBRAC | REVENUE | COSTS | INTERESTS;
 
-INSTRUCTION ::= PERCENT | STAIR CLBRAC | PROGNOSTICS| LIMIT | DEPRECIATION | INTER | NUMBER;
-OPERATE ::= OPERATE PLUS NUMBER | OPERATE MINUS NUMBER | OPERATE TIMES NUMBER | INSTRUCTION;
-INTER ::= FRENCH NUMBER COMMA NUMBER COMMA NUMBER COMMA PERCENTAGE 
-|   GERMAN NUMBER COMMA NUMBER COMMA NUMBER COMMA PERCENTAGE; 
-DEPRECIATION ::= DEPRECIATE NUMBER COMMA PERCENTAGE;
-LIMIT ::= LIMIT COMMA LIMIT_PART | LIMIT_PART;
-LIMIT_PART ::=  OPBRAC INSTRUCTION POLKADOT NUMBER CLBRAC;
+COSTS_LINE ::= 
+              COSTS_LINE SEMICOLON 
+            | ID_PART:i  EQUALS INSTRUCTION:in 
+              {:
+                in.setHasBill(i.hasBill());
+                in.setIsShield(i.isShield());
+                flujo.AddOutlay(i.getName(), in);
+              :};
 
-PERCENT ::= IDENTIFIER TIMES PERCENTAGE| INSTRUCTION TIMES PERCENTAGE | REVENUE TIMES PERCENTAGE
-| COSTS TIMES PERCENTAGE;
-STAIR ::= TIERED OPBRAC STAIR_OPTIONS;
-STAIR_OPTIONS ::= PERCENTAGE COMMA NUMBER COMMA NUMBER;
+ID_PART ::= 
+        IDENTIFIER:n 
+        {:
+            RESULT = new FinancialDataManager();
+            RESULT.setName(n);
+        :}
+      | ID_PART:I OPSQBRAC BOOL:fa COMMA BOOL:sh CLSQBRAC 
+        {:
+            RESULT = new FinancialDataManager();
+            RESULT.setName(I.getName());
+            RESULT.setHasBill(fa);
+            RESULT.setIsShield(sh);
+        :}
+     | REVENUE
+        {:
+            RESULT = new FinancialDataManager();
+            RESULT.setName("ingresos");
+        :}
+    | COSTS
+        {:
+            RESULT = new FinancialDataManager();
+            RESULT.setName("costos");
+        :};
 
-PROGNOSTICS ::= UPPER P_OPTIONS | UPPER_MIN P_OPTIONS | INF P_OPTIONS | INFMIN P_OPTIONS
-    | PROGNOSTIC P_OPTIONS;
+INSTRUCTION ::= PERCENT:I {: RESULT= I; :} 
+              | STAIR:s CLBRAC {: RESULT = s; :}
+              | PROGNOSTICS:p {: RESULT = p; :}
+              | LIMIT:l {: RESULT = l; :}
+              | DEPRECIATION:d {: RESULT = d; :}
+              | INTERESTS:in {: RESULT = in; :} 
+              | NUMBER:num {: RESULT = new FlatValuesManager(num, 10);:}
+              | OPERATE:op {: RESULT = op; :};
 
-P_OPTIONS ::= OPBRAC P_OPTIONS INCREASE | NUM_LIST CLBRAC| NUM_LIST COMMA NUMBER CLBRAC;
-INCREASE ::= PLUS PERCENTAGE | MINUS PERCENTAGE;
-NUM_LIST ::= OPSQBRAC NUM_LIST | NUMBER COMMA NUM_LIST| NUMBER CLSQBRAC;
+OPERATE ::= OPERATE:op PLUS OPBRAC INSTRUCTION:i CLBRAC
+{:
+    RESULT = new ArithmeticalManager(Options.ADD, op.getValues(), i);
+:}
+| OPERATE:op MINUS OPBRAC INSTRUCTION:i CLBRAC
+{:
+   RESULT = new ArithmeticalManager(Options.SUBSTRACT, op.getValues(), i);
+:} 
+| 
+OPBRAC INSTRUCTION:i CLBRAC
+{: RESULT = i; :};
+
+INTERESTS ::= FRENCH NUMBER:A COMMA NUMBER:P COMMA NUMBER:J COMMA PERCENTAGE:PE 
+{:
+    RESULT=new FeeManager(A, P, J, PE ,Options.FRENCH);
+:}
+          |   GERMAN NUMBER:A COMMA NUMBER:P COMMA NUMBER:J COMMA PERCENTAGE:PE
+{:
+    RESULT=new FeeManager(A, P, J, PE ,Options.GERMAN);
+:}; 
+
+DEPRECIATION ::= DEPRECIATE NUMBER:num COMMA PERCENTAGE:pe
+{:
+    RESULT = new DepreciationManager(pe,num);
+:};
+
+LIMIT ::= LIMIT:r COMMA LIMIT_PART:li
+{:
+    RESULT = r;
+    RESULT.addManager(li, li.getLimit());
+:} 
+| LIMIT_PART:li 
+{:
+    RESULT = new PeriodicalManager();
+    RESULT.addManager(li, li.getLimit());
+:};
+
+LIMIT_PART ::=  OPBRAC INSTRUCTION:I POLKADOT NUMBER:n CLBRAC
+{:
+    RESULT = I;
+    RESULT.setLimit( n.intValue(), 0);
+:};
+
+PERCENT ::= IDENTIFIER:i TIMES PERCENTAGE:pe
+{:
+    RESULT = new PercentageManager(pe,flujo.getOutLay(i));
+:}
+| INSTRUCTION:in TIMES PERCENTAGE:pe
+{:
+    RESULT = new PercentageManager(pe, in);
+:}
+| REVENUE TIMES PERCENTAGE:pe
+{:
+    RESULT = new PercentageManager(pe, flujo.getRevenue());
+:}
+| COSTS TIMES PERCENTAGE:pe
+{:
+    RESULT = new PercentageManager(pe, flujo.getCosts());
+:};
+
+STAIR ::= TIERED OPBRAC STAIR_OPTIONS:op
+{:
+    RESULT = op;
+:};
+STAIR_OPTIONS ::= PERCENTAGE:pe COMMA NUMBER:n COMMA NUMBER:n2
+{:
+    RESULT = new TieredValuesManager(pe, n.intValue(), flujo.getStart()+1, n2);
+:};
+
+PROGNOSTICS ::= PROGNOSTICS:p INCREASE:in 
+{:
+    RESULT = new PrognosticManager(p.getPattern(), p.getConfidence(), p.getOption(), in);
+:}
+| UPPER P_OPTIONS:p
+{:
+    RESULT = new PrognosticManager(p.getPattern(),p.getFixedConfidence(),OPTIONS.UPPER_LIMIT,0.); 
+:}
+| UPPER_MIN P_OPTIONS:p
+{:
+    RESULT = new PrognosticManager(p.getPattern(),p.getFixedConfidence(),OPTIONS.MINIMUM_UPPER,0.); 
+:}
+| INF P_OPTIONS:p
+{:
+    RESULT = new PrognosticManager(p.getPattern(),p.getFixedConfidence(),OPTIONS.LOWER_LIMIT,0.); 
+:} 
+| INFMIN P_OPTIONS:p
+{:
+    RESULT = new PrognosticManager(p.getPattern(),p.getFixedConfidence(),OPTIONS.MINIMUM_LOWER,0.); 
+:}
+| PROGNOSTIC P_OPTIONS:p
+{:
+    RESULT = new PrognosticManager(p.getPattern(),p.getFixedConfidence(),OPTIONS.PUNTUAL,0.); 
+:};
+| MINIMUM P_OPTONS:p
+{:
+    RESULT = new PrognosticManager(p.getPattern(),p.getFixedConfidence(),OPTIONS.MINIMUM,0.); 
+:};
+
+P_OPTIONS ::= OPBRAC P_OPTIONS:op
+{:
+    RESULT = op;
+:}
+| NUM_LIST:li CLBRAC
+{:
+    RESULT = new ModelManager(li);
+:}
+| NUM_LIST:li COMMA NUMBER:n CLBRAC
+{:
+    RESULT = new ModelManager(li);
+    RESULT.setFixedConfidence(n.intValue());
+:};
+
+INCREASE ::= PLUS PERCENTAGE:pe {:RESULT = Statistics.percentageFromString(pe);:} 
+           | MINUS PERCENTAGE:pe {:RESULT =-1 * Statistics.percentageFromString(pe);:};
+
+NUM_LIST ::= OPSQBRAC NUM_LIST:li; 
+{:
+    RESULT = li;
+:}
+| NUMBER:n COMMA NUM_LIST:li
+{
+    RESULT = new ArrayList<>();
+    RESULT.add(n);
+    RESULT.addAll(li);
+}
+| NUMBER:n CLSQBRAC
+{:
+    RESULT = new ArrayList<>();
+    RESULT.add(n);
+:};
 
 MARR_PART ::= MARR_HEADER MARR_BODY CLCURLYBRAC
 {:
@@ -81,7 +239,7 @@ MARR_HEADER ::= MARR PERCENTAGE:percentage OPCURLYBRAC
     marr = RESULT;
 :}; 
 MARR_BODY ::= MARR_LINE MARR_BODY| MARR_LINE;
-MARR_LINE ::= IDENTIFIER:i EQUALS MARR_PARAM:m {: marr.addInvestor(i,m);:};
+MARR_LINE ::= IDENTIFIER:i POINTER MARR_PARAM:m {: marr.addInvestor(i,m);:};
 MARR_PARAM ::= PERCENTAGE:risk COMMA PERCENTAGE:percentage SEMICOLON 
 {: 
    RESULT = new MARRStructure(percentage, inflacion, risk);

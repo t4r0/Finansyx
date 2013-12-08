@@ -255,8 +255,16 @@ public class CashFlow {
     public void AddOutlay(String name, FinancialDataManager manager)
     {
         String Name = name.toUpperCase();
-        this.Outlays.put(Name, manager);
-        makeSum();
+        if(Name.equalsIgnoreCase("ingresos"))
+            this.Revenue = manager;
+        else
+            if(Name.equalsIgnoreCase("costos"))
+             this.Costs = manager;
+            else
+            {
+              this.Outlays.put(Name, manager);
+              makeSum();
+            }
     }
     
     public DataManager getOutLay(String name)

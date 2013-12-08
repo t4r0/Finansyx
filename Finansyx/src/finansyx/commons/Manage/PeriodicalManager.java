@@ -17,6 +17,11 @@ public class PeriodicalManager extends FinancialDataManager{
 
     ArrayList<DataManager> managers = new ArrayList<>();
     Integer now = 0;
+    public PeriodicalManager()
+    {
+        
+    }     
+    
     public PeriodicalManager(ArrayList<DataManager> managers) {
         this.managers= managers;
         this.Calc();

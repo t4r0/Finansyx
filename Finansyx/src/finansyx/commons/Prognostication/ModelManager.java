@@ -35,6 +35,7 @@ public class ModelManager {
     
     Double incremento = 0.;
     
+    ArrayList<Double> pattern = new ArrayList<>();
     Integer fixedConfidence = 90;
     public ModelManager(){}
     
@@ -49,10 +50,16 @@ public class ModelManager {
        models.add(new PolynomialModel(pattern));
        models.add(new LogarithmicModel(pattern));
        models.add(new ExponentialModel(pattern));
-       models.add(new PotentialModel(pattern));       
+       models.add(new PotentialModel(pattern));
+       this.pattern = pattern;
        findTrending(pattern);
        chooseModel();      
      }
+     
+     public ArrayList<Double> getPattern()
+     {
+         return this.pattern;
+     }     
     
     /**
      * Inicia una nueva instancia de esta clase, con los modelos especificados y
@@ -70,12 +77,20 @@ public class ModelManager {
     public void setIncremento(Double incremento) {
         this.incremento = incremento;
     }
+    
+    public Double getIncremento()
+    {
+        return this.incremento;
+    }
 
     public void setFixedConfidence(Integer fixedConfidence) {
         this.fixedConfidence = fixedConfidence;
     }
-     
-     
+
+    public Integer getFixedConfidence() {
+        return fixedConfidence;
+    }    
+    
      
      /**
       * Halla la tendencia de los valores especificados, la cual representará

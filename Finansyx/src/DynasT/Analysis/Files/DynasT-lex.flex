@@ -42,8 +42,8 @@ percentage = {numb}['%']
     "inicial"     { return new Symbol(sym.FIRST);}
     "inferior"    { return new Symbol(sym.INF); }
     "infer-min"   { return new Symbol(sym.INFMIN);}
-    "ingresos"    { return new Symbol(sym.REVENUE);}  
-    "intereses"   { return new Symbol(sym.INTERESTS);}
+    "ingresos"    { return new Symbol(sym.REVENUE);} 
+    "minimo"      { return new Symbol(sym.MIMIMUM);}
     "neto"        { return new Symbol(sym.NET); }
     "patente"     { return new Symbol(sym.PATENT); }
     "pronosticar" { return new Symbol(sym.PROGNOSTIC); } 
@@ -66,6 +66,7 @@ percentage = {numb}['%']
     "]"           { return new Symbol(sym.CLSQBRAC); }
     ";"           { return new Symbol(sym.SEMICOLON); }
     "="           { return new Symbol(sym.EQUALS); }
+    "->"          { return new Symbol(sym.POINTER); }
     {numb}        { return new Symbol(sym.NUMBER, new Double(yytext()));} 
     {identifier}  { return new Symbol(sym.IDENTIFIER, yytext()); }
     {percentage}  { return new Symbol(sym.PERCENTAGE,yytext()); }

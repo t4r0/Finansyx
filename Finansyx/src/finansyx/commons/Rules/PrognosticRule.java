@@ -51,6 +51,10 @@ public class PrognosticRule extends RuleWithOption{
      * @param value El nivel de confianza de los limites que se calcularan
      */
     public void setConfidence(int value){ this.confianza = value; }
+
+    public ModelManager getManager() {
+        return manager;
+    }
     
     @Override
     public ArrayList<Double> getValuesFromRule()
