@@ -1,10 +1,13 @@
 package DynasT.Analysis.Classes;
 
-import java_cup.runtime.*;
+
 import finansyx.commons.*;
 import finansyx.commons.CashFlow.*;
 import finansyx.commons.Manage.*;
+import finansyx.commons.Prognostication.ModelManager;
+import finansyx.commons.Rules.Options;
 import java.util.*;
+
 action code {:
 
     public CashFlow flujo = new CashFlow();
@@ -18,7 +21,7 @@ parser code {:
 
 terminal OPBRAC,CLBRAC, PLUS, MINUS, TIMES, POINTER, POLKADOT, OPCURLYBRAC, CLCURLYBRAC, COMMA , OPSQBRAC, 
 CLSQBRAC, SEMICOLON, EQUALS, ASSETS, LAST, GERMAN, TREE, COSTS, TIERED, START,
-SCENARIO, FLOW, FRENCH, OUTLAY, INFO, FIRST, INF, INFMIN, REVENUE, PATENT, PROGNOSTIC, OPTIMIZER, MINIMUM;
+SCENARIO, FLOW, FRENCH, OUTLAY, INFO, FIRST, INF, INFMIN, REVENUE, PATENT, PROGNOSTIC, OPTIMIZER, MINIMUM,
 UPPER, UPPER_MIN, MARR, DEPRECIATE;
 terminal Double NUMBER;
 terminal String IDENTIFIER, PERCENTAGE;
@@ -27,11 +30,12 @@ terminal Integer GROSS, NET;
 
 non terminal FILE, HEADER_PART, BODY_PART;
 non terminal MARR_BODY, INFO_PART, INFO_HEADER, INFO_BODY, INFO_OPTION,INFO_LINE, LAST_INFO, MARR_LINE,
-COSTS_PART, COSTS_BODY,COSTS_HEAD, COSTS_LINE, INCREASE;
+COSTS_PART, COSTS_BODY,COSTS_HEAD, COSTS_LINE;
 
-non terminal FinancialDataManager ID_PART, INSTRUCTION, LIMIT, STAIR, PROGNOSTICS, PERCENT, DEPRECIATION,
-INTERESTS, OPERATE, LIMIT_PART, STAIR_OPTIONS;
-
+non terminal FinancialDataManager ID_PART, INSTRUCTION, STAIR,PERCENT, DEPRECIATION,
+INTERESTS, OPERATE, LIMIT_PART;
+non terminal PeriodicalManager LIMIT;
+non terminal PrognosticManager PROGNOSTICS;
 non terminal ArrayList<Double> NUM_LIST;
 non terminal Double INCREASE;
 non terminal ModelManager P_OPTIONS;
@@ -60,6 +64,7 @@ COSTS_LINE ::=
                 in.setHasBill(i.hasBill());
                 in.setIsShield(i.isShield());
                 flujo.AddOutlay(i.getName(), in);
+                System.out.println(in);
               :};
 
 ID_PART ::= 
@@ -87,7 +92,7 @@ ID_PART ::=
         :};
 
 INSTRUCTION ::= PERCENT:I {: RESULT= I; :} 
-              | STAIR:s CLBRAC {: RESULT = s; :}
+              | STAIR:s {: RESULT = s; :}
               | PROGNOSTICS:p {: RESULT = p; :}
               | LIMIT:l {: RESULT = l; :}
               | DEPRECIATION:d {: RESULT = d; :}
@@ -109,11 +114,11 @@ OPBRAC INSTRUCTION:i CLBRAC
 
 INTERESTS ::= FRENCH NUMBER:A COMMA NUMBER:P COMMA NUMBER:J COMMA PERCENTAGE:PE 
 {:
-    RESULT=new FeeManager(A, P, J, PE ,Options.FRENCH);
+    RESULT=new FeeManager(A, P.intValue(), J.intValue(), PE ,Options.FRENCH);
 :}
           |   GERMAN NUMBER:A COMMA NUMBER:P COMMA NUMBER:J COMMA PERCENTAGE:PE
 {:
-    RESULT=new FeeManager(A, P, J, PE ,Options.GERMAN);
+    RESULT= new FeeManager(A, P.intValue(), J.intValue(), PE ,Options.GERMAN);;
 :}; 
 
 DEPRECIATION ::= DEPRECIATE NUMBER:num COMMA PERCENTAGE:pe
@@ -126,13 +131,14 @@ LIMIT ::= LIMIT:r COMMA LIMIT_PART:li
     RESULT = r;
     RESULT.addManager(li, li.getLimit());
 :} 
+
 | LIMIT_PART:li 
 {:
     RESULT = new PeriodicalManager();
     RESULT.addManager(li, li.getLimit());
 :};
 
-LIMIT_PART ::=  OPBRAC INSTRUCTION:I POLKADOT NUMBER:n CLBRAC
+LIMIT_PART ::= OPSQBRAC INSTRUCTION:I POLKADOT NUMBER:n CLSQBRAC
 {:
     RESULT = I;
     RESULT.setLimit( n.intValue(), 0);
@@ -155,11 +161,7 @@ PERCENT ::= IDENTIFIER:i TIMES PERCENTAGE:pe
     RESULT = new PercentageManager(pe, flujo.getCosts());
 :};
 
-STAIR ::= TIERED OPBRAC STAIR_OPTIONS:op
-{:
-    RESULT = op;
-:};
-STAIR_OPTIONS ::= PERCENTAGE:pe COMMA NUMBER:n COMMA NUMBER:n2
+STAIR ::= TIERED PERCENTAGE:pe COMMA NUMBER:n COMMA NUMBER:n2
 {:
     RESULT = new TieredValuesManager(pe, n.intValue(), flujo.getStart()+1, n2);
 :};
@@ -170,38 +172,34 @@ PROGNOSTICS ::= PROGNOSTICS:p INCREASE:in
 :}
 | UPPER P_OPTIONS:p
 {:
-    RESULT = new PrognosticManager(p.getPattern(),p.getFixedConfidence(),OPTIONS.UPPER_LIMIT,0.); 
+    RESULT = new PrognosticManager(p.getPattern(),p.getFixedConfidence(),Options.UPPER_LIMIT,0.); 
 :}
 | UPPER_MIN P_OPTIONS:p
 {:
-    RESULT = new PrognosticManager(p.getPattern(),p.getFixedConfidence(),OPTIONS.MINIMUM_UPPER,0.); 
+    RESULT = new PrognosticManager(p.getPattern(),p.getFixedConfidence(),Options.MINIMUM_UPPER,0.); 
 :}
 | INF P_OPTIONS:p
 {:
-    RESULT = new PrognosticManager(p.getPattern(),p.getFixedConfidence(),OPTIONS.LOWER_LIMIT,0.); 
+    RESULT = new PrognosticManager(p.getPattern(),p.getFixedConfidence(),Options.LOWER_LIMIT,0.); 
 :} 
 | INFMIN P_OPTIONS:p
 {:
-    RESULT = new PrognosticManager(p.getPattern(),p.getFixedConfidence(),OPTIONS.MINIMUM_LOWER,0.); 
+    RESULT = new PrognosticManager(p.getPattern(),p.getFixedConfidence(),Options.MINIMUM_LOWER,0.); 
 :}
 | PROGNOSTIC P_OPTIONS:p
 {:
-    RESULT = new PrognosticManager(p.getPattern(),p.getFixedConfidence(),OPTIONS.PUNTUAL,0.); 
-:};
-| MINIMUM P_OPTONS:p
+    RESULT = new PrognosticManager(p.getPattern(),p.getFixedConfidence(),Options.PUNTUAL,0.); 
+:}
+| MINIMUM P_OPTIONS:p
 {:
-    RESULT = new PrognosticManager(p.getPattern(),p.getFixedConfidence(),OPTIONS.MINIMUM,0.); 
+    RESULT = new PrognosticManager(p.getPattern(),p.getFixedConfidence(),Options.MINIMUM,0.); 
 :};
 
-P_OPTIONS ::= OPBRAC P_OPTIONS:op
-{:
-    RESULT = op;
-:}
-| NUM_LIST:li CLBRAC
+P_OPTIONS ::=  NUM_LIST:li
 {:
     RESULT = new ModelManager(li);
 :}
-| NUM_LIST:li COMMA NUMBER:n CLBRAC
+| NUM_LIST:li COMMA NUMBER:n 
 {:
     RESULT = new ModelManager(li);
     RESULT.setFixedConfidence(n.intValue());
@@ -210,16 +208,16 @@ P_OPTIONS ::= OPBRAC P_OPTIONS:op
 INCREASE ::= PLUS PERCENTAGE:pe {:RESULT = Statistics.percentageFromString(pe);:} 
            | MINUS PERCENTAGE:pe {:RESULT =-1 * Statistics.percentageFromString(pe);:};
 
-NUM_LIST ::= OPSQBRAC NUM_LIST:li; 
+NUM_LIST ::= OPSQBRAC NUM_LIST:li
 {:
     RESULT = li;
 :}
 | NUMBER:n COMMA NUM_LIST:li
-{
+{:
     RESULT = new ArrayList<>();
     RESULT.add(n);
     RESULT.addAll(li);
-}
+:}
 | NUMBER:n CLSQBRAC
 {:
     RESULT = new ArrayList<>();

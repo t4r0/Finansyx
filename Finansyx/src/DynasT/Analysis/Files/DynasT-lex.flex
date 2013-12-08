@@ -8,19 +8,22 @@ import java_cup.runtime.Symbol;
 %line
 %column
 %cup
+%unicode
 %ignorecase
 %type java_cup.runtime.Symbol
 %eofval{
   return new Symbol(sym.EOF);
 %eofval}
-
+%eofclose
 newLine = \n|\r|\n\r
 whiteSpace = [ \t\f]
 integer = [0-9]+
 floating = {integer}[\.]{integer} 
 identifier = [:jletter:][:jletterdigit:]* 
 numb = {integer} | {floating}
+InputCharacter = [^\r\n]
 percentage = {numb}['%'] 
+comment = "//" {InputCharacter}* {newLine}
 %%
 
 <YYINITIAL>
@@ -43,7 +46,7 @@ percentage = {numb}['%']
     "inferior"    { return new Symbol(sym.INF); }
     "infer-min"   { return new Symbol(sym.INFMIN);}
     "ingresos"    { return new Symbol(sym.REVENUE);} 
-    "minimo"      { return new Symbol(sym.MIMIMUM);}
+    "minimo"      { return new Symbol(sym.MINIMUM);}
     "neto"        { return new Symbol(sym.NET); }
     "patente"     { return new Symbol(sym.PATENT); }
     "pronosticar" { return new Symbol(sym.PROGNOSTIC); } 
@@ -72,6 +75,7 @@ percentage = {numb}['%']
     {percentage}  { return new Symbol(sym.PERCENTAGE,yytext()); }
     {whiteSpace}  {/* ignoring */}
     {newLine}     {/* ignoring */}
+    {comment}     {/* ignoring */}
     . {System.err.println("caracter invalido" + yytext() + "["+ yyline + ":"+ yycolumn + "]");}
 }
 

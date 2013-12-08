@@ -256,10 +256,10 @@ public class CashFlow {
     {
         String Name = name.toUpperCase();
         if(Name.equalsIgnoreCase("ingresos"))
-            this.Revenue = manager;
+            this.setRevenue(manager);
         else
             if(Name.equalsIgnoreCase("costos"))
-             this.Costs = manager;
+            this.setCosts(manager);
             else
             {
               this.Outlays.put(Name, manager);

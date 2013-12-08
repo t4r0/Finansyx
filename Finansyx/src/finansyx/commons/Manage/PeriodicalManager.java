@@ -30,11 +30,13 @@ public class PeriodicalManager extends FinancialDataManager{
     public void addManager(DataManager manager, Integer limit)
     {
         manager.setLimit( limit + now, now);
+        managers.add(manager);
         now += limit;
         Calc();
     }
     @Override
     public final void Calc(){
+        values.clear();
         for(DataManager manager : managers)
           values.addAll(manager.values);        
     }

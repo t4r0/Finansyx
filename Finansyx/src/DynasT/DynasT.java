@@ -29,6 +29,7 @@ public class DynasT {
         {           
            System.out.println("Listo!");      
            System.out.println(e.getMessage());
+           e.printStackTrace();                   
         }
         System.out.println("Generado correctamente");
     }
