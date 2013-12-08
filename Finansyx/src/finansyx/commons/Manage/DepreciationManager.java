@@ -32,11 +32,21 @@ public class DepreciationManager extends FinancialDataManager{
          Calc();
      }
 
+     public ArrayList<Double> getActualValues()
+     {
+         return actualValues;
+     }
     @Override
     public final void Calc() {
         this.actualValues = Finances.Depreciate(Original, value);
         this.values = Finances.flatDepreciation(Original, value);
     }
+
+    @Override
+    public Boolean isAsset() {
+        return true;
+    }
+    
     
      
 }

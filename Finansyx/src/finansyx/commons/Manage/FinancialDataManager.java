@@ -44,5 +44,8 @@ public class FinancialDataManager extends DataManager{
         return isShield;
     }
             
-    
+    public Boolean isAsset()
+    {
+        return false;
+    }
 }

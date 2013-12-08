@@ -178,7 +178,7 @@ public class Finances {
         ArrayList<Double> values = new ArrayList<>();
          int depYears = (int)(1/percentage);
         Double value = percentage * initial;
-        Double current = initial - value;
+        Double current = initial;
         for(int i=0; i < depYears && i < 10; i++) 
         {
             values.add(current);

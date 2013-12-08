@@ -3,6 +3,7 @@ package finansyx.commons.CashFlow;
 
 import finansyx.commons.Manage.ArithmeticalManager;
 import finansyx.commons.Manage.DataManager;
+import finansyx.commons.Manage.DepreciationManager;
 import finansyx.commons.Manage.FinancialDataManager;
 import finansyx.commons.Rules.Options;
 import java.util.ArrayList;
@@ -71,10 +72,6 @@ public class CashFlow {
     /**
      * Los ingresos de este año
      */
-    
-    /**
-     * Los ingresos de este año
-     */
     FinancialDataManager Revenue = new FinancialDataManager();
     
     /**
@@ -106,6 +103,8 @@ public class CashFlow {
     ArrayList<Double> outlaysWithOutBill  = new ArrayList<>();
     
     ArrayList<Double> shields = new ArrayList<>();
+    
+    ArrayList<Double> asset = new ArrayList<>();
     /**
      * Crea una nueva instancia de esta clase
      * @param revenue los ingresos 
@@ -155,6 +154,27 @@ public class CashFlow {
         this.start = value;
     }
 
+    public FinancialDataManager getCosts() {
+        return Costs;
+    }
+
+    public ArrayList<Double> getOutgoings() {
+        return outgoings;
+    }
+
+    public ArrayList<Double> getOutlaysWithBill() {
+        return outlaysWithBill;
+    }
+
+    public ArrayList<Double> getOutlaysWithOutBill() {
+        return outlaysWithOutBill;
+    }
+    
+    public FinancialDataManager getRevenue() {
+        return Revenue;
+    }
+    
+
     public Integer getStart() {
         return start;
     }   
@@ -165,10 +185,6 @@ public class CashFlow {
 
     public void setType(Integer type) {
         this.type = type;
-    }
-
-    public DataManager getCosts() {
-        return Costs;
     }
 
     public DataManager getGrossProfit() {
@@ -185,10 +201,6 @@ public class CashFlow {
 
     public Double getPercentage() {
         return percentage;
-    }
-
-    public DataManager getRevenue() {
-        return Revenue;
     }
 
     public void setCosts(FinancialDataManager Costs) {
@@ -265,6 +277,35 @@ public class CashFlow {
               this.Outlays.put(Name, manager);
               makeSum();
             }
+    }
+    
+    public void AddAsset(String name, DepreciationManager manager)
+    {
+        int size = manager.getValues().size();
+        ArrayList<Double> val = manager.getActualValues();
+        if(asset.isEmpty())
+            asset.addAll(val);
+        else
+        {
+            for(int i=0; i < size; i ++)
+            {
+                if(i > asset.size())
+                    asset.add(val.get(i));
+                else
+                    asset.set(i,asset.get(i) + val.get(i));
+            }
+        }
+        this.AddOutlay(name, manager);
+    }
+    
+    public Double getAsset(Integer i)
+    {
+        return asset.get(i);
+    }
+    
+    public ArrayList<Double> getAsset()
+    {
+        return asset;
     }
     
     public DataManager getOutLay(String name)

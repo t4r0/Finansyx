@@ -4,10 +4,23 @@
  */
 package finansyx.commons.Finances.Taxes;
 
+import finansyx.commons.CashFlow.CashFlow;
+
 /**
  *
  * @author t4r0
  */
 public class ISOTax extends Tax{
+    
+    public ISOTax()
+    {
+        
+    }
+
+    @Override
+    public void calcTax(CashFlow cashFlow) {
+       
+    }
+    
     
 }
