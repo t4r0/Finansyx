@@ -7,12 +7,15 @@ import finansyx.commons.Manage.*;
 import finansyx.commons.Prognostication.ModelManager;
 import finansyx.commons.Rules.Options;
 import java.util.*;
+import java.util.HashMap;
 
 action code {:
 
     public CashFlow flujo = new CashFlow();
     MARRManager marr = new MARRManager();
     String inflacion = "0%";
+    String name = "";
+    public FinancialPlanning plan = new FinancialPlanning();
 :}
 
 parser code {:
@@ -33,7 +36,8 @@ non terminal MARR_BODY, INFO_PART, INFO_HEADER, INFO_BODY, INFO_OPTION,INFO_LINE
 COSTS_PART, COSTS_BODY, COSTS_LINE;
 
 non terminal FinancialDataManager ID_PART, INSTRUCTION, STAIR,PERCENT, DEPRECIATION,
-INTERESTS, OPERATE, LIMIT_PART, AVER, OPTIM, FIND, SCENARIO_PART, SCENARIO_LINE, SCENARIO_BODY;
+INTERESTS, OPERATE, LIMIT_PART, AVER, OPTIM, FIND, SCENARIO_PART, SCENARIO_BODY;
+non terminal HashMap<String, Double> SCENARIO_LINE;
 non terminal PeriodicalManager LIMIT;
 non terminal PrognosticManager PROGNOSTICS;
 non terminal ArrayList<Double> NUM_LIST;
@@ -50,13 +54,28 @@ FILE ::= HEADER_PART BODY_PART CLCURLYBRAC SEMICOLON;
 BOOL ::= YES{:RESULT = true;:} | NO {:RESULT = false;:};
 TYPE ::= GROSS {:RESULT = CashFlow.GROSS; :} | NET{:RESULT = CashFlow.NET;:};
 
-HEADER_PART ::=  FLOW IDENTIFIER OPCURLYBRAC;
+HEADER_PART ::=  FLOW IDENTIFIER:i {: name = i;:} OPCURLYBRAC;
 BODY_PART ::= MARR_PART INFO_PART COSTS_PART SCENARIO_PART;
 SCENARIO_PART ::= SCENARIO_BODY SCENARIO_PART | SCENARIO_BODY;
-SCENARIO_BODY ::= SCENARIO IDENTIFIER SCENARIO_LINE POLKADOT SCENARIO;
-SCENARIO_LINE ::= SCENARIO_LINE SEMICOLON 
-|SCENARIO_LINE FIND INCREASE 
-| FIND INCREASE ;
+SCENARIO_BODY ::= SCENARIO IDENTIFIER:id SCENARIO_LINE:l POLKADOT SCENARIO
+{:
+    plan.createScenario(l,id);
+:};
+SCENARIO_LINE ::= SCENARIO_LINE:L SEMICOLON
+{:
+    RESULT = L;
+:} 
+|SCENARIO_LINE:l FIND:i INCREASE:in
+{
+    RESULT = l;
+    RESULT.put(i.getName(), in);
+} 
+| FIND:i INCREASE:in
+{:
+    RESULT = new HashMap<>();
+    RESULT.put(i.getName(), in);
+:} ;
+
 FIND ::= IDENTIFIER:id
 {:
     RESULT = flujo.getOutLay(id);
@@ -74,8 +93,8 @@ RESULT.setName("ingresos");:}
 
 COSTS_PART ::= OUTLAY COSTS_BODY POLKADOT OUTLAY
 {:
-    System.out.println("hola");
     flujo.Optimize();
+    plan.addCashFlow(name,flujo);
 :};
 
 COSTS_BODY ::= COSTS_BODY COSTS_LINE | COSTS_LINE;

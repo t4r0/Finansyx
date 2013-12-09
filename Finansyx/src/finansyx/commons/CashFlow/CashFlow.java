@@ -8,14 +8,17 @@ import finansyx.commons.Manage.ArithmeticalManager;
 import finansyx.commons.Manage.DataManager;
 import finansyx.commons.Manage.DepreciationManager;
 import finansyx.commons.Manage.FinancialDataManager;
+import finansyx.commons.Manage.IncrementManager;
 import finansyx.commons.Rules.Options;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 /**
  *
  * @author t4r0
  */
-public class CashFlow {
+public class CashFlow implements Cloneable {
     /**
      * Indica si las cantidades de este flujo de caja son brutas
      */
@@ -342,6 +345,10 @@ public class CashFlow {
     public FinancialDataManager getOutLay(String name)
     {
         String Name = name.toUpperCase();
+        if(Name.equalsIgnoreCase("ingresos"))
+            return this.Revenue;
+        if(Name.equalsIgnoreCase("costos"))
+            return this.Costs;
         return Outlays.get(Name);
     }
 
@@ -494,5 +501,26 @@ public class CashFlow {
         CalcEffectiveNetIncome();
         CalcActualNetValue();
         IRR();
+    }
+    
+    public CashFlow generateScenario(HashMap<String, Double> map)
+    {
+        CashFlow copy = null;
+        FinancialDataManager tmp = null;
+        IncrementManager nu = null;
+        try {
+             copy = (CashFlow)(this.clone());
+        } catch (CloneNotSupportedException ex) {
+            return null;
+        }
+        for(String name: map.keySet())
+        {
+            tmp = copy.getOutLay(name);
+            nu = new IncrementManager(tmp,map.get(name));
+            tmp.setHasBill(tmp.hasBill());
+            tmp.setIsShield(tmp.isShield());
+        }
+        copy.ReCalc();
+        return copy;
     }
 }

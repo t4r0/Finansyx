@@ -93,7 +93,7 @@ public class Finansyx {
         flujo.setAssets(2200.0);
         flujo.setLastYearRevenue(2888.0);
         flujo.setLasYearCosts(2773.0);
-        flujo.setRevenue(new PrognosticManager(prog, 95, Options.UPPER_LIMIT, 0.15));
+        flujo.setRevenue(new PrognosticManager(prog, 95, Options.UPPER_LIMIT, 0.12));
         
         flujo.setCosts(new PeriodicalManager(getManagers(flujo.getRevenue())));
         
@@ -126,6 +126,8 @@ public class Finansyx {
         flujo.AddOutlay("incobrables",inc);
         
         flujo.Optimize();
+        
+        CashFlow clon = flujo.generateScenario(null);
     }
     
     public static void depreciate(CashFlow flujo)
