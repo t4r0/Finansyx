@@ -7,6 +7,7 @@
 package finansyx.commons.CashFlow;
 
 import finansyx.commons.Statistics;
+import java.util.ArrayList;
 import java.util.HashMap;
 
 /**
@@ -32,4 +33,17 @@ public class MARRManager{
     }
     
     public Double getMarr(){return marr;}
+    
+    public ArrayList<Double> actualNetValue(ArrayList<Double> values)
+    {
+        ArrayList<Double> anV = new ArrayList<>();
+        for(int i=0; i < values.size(); i++)
+            anV.add(this.actualNetValue(values.get(i), i+1));
+        return anV;
+    }
+    
+    public Double actualNetValue(Double value, Integer dif)
+    {
+        return Math.pow(value * (1 + this.marr), dif); 
+    }
 }

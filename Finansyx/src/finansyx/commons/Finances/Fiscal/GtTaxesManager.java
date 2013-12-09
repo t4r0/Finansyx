@@ -22,7 +22,12 @@ public class GtTaxesManager extends TaxManager {
     IVATax iva = new IVATax();
     ISRTax isr = new ISRTax();
     ISOTax iso = null;
-    public ArrayList<Double> values = new ArrayList<Double>();
+    public ArrayList<Double> values = new ArrayList<>();
+    
+    public GtTaxesManager()
+    {
+        
+    }
     public GtTaxesManager(int Type,CashFlow cashflow)
     {
         isr = new ISRTax();

@@ -90,6 +90,7 @@ public class Finansyx {
         ArrayList<Double> seg= new ArrayList<>(
                 Arrays.asList(new Double[]{21., 29., 38., 49., 53., 57., 58., 59., 60.}));
         CashFlow flujo = new CashFlow();
+        flujo.setAssets(2200.0);
         flujo.setLastYearRevenue(2888.0);
         flujo.setLasYearCosts(2773.0);
         flujo.setRevenue(new PrognosticManager(prog, 95, Options.UPPER_LIMIT, 0.15));
@@ -123,16 +124,8 @@ public class Finansyx {
         inc.setHasBill(false);
         inc.setIsShield(true);
         flujo.AddOutlay("incobrables",inc);
-        IVATax iva = new  IVATax();
-        iva.calcTax(flujo);
-        System.out.println(iva);
-        ISRTax isr = new ISRTax();
-        isr.calcTax(flujo);
-        System.out.println(isr);
-        ISOTax iso = new ISOTax(isr);
-        iso.calcTax(flujo);
-        System.out.println(iso);
-        GtTaxesManager man= new GtTaxesManager(GTAcreditation.ISR_ISO, flujo);
+        
+        flujo.Optimize();
     }
     
     public static void depreciate(CashFlow flujo)

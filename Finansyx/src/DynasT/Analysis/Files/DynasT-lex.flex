@@ -31,7 +31,6 @@ comment = "#"* {InputCharacter}* {newLine}*
     "activos" {return new Symbol(sym.ASSETS);}
     "anterior" {return new Symbol(sym.LAST);}
     "aleman"  {return new Symbol(sym.GERMAN);}
-    "arbol"   {return new Symbol(sym.TREE);} 
     "bruto"   {return new Symbol(sym.GROSS);}
     "costos"  {return new Symbol(sym.COSTS);}   
     "depreciar" {return new Symbol(sym.DEPRECIATE);}
@@ -50,6 +49,7 @@ comment = "#"* {InputCharacter}* {newLine}*
     "neto"        { return new Symbol(sym.NET); }
     "patente"     { return new Symbol(sym.PATENT); }
     "pronosticar" { return new Symbol(sym.PROGNOSTIC); } 
+    "promedio"    { return new Symbol(sym.AVERAGE);}
     "no"          { return new Symbol(sym.NO, false); } 
     "optimo"      { return new Symbol(sym.OPTIMIZER); }  
     "si"          { return new Symbol(sym.YES, true); }  

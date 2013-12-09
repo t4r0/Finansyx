@@ -1,6 +1,9 @@
 
 package finansyx.commons.CashFlow;
 
+import finansyx.commons.Finances.Finances;
+import finansyx.commons.Finances.Fiscal.GTAcreditation;
+import finansyx.commons.Finances.Fiscal.GtTaxesManager;
 import finansyx.commons.Manage.ArithmeticalManager;
 import finansyx.commons.Manage.DataManager;
 import finansyx.commons.Manage.DepreciationManager;
@@ -23,6 +26,7 @@ public class CashFlow {
      */
     public static final int NET = 24;
      
+   Integer regime = -1;
     /**
      * El año de inicio
      */
@@ -105,6 +109,17 @@ public class CashFlow {
     ArrayList<Double> shields = new ArrayList<>();
     
     ArrayList<Double> asset = new ArrayList<>();
+    
+    Double IRR = 0.0;
+    
+    ArrayList<Double> netProfit = new ArrayList<>();
+    
+    ArrayList<Double> actualNetValue =new ArrayList<>();
+    
+    ArrayList<Double> effectiveNetIncome = new ArrayList<>();
+    
+    GtTaxesManager taxes = new GtTaxesManager();
+    
     /**
      * Crea una nueva instancia de esta clase
      * @param revenue los ingresos 
@@ -174,6 +189,10 @@ public class CashFlow {
         return Revenue;
     }
     
+    public Double getIRR()
+    {
+        return IRR;
+    }
 
     public Integer getStart() {
         return start;
@@ -320,7 +339,7 @@ public class CashFlow {
         return asset;
     }
     
-    public DataManager getOutLay(String name)
+    public FinancialDataManager getOutLay(String name)
     {
         String Name = name.toUpperCase();
         return Outlays.get(Name);
@@ -387,5 +406,93 @@ public class CashFlow {
             outlaysWithOutBill.add(bill - sum);
             shields.add(shield);
         }
+    }
+    
+    public ArrayList<Double> CalcNetProfit(int Type)
+    {
+        ArrayList<Double> prof = new ArrayList<>();
+        taxes = new GtTaxesManager(Type, this);
+        ArrayList<Double> imp = taxes.calcTaxes();
+        for(int i=0; i < PBT.size(); i++)
+            prof.add(PBT.get(i) - taxes.values.get(i));
+        return prof;
+    }
+    
+    public void CalcNetProfit()
+    {
+        netProfit = this.CalcNetProfit(this.regime);
+    }
+    public ArrayList<Double> CalcEffectiveNetIncome(ArrayList<Double> netProfit)
+    {
+        ArrayList<Double> eff = new ArrayList<>();
+        for(int i=0; i< netProfit.size(); i++)
+            eff.add(netProfit.get(i) + shields.get(i));
+        return eff;
+    }
+    
+    public void CalcEffectiveNetIncome()
+    {
+       effectiveNetIncome = this.CalcEffectiveNetIncome(netProfit);
+    }
+    
+    public void ReCalc()
+    {
+        Revenue.Calc();
+        Costs.Calc();
+        grossProfit = new ArithmeticalManager(Options.SUBSTRACT, Revenue.getValues(),Costs);
+        for(FinancialDataManager man : Outlays.values())
+            man.Calc();
+        makeSum();
+        CalcNetProfit();
+        CalcEffectiveNetIncome();
+        CalcActualNetValue();
+        IRR();
+    }
+    
+    public ArrayList<Double> CalcActualNetValue(ArrayList<Double> list)
+    {
+       return  marr.actualNetValue(list);
+    }  
+    
+    public void CalcActualNetValue()
+    {
+        actualNetValue = CalcActualNetValue(effectiveNetIncome);
+    }
+    public Double IRR(ArrayList<Double> list)
+    {
+        return Finances.IRR(list);
+    }
+    
+    public Double IRR()
+    {
+        ArrayList<Double> income = new ArrayList<>();
+        income.add(assets * -1.0);
+        income.addAll(actualNetValue);
+        return IRR = Finances.IRR(income);
+    }
+    public void Optimize()
+    {
+        ArrayList<Double> netprof = CalcNetProfit(GTAcreditation.ISO_ISR);
+        ArrayList<Double> netprof2 = CalcNetProfit(GTAcreditation.ISR_ISO);
+        
+        ArrayList<Double> act1 = new ArrayList<>();
+        act1.add(assets * -1.0);
+        act1.addAll(CalcActualNetValue(CalcEffectiveNetIncome(netprof)));
+        
+        ArrayList<Double> act2 = new ArrayList<>();
+        act2.add(assets * -1.0);
+        act2.addAll(CalcActualNetValue(CalcEffectiveNetIncome(netprof2)));
+        
+        Double irr1 = IRR(act1);
+        Double irr2 = IRR(act2);
+        
+        if(irr1 > irr2)
+            this.regime = GTAcreditation.ISO_ISR;
+        else
+            this.regime = GTAcreditation.ISR_ISO;
+        CalcNetProfit();
+        CalcEffectiveNetIncome();
+        CalcActualNetValue();
+        IRR();
     }
 }

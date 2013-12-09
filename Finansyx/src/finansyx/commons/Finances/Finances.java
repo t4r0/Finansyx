@@ -6,7 +6,10 @@ package finansyx.commons.Finances;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
-import org.apache.commons.math3.util.Precision;/**
+import org.apache.commons.math3.util.Precision;
+import org.apache.poi.ss.formula.functions.Irr;
+import org.apache.commons.lang3.ArrayUtils;
+/**
  *
  * @author t4r0
  */
@@ -186,4 +189,11 @@ public class Finances {
         }
         return values;
     }
+    
+    public static Double IRR(ArrayList<Double> values)
+    {
+        double[] income = ArrayUtils.toPrimitive(values.toArray(new Double[0]));
+        return Irr.irr(income);
+    }
+    
 }
