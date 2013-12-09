@@ -12,7 +12,7 @@ public class FinancialDataManager extends DataManager{
     
     Boolean hasBill = true;
     Boolean isShield = false;
-
+    Boolean isAsset = false;
     public FinancialDataManager() {
     }
     
@@ -46,6 +46,11 @@ public class FinancialDataManager extends DataManager{
             
     public Boolean isAsset()
     {
-        return false;
+        return isAsset;
+    }
+    
+    public void isAsset(Boolean value)
+    {
+        this.isAsset = value;
     }
 }

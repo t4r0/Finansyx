@@ -66,10 +66,10 @@ SCENARIO_LINE ::= SCENARIO_LINE:L SEMICOLON
     RESULT = L;
 :} 
 |SCENARIO_LINE:l FIND:i INCREASE:in
-{
+{:
     RESULT = l;
     RESULT.put(i.getName(), in);
-} 
+:} 
 | FIND:i INCREASE:in
 {:
     RESULT = new HashMap<>();

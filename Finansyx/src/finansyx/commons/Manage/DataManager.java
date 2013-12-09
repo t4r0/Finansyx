@@ -17,6 +17,7 @@ public class DataManager {
     ArrayList<Double> values = new ArrayList<>();
     Rule calcRule = new Rule();
     String name = "";
+    ArrayList<DataManager> related = new ArrayList<>();
     public DataManager() {
     }
     
@@ -38,6 +39,20 @@ public class DataManager {
         this.values = calcRule.getValuesFromRule(base);
     }
     
+    public void UpdateRelated(DataManager man)
+    {
+        for(DataManager rel: related)
+        {
+            rel.base = man;
+            man.AddRelated(rel);
+        }
+        related.clear();
+    }
+    
+    private void AddRelated(DataManager man)
+    {
+        this.related.add(man);
+    }
     /**
      * Calcula el valor en base a la regla de calculo especificada
      */

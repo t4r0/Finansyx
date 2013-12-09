@@ -244,7 +244,7 @@ public class CashFlow implements Cloneable {
 
     public void setOutlays(HashMap<String, FinancialDataManager> Outlays) {
         this.Outlays = Outlays;
-    }
+    }    
 
     public void setPercentage(Double percentage) {
         this.percentage = percentage;
@@ -293,14 +293,44 @@ public class CashFlow implements Cloneable {
         percentage =  1 - (lasYearCosts/ lastYearRevenue);
     }
     
+    public void setOutLay(String name, FinancialDataManager manager)
+    {
+        String Name = name.toUpperCase();
+        if(Name.equalsIgnoreCase("ingresos"))
+        {
+            Revenue.UpdateRelated(manager);
+            setRevenue(manager);
+        }
+         else
+            if(Name.equalsIgnoreCase("costos"))
+            {
+                Costs.UpdateRelated(manager);
+                setCosts(manager);
+            }
+            else
+            {
+               FinancialDataManager man = this.Outlays.get(name);
+               if(man != null)
+               {
+                 man.UpdateRelated(manager);
+                 this.Outlays.put(Name, manager);
+                 makeSum();
+               }
+            }
+    }
     public void AddOutlay(String name, FinancialDataManager manager)
     {
         String Name = name.toUpperCase();
         if(Name.equalsIgnoreCase("ingresos"))
+        {
             this.setRevenue(manager);
+          
+        }
         else
             if(Name.equalsIgnoreCase("costos"))
-            this.setCosts(manager);
+            {
+                this.setCosts(manager);                
+            }
             else
             {
               this.Outlays.put(Name, manager);
@@ -517,8 +547,10 @@ public class CashFlow implements Cloneable {
         {
             tmp = copy.getOutLay(name);
             nu = new IncrementManager(tmp,map.get(name));
-            tmp.setHasBill(tmp.hasBill());
-            tmp.setIsShield(tmp.isShield());
+            nu.setHasBill(tmp.hasBill());
+            nu.setIsShield(tmp.isShield());
+            nu.isAsset(tmp.isAsset());
+            copy.setOutLay(name, nu);
         }
         copy.ReCalc();
         return copy;
