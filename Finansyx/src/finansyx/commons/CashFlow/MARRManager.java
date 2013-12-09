@@ -44,6 +44,6 @@ public class MARRManager{
     
     public Double actualNetValue(Double value, Integer dif)
     {
-        return Math.pow(value * (1 + this.marr), dif); 
+        return value * Math.pow((1 + this.marr), -1 * dif); 
     }
 }

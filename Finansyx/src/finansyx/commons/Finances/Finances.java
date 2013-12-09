@@ -195,5 +195,4 @@ public class Finances {
         double[] income = ArrayUtils.toPrimitive(values.toArray(new Double[0]));
         return Irr.irr(income);
     }
-    
 }

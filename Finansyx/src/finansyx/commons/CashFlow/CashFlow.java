@@ -287,7 +287,7 @@ public class CashFlow {
         ArrayList<Double> csts = Costs.getValues();
         for(int i=0; i< rvnue.size(); i++)
             grossProfitPercentage.add(1 - (csts.get(i) / rvnue.get(i)));
-        percentage =  1 - (lastYearRevenue / lasYearCosts);
+        percentage =  1 - (lasYearCosts/ lastYearRevenue);
     }
     
     public void AddOutlay(String name, FinancialDataManager manager)
@@ -403,7 +403,7 @@ public class CashFlow {
             PBT.add(pbt);
             outgoings.add(sum);
             outlaysWithBill.add(bill);
-            outlaysWithOutBill.add(bill - sum);
+            outlaysWithOutBill.add(sum + Costs.getValues().get(i)  - bill);
             shields.add(shield);
         }
     }

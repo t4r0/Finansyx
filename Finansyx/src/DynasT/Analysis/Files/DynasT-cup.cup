@@ -33,7 +33,7 @@ non terminal MARR_BODY, INFO_PART, INFO_HEADER, INFO_BODY, INFO_OPTION,INFO_LINE
 COSTS_PART, COSTS_BODY, COSTS_LINE;
 
 non terminal FinancialDataManager ID_PART, INSTRUCTION, STAIR,PERCENT, DEPRECIATION,
-INTERESTS, OPERATE, LIMIT_PART, AVER, OPTIM, FIND;
+INTERESTS, OPERATE, LIMIT_PART, AVER, OPTIM, FIND, SCENARIO_PART, SCENARIO_LINE, SCENARIO_BODY;
 non terminal PeriodicalManager LIMIT;
 non terminal PrognosticManager PROGNOSTICS;
 non terminal ArrayList<Double> NUM_LIST;
@@ -51,7 +51,12 @@ BOOL ::= YES{:RESULT = true;:} | NO {:RESULT = false;:};
 TYPE ::= GROSS {:RESULT = CashFlow.GROSS; :} | NET{:RESULT = CashFlow.NET;:};
 
 HEADER_PART ::=  FLOW IDENTIFIER OPCURLYBRAC;
-BODY_PART ::= MARR_PART INFO_PART COSTS_PART ;
+BODY_PART ::= MARR_PART INFO_PART COSTS_PART SCENARIO_PART;
+SCENARIO_PART ::= SCENARIO_BODY SCENARIO_PART | SCENARIO_BODY;
+SCENARIO_BODY ::= SCENARIO IDENTIFIER SCENARIO_LINE POLKADOT SCENARIO;
+SCENARIO_LINE ::= SCENARIO_LINE SEMICOLON 
+|SCENARIO_LINE FIND INCREASE 
+| FIND INCREASE ;
 FIND ::= IDENTIFIER:id
 {:
     RESULT = flujo.getOutLay(id);
@@ -61,18 +66,19 @@ FIND ::= IDENTIFIER:id
         RESULT.setName(id);
     }   
         
-:} | REVENUE{:RESULT = flujo.getRevenue();
+:} | REVENUE{:
+RESULT = flujo.getRevenue();
 RESULT.setName("ingresos");:} 
 | COSTS{:RESULT = flujo.getCosts();
  RESULT.setName("costos");:};
 
-COSTS_PART ::= OUTLAY COSTS_BODY 
+COSTS_PART ::= OUTLAY COSTS_BODY POLKADOT OUTLAY
 {:
     System.out.println("hola");
     flujo.Optimize();
 :};
 
-COSTS_BODY ::= COSTS_BODY COSTS_LINE | COSTS_LINE | POLKADOT OUTLAY;
+COSTS_BODY ::= COSTS_BODY COSTS_LINE | COSTS_LINE;
 
 COSTS_LINE ::= 
               COSTS_LINE SEMICOLON 
@@ -84,7 +90,6 @@ COSTS_LINE ::=
                     flujo.AddAsset(i.getName(), (DepreciationManager)(in));
                 else
                     flujo.AddOutlay(i.getName(), in);
-                System.out.println(in);
               :};
 
 ID_PART ::= 
@@ -243,7 +248,6 @@ NUM_LIST ::= OPSQBRAC NUM_LIST:li
 MARR_PART ::= MARR_HEADER MARR_BODY CLCURLYBRAC
 {:
  flujo.setMarr(marr);
- System.out.println("tmar= " + marr.getMarr());
 :};
 
 MARR_HEADER ::= MARR PERCENTAGE:percentage OPCURLYBRAC 

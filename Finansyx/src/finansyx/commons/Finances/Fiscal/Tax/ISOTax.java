@@ -39,7 +39,11 @@ public class ISOTax extends Tax{
                asset = cashFlow.getAsset(i);
                val = rev.get(i);
                if(asset > val * 4 || asset < val)
-                   payment.add(val*0.01);
+               {   if(cashFlow.getType() == CashFlow.NET)
+                     payment.add(val*0.01);
+                   else
+                     payment.add((val/1.12) *0.01);
+               }
                else
                    payment.add(asset * 0.01);
            }

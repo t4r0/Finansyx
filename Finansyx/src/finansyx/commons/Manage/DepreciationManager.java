@@ -18,8 +18,8 @@ public class DepreciationManager extends FinancialDataManager{
      {
          this.value = percentage;
          this.Original = original;
-         this.hasBill = false;
-         this.isShield = true;
+         setHasBill(false);
+         setIsShield(true);
          Calc();
      }
      
@@ -27,8 +27,8 @@ public class DepreciationManager extends FinancialDataManager{
      {
          this.value = Statistics.percentageFromString(percentage);
          this.Original = original;
-         this.hasBill = false;
-         this.isShield = true;
+         setHasBill(false);
+         setIsShield(true);
          Calc();
      }
 
