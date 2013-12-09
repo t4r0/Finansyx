@@ -33,7 +33,8 @@ public class PrognosticManager extends FinancialDataManager{
     
     public Integer getConfidence()
     {
-        return confidence;
+        Integer conf = ((PrognosticRule)(calcRule)).getManager().getFixedConfidence();
+        return conf;
     }
     
     public Double getIncremento()

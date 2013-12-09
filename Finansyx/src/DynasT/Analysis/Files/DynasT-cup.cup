@@ -30,7 +30,7 @@ terminal Integer GROSS, NET;
 
 non terminal FILE, HEADER_PART, BODY_PART;
 non terminal MARR_BODY, INFO_PART, INFO_HEADER, INFO_BODY, INFO_OPTION,INFO_LINE, LAST_INFO, MARR_LINE,
-COSTS_PART, COSTS_BODY,COSTS_HEAD, COSTS_LINE;
+COSTS_PART, COSTS_BODY, COSTS_LINE;
 
 non terminal FinancialDataManager ID_PART, INSTRUCTION, STAIR,PERCENT, DEPRECIATION,
 INTERESTS, OPERATE, LIMIT_PART, AVER, OPTIM, FIND;
@@ -51,18 +51,28 @@ BOOL ::= YES{:RESULT = true;:} | NO {:RESULT = false;:};
 TYPE ::= GROSS {:RESULT = CashFlow.GROSS; :} | NET{:RESULT = CashFlow.NET;:};
 
 HEADER_PART ::=  FLOW IDENTIFIER OPCURLYBRAC;
-BODY_PART ::= MARR_PART INFO_PART COSTS_PART;
+BODY_PART ::= MARR_PART INFO_PART COSTS_PART ;
 FIND ::= IDENTIFIER:id
 {:
     RESULT = flujo.getOutLay(id);
-:} | REVENUE{:RESULT = flujo.getRevenue();:} | COSTS{:flujo.getCosts();:};
+    if(RESULT == null)
+    {
+        RESULT = new FinancialDataManager();
+        RESULT.setName(id);
+    }   
+        
+:} | REVENUE{:RESULT = flujo.getRevenue();
+RESULT.setName("ingresos");:} 
+| COSTS{:RESULT = flujo.getCosts();
+ RESULT.setName("costos");:};
 
-COSTS_PART ::= COSTS_HEAD COSTS_BODY CLCURLYBRAC
+COSTS_PART ::= OUTLAY COSTS_BODY 
 {:
+    System.out.println("hola");
     flujo.Optimize();
 :};
-COSTS_HEAD ::= OUTLAY OPCURLYBRAC;
-COSTS_BODY ::= COSTS_BODY COSTS_LINE | COSTS_LINE;
+
+COSTS_BODY ::= COSTS_BODY COSTS_LINE | COSTS_LINE | POLKADOT OUTLAY;
 
 COSTS_LINE ::= 
               COSTS_LINE SEMICOLON 

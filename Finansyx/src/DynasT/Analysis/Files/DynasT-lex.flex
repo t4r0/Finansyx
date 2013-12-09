@@ -21,9 +21,7 @@ integer = [0-9]+
 floating = {integer}[\.]{integer} 
 identifier = [:jletter:][:jletterdigit:]* 
 numb = {integer} | {floating}
-InputCharacter = [^\r\n]
 percentage = {numb}['%'] 
-comment = "#"* {InputCharacter}* {newLine}* 
 %%
 
 <YYINITIAL>
@@ -75,7 +73,6 @@ comment = "#"* {InputCharacter}* {newLine}*
     {percentage}  { return new Symbol(sym.PERCENTAGE,yytext()); }
     {whiteSpace}  {/* ignoring */}
     {newLine}     {/* ignoring */}
-    {comment}     {/* ignoring */}
     . {System.err.println("caracter invalido" + yytext() + "["+ yyline + ":"+ yycolumn + "]");}
 }
 
