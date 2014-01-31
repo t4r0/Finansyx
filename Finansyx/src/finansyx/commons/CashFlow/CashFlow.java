@@ -1,6 +1,7 @@
 
 package finansyx.commons.CashFlow;
 
+import com.sun.org.apache.bcel.internal.generic.AALOAD;
 import finansyx.commons.Finances.Finances;
 import finansyx.commons.Finances.Fiscal.GTAcreditation;
 import finansyx.commons.Finances.Fiscal.GtTaxesManager;
@@ -122,6 +123,10 @@ public class CashFlow implements Cloneable {
     ArrayList<Double> effectiveNetIncome = new ArrayList<>();
     
     GtTaxesManager taxes = new GtTaxesManager();
+    
+    
+    HashMap<String, String> related = new HashMap<>();
+    
     
     /**
      * Crea una nueva instancia de esta clase
@@ -293,31 +298,6 @@ public class CashFlow implements Cloneable {
         percentage =  1 - (lasYearCosts/ lastYearRevenue);
     }
     
-    public void setOutLay(String name, FinancialDataManager manager)
-    {
-        String Name = name.toUpperCase();
-        if(Name.equalsIgnoreCase("ingresos"))
-        {
-            Revenue.UpdateRelated(manager);
-            setRevenue(manager);
-        }
-         else
-            if(Name.equalsIgnoreCase("costos"))
-            {
-                Costs.UpdateRelated(manager);
-                setCosts(manager);
-            }
-            else
-            {
-               FinancialDataManager man = this.Outlays.get(name);
-               if(man != null)
-               {
-                 man.UpdateRelated(manager);
-                 this.Outlays.put(Name, manager);
-                 makeSum();
-               }
-            }
-    }
     public void AddOutlay(String name, FinancialDataManager manager)
     {
         String Name = name.toUpperCase();
@@ -532,7 +512,14 @@ public class CashFlow implements Cloneable {
         CalcActualNetValue();
         IRR();
     }
-    
+    public void ReplaceRelated(String name, Double perc)
+    {
+        for(FinancialDataManager manager: Outlays.values())
+        {
+            if(manager.getRelated().equalsIgnoreCase(name))
+                manager = new IncrementManager(manager,perc);
+        }
+    }
     public CashFlow generateScenario(HashMap<String, Double> map)
     {
         CashFlow copy = null;
@@ -550,7 +537,8 @@ public class CashFlow implements Cloneable {
             nu.setHasBill(tmp.hasBill());
             nu.setIsShield(tmp.isShield());
             nu.isAsset(tmp.isAsset());
-            copy.setOutLay(name, nu);
+            copy.AddOutlay(name, nu);
+            copy.ReplaceRelated(name,map.get(name));
         }
         copy.ReCalc();
         return copy;

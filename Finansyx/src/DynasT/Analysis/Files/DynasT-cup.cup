@@ -82,9 +82,10 @@ FIND ::= IDENTIFIER:id
     if(RESULT == null)
     {
         RESULT = new FinancialDataManager();
-        RESULT.setName(id);
+      
     }   
-        
+    RESULT.setName(id);  
+
 :} | REVENUE{:
 RESULT = flujo.getRevenue();
 RESULT.setName("ingresos");:} 
@@ -105,10 +106,12 @@ COSTS_LINE ::=
               {:
                 in.setHasBill(i.hasBill());
                 in.setIsShield(i.isShield());
+                in.setName(i.getName());
                 if(in.isAsset())
                     flujo.AddAsset(i.getName(), (DepreciationManager)(in));
                 else
                     flujo.AddOutlay(i.getName(), in);
+              
               :};
 
 ID_PART ::= 
@@ -138,15 +141,18 @@ INSTRUCTION ::= PERCENT:I {: RESULT= I; :}
 AVER ::= AVERAGE NUM_LIST:n COMMA FIND:id
 {:
     RESULT = new AverageManager(id,n);
+    RESULT.setRelated(id.getName());
 :};
 
 OPTIM ::= OPTIMIZER NUM_LIST:li COMMA FIND:id
 {:
     RESULT = new Optimizer(li, id, 0.0);
+    RESULT.setRelated(id.getName());
 :}
 | OPTIMIZER NUM_LIST:li COMMA FIND:id COMMA INCREASE:i
 {:
     RESULT = new Optimizer(li, id, i);
+    RESULT.setRelated(id.getName());
 :};
 OPERATE ::= OPERATE:op PLUS OPBRAC INSTRUCTION:i CLBRAC
 {:
@@ -195,10 +201,14 @@ LIMIT_PART ::= OPSQBRAC INSTRUCTION:I POLKADOT NUMBER:n CLSQBRAC
 PERCENT ::= FIND:i TIMES PERCENTAGE:pe
 {:
     RESULT = new PercentageManager(pe,i);
+    RESULT.setRelated(i.getName());
+
 :}
 | INSTRUCTION:in TIMES PERCENTAGE:pe
 {:
     RESULT = new PercentageManager(pe, in);
+    RESULT.setRelated(in.getRelated());
+    RESULT.setName(in.getName());
 :};
 
 STAIR ::= TIERED PERCENTAGE:pe COMMA NUMBER:n COMMA NUMBER:n2

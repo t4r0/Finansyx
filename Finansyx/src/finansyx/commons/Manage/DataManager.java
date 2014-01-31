@@ -17,7 +17,8 @@ public class DataManager {
     ArrayList<Double> values = new ArrayList<>();
     Rule calcRule = new Rule();
     String name = "";
-    ArrayList<DataManager> related = new ArrayList<>();
+    String relate = "";
+    
     public DataManager() {
     }
     
@@ -36,22 +37,17 @@ public class DataManager {
     {
         this.calcRule = calcRule;
         this.base = base;
-        this.values = calcRule.getValuesFromRule(base);
+        this.values = calcRule.getValuesFromRule(base);        
     }
     
-    public void UpdateRelated(DataManager man)
+    public void setRelated(String name)
     {
-        for(DataManager rel: related)
-        {
-            rel.base = man;
-            man.AddRelated(rel);
-        }
-        related.clear();
-    }
+        this.relate = name;
+    }     
     
-    private void AddRelated(DataManager man)
+    public String getRelated()
     {
-        this.related.add(man);
+        return relate.toUpperCase();
     }
     /**
      * Calcula el valor en base a la regla de calculo especificada
